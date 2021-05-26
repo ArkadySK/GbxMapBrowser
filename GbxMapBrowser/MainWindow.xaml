@@ -24,8 +24,8 @@
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" HorizontalAlignment="Right" Margin="0 0 40 0" Padding="0" Content="⟳" Click="refreshMapsButton_Click"/>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="OpenInExplorerButton" HorizontalAlignment="Right" Padding="0" Content="📁" Click="OpenInExplorerButton_Click"/>
         </Grid>
-
-        <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="12" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="50" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
+        <Button Grid.Row="1" Panel.ZIndex="10" Width="40" Style="{StaticResource AddressButtonStyle}" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5" Click="manageGamesButton_Click" Padding="-5" FontSize="35">⚙️</Button>
+        <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="5" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="50" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
             <mah:HamburgerMenu.Content>
                 <!--Map list, the right part-->
                 <ListView x:Name="mapListView" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" PreviewMouseDoubleClick="mapListView_PreviewMouseDoubleClick">
