@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GbxMapBrowser", "GbxMapBrowser\GbxMapBrowser.csproj", "{4193C627-00CC-4CF2-BAE5-E111ECCB82A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4193C627-00CC-4CF2-BAE5-E111ECCB82A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4193C627-00CC-4CF2-BAE5-E111ECCB82A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4193C627-00CC-4CF2-BAE5-E111ECCB82A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4193C627-00CC-4CF2-BAE5-E111ECCB82A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0FA67D8-84CF-4D30-9500-F48AFDE1CE5C}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,126 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GbxMapBrowser"
+        xmlns:System="clr-namespace:System;assembly=System.Runtime" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="GbxMapBrowser.MainWindow"
+        mc:Ignorable="d"
+        Title="Gbx Map Browser (Preview)" Height="700" Width="1000" MinHeight="680" MinWidth="700" DataContext="MapInfoController">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="290"/>
+        </Grid.ColumnDefinitions>
+        <!--<GridSplitter Grid.Column="0" Grid.Row="1" Width="3" HorizontalAlignment="Right" Panel.ZIndex="10"/>-->
+        <GridSplitter Grid.Column="1"  Grid.Row="1" Width="3" HorizontalAlignment="Left" Panel.ZIndex="10"/>
+        <Grid Margin="5" HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
+            <Button Style="{StaticResource AddressButtonStyle}" x:Name="parentFolderButton" HorizontalAlignment="Left" Padding="0" Content="⏏" Click="parentFolderButton_Click"/>
+            <TextBox x:Name="currentFolderTextBox" FontSize="16" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Margin="44,0,80,0" KeyUp="currentFolderTextBox_KeyUp"/>
+            <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" HorizontalAlignment="Right" Margin="0 0 40 0" Padding="0" Content="⟳" Click="refreshMapsButton_Click"/>
+            <Button Style="{StaticResource AddressButtonStyle}" x:Name="OpenInExplorerButton" HorizontalAlignment="Right" Padding="0" Content="📁" Click="OpenInExplorerButton_Click"/>
+        </Grid>
+
+        <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="12" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="50" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
+            <mah:HamburgerMenu.Content>
+                <!--Map list, the right part-->
+                <ListView x:Name="mapListView" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" PreviewMouseDoubleClick="mapListView_PreviewMouseDoubleClick">
+                    <ListView.Resources>
+                        <DataTemplate DataType="{x:Type local:FolderInfo}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Data/UIIcons/Folder.png" Width="50"></Image>
+                                <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding FolderName}" Grid.Column="1" Margin="5"/>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type local:MapInfo}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding MapName}" Grid.Column="1" Margin="5"/>
+                                <Image Source="{Binding EnviImage}" Grid.Column="0" Margin="5"/>
+                                <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="2" Margin="5"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.Resources>
+                </ListView>
+            </mah:HamburgerMenu.Content>
+            
+            <!--The Game list, left part of UI-->
+            <mah:HamburgerMenu.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding Visibility}" Margin="5">
+                        <Image Width="40" Source="{Binding Icon}"></Image>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="5 0 0 0" Content="{Binding Name}" />
+                            <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="0" Content=" Maps" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </mah:HamburgerMenu.ItemTemplate>
+        </mah:HamburgerMenu>
+        
+        
+        <!--Map Preview window-->
+        <Grid Grid.Column="1" Margin="5 0" HorizontalAlignment="Stretch" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="medalColumn" Width="38"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label x:Name="nameLabel" Content="{Binding SelectedItem.MapName, ElementName=mapListView, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="11"/>
+            <Label FontSize="18" Content="{Binding Content, ElementName=nameLabel}" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="10" Foreground="{DynamicResource MahApps.Brushes.Flyout.Background}">
+                <Label.Effect>
+                    <BlurEffect Radius="5" KernelType="Gaussian"/>
+                </Label.Effect>
+            </Label>
+            <Label Content="{Binding SelectedItem.FolderName, ElementName=mapListView, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="10"/>
+
+            <Image Source="{Binding SelectedItem.MapThumbnail, ElementName=mapListView}" Grid.ColumnSpan="2" Grid.Row="0" Stretch="UniformToFill"/>
+            <Label Content="{Binding SelectedItem.Author, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
+            <Label Content="{Binding SelectedItem.CopperPrice, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
+            <Label Content="{Binding SelectedItem.MapType, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="2" Panel.ZIndex="10"/>
+            <Label Content="{Binding SelectedItem.Titlepack, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="3" Panel.ZIndex="10"/>
+            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveAuthor, ElementName=mapListView}" Grid.Column="1" Grid.Row="4"/>
+            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveGold, ElementName=mapListView}" Grid.Column="1" Grid.Row="5"/>
+            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveSilver, ElementName=mapListView}" Grid.Column="1" Grid.Row="6"/>
+            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveBronze, ElementName=mapListView}" Grid.Column="1" Grid.Row="7"/>
+            <Image Grid.Row="4" Margin="5 1" Source="/Data/Medals/NadeoMedal.png"/>
+            <Image Grid.Row="5" Margin="5 1" Source="/Data/Medals/GoldMedal.png"/>
+            <Image Grid.Row="6" Margin="5 1" Source="/Data/Medals/SilverMedal.png"/>
+            <Image Grid.Row="7" Margin="5 1" Source="/Data/Medals/BronzeMedal.png"/>
+        </Grid>
+
+        <StackPanel VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Margin="10" Panel.ZIndex="10">
+            <Label Padding="1" Style="{StaticResource DefaultUIStyle}" Content="Open in:"/>
+            <ComboBox x:Name="openInComboBox" FontSize="15" Margin="0 5 0 10" Height="40">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Label Visibility="{Binding Visibility}" Content="{Binding Name}" Style="{StaticResource DefaultUIStyle}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button BorderThickness="1" Click="ButtonPlay_Click" Content="Play" Height="35" FontSize="20" Background="{DynamicResource MahApps.Brushes.AccentBase}" BorderBrush="{DynamicResource MahApps.Brushes.Button.Flat.Background}" Foreground="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Foreground.MouseOver}">
+                <Button.Resources>
+                    <ResourceDictionary Source="/PresentationFramework.Aero2;component/themes/Aero2.NormalColor.xaml"/>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

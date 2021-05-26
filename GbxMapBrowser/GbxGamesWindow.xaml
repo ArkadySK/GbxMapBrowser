@@ -1,0 +1,51 @@
+﻿<Window x:Class="GbxMapBrowser.GbxGamesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GbxMapBrowser"
+        mc:Ignorable="d"
+        Title="GbxGamesWindow" Height="320" Width="600" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Closing="Window_Closing">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <ListView x:Name="listView" ItemsSource="{Binding GbxGames}">
+            <!--GbxGame Item Template-->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="80" ToolTip="{Binding InstalationFolder}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1">
+                            <Label Style="{StaticResource DefaultUIStyle}" FontSize="20" FontWeight="Bold" Content="{Binding Name}"/>
+                            <Label Style="{StaticResource DefaultUIStyle}" FontWeight="Light" Content="Enabled: " Padding="10 0 0 0"/>
+                            <Label Style="{StaticResource DefaultUIStyle}" FontWeight="Light" Content="{Binding IsEnabled}" Padding="0"/>
+                        </StackPanel>
+                        <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource DefaultUIStyle}" FontWeight="Light" Content="{Binding InstalationFolder}"/>
+                        <Image Grid.RowSpan="2" Source="{Binding Icon}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <!--GbxGame Item Template END-->
+        </ListView>
+
+        <!--GbxGame Settings Panel-->
+        <StackPanel Grid.Column="1">
+            <Label Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Content="{Binding SelectedItem.Name, ElementName=listView, FallbackValue='Choose a game'}"/>
+            <Button Content="Change Install Location" Margin="5" Click="Button_Click"/>
+            <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsEnabled, ElementName=listView}">
+                <Label Style="{StaticResource DefaultUIStyle}" Content="Enable this game"/>
+            </CheckBox>
+
+        </StackPanel>
+    </Grid>
+</Window>

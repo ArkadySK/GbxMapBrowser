@@ -1,0 +1,202 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.IO;
+using System.Diagnostics;
+
+namespace GbxMapBrowser
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        MapInfoController MapInfoController = new MapInfoController();
+        GbxGameController GbxGameController = new GbxGameController();
+        string curFolder;
+        SearchOption searchOption;
+
+         public MainWindow()
+        {
+            curFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            searchOption = SearchOption.TopDirectoryOnly;
+            InitializeComponent();
+            LoadGbxGameList();
+            UpdateMapList(curFolder);
+            //Properties.Settings.Default.IsFirstRun = true;
+
+            if (Properties.Settings.Default.IsFirstRun)
+            {
+                ShowGbxGamesWindow();
+            }
+        }
+  
+        void LoadGbxGameList()
+        {
+            gamesListMenu.ItemsSource = GbxGameController.GbxGames;
+            openInComboBox.ItemsSource = GbxGameController.GbxGames;
+            GbxGameController.AddGbxGame("TM Forever", Properties.Settings.Default.TMForeverFolder, "TmForever.exe");
+            GbxGameController.AddGbxGame("ManiaPlanet", Properties.Settings.Default.ManiaPlanetFolder, "ManiaPlanet.exe");
+            GbxGameController.AddGbxGame("TM 2020", Properties.Settings.Default.TMNextFolder, "Trackmania.exe");
+        }
+
+        void ShowGbxGamesWindow()
+        {
+            GbxGamesWindow gbxGamesWindow = new GbxGamesWindow(GbxGameController);
+            gbxGamesWindow.ShowDialog();
+            gamesListMenu.ItemsSource = null;
+            openInComboBox.ItemsSource = null;
+            gamesListMenu.ItemsSource = GbxGameController.GbxGames;
+            openInComboBox.ItemsSource = GbxGameController.GbxGames;
+        }
+
+        private string[] GetFolders(string folder) 
+        {
+            List<string> folders = new List<string>();
+            try
+            {
+                var foldersarray = Directory.GetDirectories(folder);
+                folders = foldersarray.ToList();
+            }
+            catch(Exception e)   {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);               
+            }
+            return folders.ToArray();
+        }
+
+        private string[] GetMapInfos(string folder)
+        {
+            List<string> mapInfos = new List<string>();
+            try
+            {
+                var mapInfosarray = Directory.GetFiles(folder, "*.gbx", searchOption);
+                mapInfos = mapInfosarray.ToList();
+            }
+            catch
+            {             
+            }
+            return mapInfos.ToArray();
+        }
+
+        void UpdateMapList(string mapsFolder)
+        {
+            mapListView.ItemsSource = null;
+            string[] folders = GetFolders(mapsFolder);
+
+            var mapFiles = GetMapInfos(mapsFolder);
+            currentFolderTextBox.Text = mapsFolder;
+            MapInfoController.ClearMapList();
+
+            foreach (var f in folders)
+            {
+                MapInfoController.AddFolder(f);
+            }      
+            foreach (string mapfullpath  in mapFiles)
+            {
+                MapInfoController.AddMap(mapfullpath);
+            }
+            mapListView.ItemsSource = MapInfoController.MapList;
+        }
+
+        private void parentFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var parentFolder = (Directory.GetParent(curFolder));
+                if(parentFolder!=null)
+                curFolder = parentFolder.FullName;
+            }
+            catch (Exception ee) {
+                MessageBox.Show(ee.Message);
+            }
+            UpdateMapList(curFolder);
+        }
+
+        private void refreshMapsButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateMapList(curFolder);
+        }
+
+        private void OpenInExplorerButton_Click(object sender, RoutedEventArgs e)
+        {
+            Process explorerProcess = new Process();
+            explorerProcess.StartInfo = new ProcessStartInfo("explorer", curFolder);
+            explorerProcess.Start();
+        }
+
+        private void GoButton_Click(object sender, RoutedEventArgs e)
+        {
+            curFolder = currentFolderTextBox.Text;
+            UpdateMapList(curFolder);
+        }
+
+        private void mapListView_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(mapListView.SelectedItem is FolderInfo)
+            {
+                curFolder = ((FolderInfo)mapListView.SelectedItem).FolderFullPath;
+                UpdateMapList(curFolder);
+            }
+        }
+
+        void OpenMap(string mapname)
+        {
+            var selGame = (GbxGame)openInComboBox.SelectedItem;
+            if(selGame == null)
+            {
+                MessageBox.Show("Choose a game to launch your map with!", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                return;
+            }
+
+            string path = selGame.InstalationFolder + "\\" + selGame.TargetExeName;
+
+            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(path, "/useexedir /singleinst /file=\"" + mapname + "\"");
+            //ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(path, "/useexedir /bench=\"C:\\Users\\Adam\\Documents\\Trackmania2020\\Replays\\My Replays\ClassicMod Showcase.Replay.Gbx\"");
+            Process gameGbx = new Process();
+            gameGbx.StartInfo = gameGbxStartInfo;
+            gameGbx.Start();
+        }
+
+        private void ButtonPlay_Click(object sender, RoutedEventArgs e)
+        {
+            if (mapListView.SelectedItem is MapInfo) 
+                OpenMap(((MapInfo)mapListView.SelectedItem).MapFullName);
+        }
+
+        private void manageGamesButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowGbxGamesWindow();
+        }
+
+        private void currentFolderTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                curFolder = currentFolderTextBox.Text;
+                UpdateMapList(curFolder);
+            }
+        }
+
+        private void gamesListMenu_ItemClick(object sender, MahApps.Metro.Controls.ItemClickEventArgs args)
+        {
+            if (gamesListMenu.SelectedItem == null) return;
+            var selGame = (GbxGame)gamesListMenu.SelectedItem;
+            if (!selGame.IsEnabled) return;
+            openInComboBox.SelectedItem = selGame;
+            curFolder = selGame.MapsFolder;
+            UpdateMapList(selGame.MapsFolder);
+            GbxGameController.SelectedGbxGame = selGame;
+        }
+    }
+}
