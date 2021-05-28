@@ -19,12 +19,18 @@
         <!--<GridSplitter Grid.Column="0" Grid.Row="1" Width="3" HorizontalAlignment="Right" Panel.ZIndex="10"/>-->
         <GridSplitter Grid.Column="1"  Grid.Row="1" Width="3" HorizontalAlignment="Left" Panel.ZIndex="10"/>
         <Grid Margin="5" HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
-            <Button Style="{StaticResource AddressButtonStyle}" x:Name="parentFolderButton" HorizontalAlignment="Left" Padding="0" Content="⏏" Click="parentFolderButton_Click"/>
-            <TextBox x:Name="currentFolderTextBox" FontSize="16" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Margin="44,0,80,0" KeyUp="currentFolderTextBox_KeyUp"/>
-            <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" HorizontalAlignment="Right" Margin="0 0 40 0" Padding="0" Content="⟳" Click="refreshMapsButton_Click"/>
-            <Button Style="{StaticResource AddressButtonStyle}" x:Name="OpenInExplorerButton" HorizontalAlignment="Right" Padding="0" Content="📁" Click="OpenInExplorerButton_Click"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource AddressButtonStyle}" x:Name="parentFolderButton"  HorizontalAlignment="Left" Content="⏏" Click="parentFolderButton_Click"/>
+            <TextBox x:Name="currentFolderTextBox" FontSize="16" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="currentFolderTextBox_KeyUp"/>
+            <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" Grid.Column="2" HorizontalAlignment="Right" Content="⟳" Click="refreshMapsButton_Click"/>
+            <Button Style="{StaticResource AddressButtonStyle}" x:Name="OpenInExplorerButton" Grid.Column="3" HorizontalAlignment="Right" Content="📁" Click="OpenInExplorerButton_Click"/>
         </Grid>
-        <Button Grid.Row="1" Panel.ZIndex="10" Width="40" Style="{StaticResource AddressButtonStyle}" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5" Click="manageGamesButton_Click" Padding="-5" FontSize="35">⚙️</Button>
+        <Button Grid.Row="1" Panel.ZIndex="10" Style="{StaticResource AddressButtonStyle}" Width="48" Height="48" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Click="manageGamesButton_Click" Padding="-5" FontSize="35">⚙️</Button>
         <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="5" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="50" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
             <mah:HamburgerMenu.Content>
                 <!--Map list, the right part-->

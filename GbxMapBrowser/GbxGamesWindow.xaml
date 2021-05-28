@@ -41,7 +41,7 @@
         <!--GbxGame Settings Panel-->
         <StackPanel Grid.Column="1">
             <Label Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Content="{Binding SelectedItem.Name, ElementName=listView, FallbackValue='Choose a game'}"/>
-            <Button Margin="5" Click="Button_Click">
+            <Button Margin="5" Click="Button_Click" Style="{x:Null}" Background="Black">
                 <Label Style="{StaticResource DefaultUIStyle}">Change Install Location</Label>
             </Button>
             <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsEnabled, ElementName=listView}">
