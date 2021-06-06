@@ -68,16 +68,20 @@ namespace GbxMapBrowser
                 }
                 else
                     MapType = "Gamemode: " + challenge.ChallengeParameters.MapType;
+
                 ObjectiveBronze = challenge.TMObjective_BronzeTime.GetValueOrDefault().ToStringTM();
                 ObjectiveSilver = challenge.TMObjective_SilverTime.GetValueOrDefault().ToStringTM();
                 ObjectiveGold = challenge.TMObjective_GoldTime.GetValueOrDefault().ToStringTM();
                 ObjectiveAuthor = challenge.TMObjective_AuthorTime.GetValueOrDefault().ToStringTM();
                 Titlepack = challenge.TitleID;
-                EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".dds"));              
+                EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".dds"));
 
-                Task <Bitmap> mapThumbnail = challenge.Thumbnail;
-                if(mapThumbnail!=null)
-                MapThumbnail = ConvertToImageSource(mapThumbnail.Result);
+                var thumb_stream = new StreamReader(new MemoryStream(challenge.Thumbnail)).ReadToEnd();
+                {
+                    Bitmap mapThumbnail = new Bitmap(thumb_stream);
+                    MapThumbnail = ConvertToImageSource(mapThumbnail);
+                }
+
             }
             else if (gbx is GameBox<CGameCtnReplayRecord> gbxReplay)
             {
