@@ -74,11 +74,15 @@ namespace GbxMapBrowser
                 ObjectiveGold = challenge.TMObjective_GoldTime.GetValueOrDefault().ToStringTM();
                 ObjectiveAuthor = challenge.TMObjective_AuthorTime.GetValueOrDefault().ToStringTM();
                 Titlepack = challenge.TitleID;
+
                 EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".dds"));
 
-                var thumb_stream = new StreamReader(new MemoryStream(challenge.Thumbnail)).ReadToEnd();
+                if (challenge.Thumbnail == null) return;
+                var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail);
+
+                if (thumbnailMemoryStream == null) throw new Exception("HELO your buffer is empty :(");
                 {
-                    Bitmap mapThumbnail = new Bitmap(thumb_stream);
+                    Bitmap mapThumbnail = new Bitmap(new StreamReader(thumbnailMemoryStream).BaseStream);
                     MapThumbnail = ConvertToImageSource(mapThumbnail);
                 }
 
