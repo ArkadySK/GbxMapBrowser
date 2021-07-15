@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="parentFolderButton"  HorizontalAlignment="Left" Content="⏏" Click="parentFolderButton_Click"/>
-            <TextBox x:Name="currentFolderTextBox" FontSize="16" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="currentFolderTextBox_KeyUp"/>
+            <TextBox x:Name="currentFolderTextBox" FontSize="16" Margin="5 0" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="currentFolderTextBox_KeyUp"/>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" Grid.Column="2" HorizontalAlignment="Right" Content="⟳" Click="refreshMapsButton_Click"/>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="OpenInExplorerButton" Grid.Column="3" HorizontalAlignment="Right" Content="📁" Click="OpenInExplorerButton_Click"/>
         </Grid>
