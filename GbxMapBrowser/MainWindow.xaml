@@ -34,10 +34,10 @@
         <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="5" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="50" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
             <mah:HamburgerMenu.Content>
                 <!--Map list, the right part-->
-                <ListView x:Name="mapListView" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" PreviewMouseDoubleClick="mapListView_PreviewMouseDoubleClick">
+                <ListView x:Name="mapListView" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" MouseDoubleClick="mapListView_PreviewMouseDoubleClick" AllowDrop="True" PreviewMouseDown="mapListView_PreviewMouseDown" >
                     <ListView.Resources>
                         <DataTemplate DataType="{x:Type local:FolderInfo}">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel x:Name="mapListViewItem" Orientation="Horizontal">
                                 <Image Source="/Data/UIIcons/Folder.png" Width="50"></Image>
                                 <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding FolderName}" Grid.Column="1" Margin="5"/>
                             </StackPanel>
@@ -98,7 +98,13 @@
             </Label>
             <Label Content="{Binding SelectedItem.FolderName, ElementName=mapListView, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="10"/>
 
-            <Image Source="{Binding SelectedItem.MapThumbnail, ElementName=mapListView}" Grid.ColumnSpan="2" Grid.Row="0" Stretch="UniformToFill"/>
+            <Image Source="{Binding SelectedItem.MapThumbnail, ElementName=mapListView}" Grid.ColumnSpan="2" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
             <Label Content="{Binding SelectedItem.Author, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
             <Label Content="{Binding SelectedItem.CopperPrice, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
             <Label Content="{Binding SelectedItem.MapType, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="2" Panel.ZIndex="10"/>

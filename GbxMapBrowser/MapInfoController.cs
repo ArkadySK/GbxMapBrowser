@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GbxMapBrowser
@@ -29,6 +30,28 @@ namespace GbxMapBrowser
         public void ClearMapList()
         {
             MapList.Clear();
+        }
+
+
+        public MapInfo[] GetMapsByName(string[] mapNames)
+        {
+            List<MapInfo> maps = new List<MapInfo>();
+            foreach (var mi in MapList)
+            {
+                if (!(mi is MapInfo)) continue;
+                var mapName = (mi as MapInfo).MapName;
+                if (mapNames.ToList().Contains(mapName)) maps.Add((MapInfo)mi);
+            }
+            return maps.ToArray();
+        }
+
+        public bool AtleastOneExists(MapInfo[] mapInfos) 
+        {
+            foreach (var mi in mapInfos)
+            {
+                if (MapList.Contains(mi)) return true;
+            }
+            return false;
         }
     }
 }

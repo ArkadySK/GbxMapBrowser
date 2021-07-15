@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Diagnostics;
+using System.ArrayExtensions;
 
 namespace GbxMapBrowser
 {
@@ -188,6 +189,7 @@ namespace GbxMapBrowser
             }
         }
 
+
         private void gamesListMenu_ItemClick(object sender, MahApps.Metro.Controls.ItemClickEventArgs args)
         {
             if (gamesListMenu.SelectedItem == null) return;
@@ -198,5 +200,34 @@ namespace GbxMapBrowser
             UpdateMapList(selGame.MapsFolder);
             GbxGameController.SelectedGbxGame = selGame;
         }
+
+        void DragOutMaps(MapInfo[] mapInfos)
+        {
+            List<string> files = new List<string>();
+            Array.ForEach(mapInfos, mfo => files.Add(mfo.MapFullName));
+                
+            var mapFile = new DataObject(DataFormats.FileDrop, files.ToArray());
+            DragDrop.DoDragDrop((DependencyObject)mapListView, mapFile, DragDropEffects.Copy);
+        }
+
+        private void mapListView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton != MouseButton.Left) return;
+            if (mapListView.SelectedItem == null) return;
+            if (!(mapListView.SelectedItem is MapInfo)) return; //DOROB NA VIAC MAP
+            if (!(e.MouseDevice.DirectlyOver is TextBlock)) return;
+            string lastSelMapName = (e.MouseDevice.DirectlyOver as TextBlock).Text;
+            List<string> mapNames = new List<string>();
+            foreach (var m in mapListView.SelectedItems)
+            {
+                mapNames.Add((m as MapInfo).MapName);
+            }
+            if (!mapNames.Contains(lastSelMapName)) return;
+            var selMaps = MapInfoController.GetMapsByName(mapNames.ToArray());
+
+            if (MapInfoController.AtleastOneExists(selMaps))
+                DragOutMaps(selMaps);
+        }
+
     }
 }
