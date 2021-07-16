@@ -52,6 +52,16 @@
                                 <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding MapName}" Grid.Column="1" Margin="5"/>
                                 <Image Source="{Binding EnviImage}" Grid.Column="0" Margin="5"/>
                                 <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="2" Margin="5"/>
+                                <Grid.ContextMenu>
+                                    <ContextMenu>
+                                        <Label>Select</Label>
+                                        <Separator/>
+                                        <Label>Copy</Label>
+                                        <Label>Paste</Label>
+                                        <Separator/>
+                                        <Label>Delete</Label>
+                                    </ContextMenu>
+                                </Grid.ContextMenu>
                             </Grid>
                         </DataTemplate>
                     </ListView.Resources>
