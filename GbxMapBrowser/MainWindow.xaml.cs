@@ -42,7 +42,8 @@ namespace GbxMapBrowser
                 ShowGbxGamesWindow();
             }
         }
-  
+
+        #region GbxGameListInit
         void LoadGbxGameList()
         {
             gamesListMenu.ItemsSource = GbxGameController.GbxGames;
@@ -61,7 +62,27 @@ namespace GbxMapBrowser
             gamesListMenu.ItemsSource = GbxGameController.GbxGames;
             openInComboBox.ItemsSource = GbxGameController.GbxGames;
         }
+        #endregion
 
+        #region GbxGameListMethods
+        private void manageGamesButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowGbxGamesWindow();
+        }
+
+        private void gamesListMenu_ItemClick(object sender, MahApps.Metro.Controls.ItemClickEventArgs args)
+        {
+            if (gamesListMenu.SelectedItem == null) return;
+            var selGame = (GbxGame)gamesListMenu.SelectedItem;
+            if (!selGame.IsEnabled) return;
+            openInComboBox.SelectedItem = selGame;
+            curFolder = selGame.MapsFolder;
+            UpdateMapList(selGame.MapsFolder);
+            GbxGameController.SelectedGbxGame = selGame;
+        }
+        #endregion
+
+        #region GetDataAndUpdateUI
         private string[] GetFolders(string folder) 
         {
             List<string> folders = new List<string>();
@@ -109,6 +130,8 @@ namespace GbxMapBrowser
             }
             mapListView.ItemsSource = MapInfoController.MapList;
         }
+
+        #endregion
 
         private void parentFolderButton_Click(object sender, RoutedEventArgs e)
         {
@@ -175,10 +198,7 @@ namespace GbxMapBrowser
                 OpenMap(((MapInfo)mapListView.SelectedItem).MapFullName);
         }
 
-        private void manageGamesButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShowGbxGamesWindow();
-        }
+        
 
         private void currentFolderTextBox_KeyUp(object sender, KeyEventArgs e)
         {
@@ -189,17 +209,7 @@ namespace GbxMapBrowser
             }
         }
 
-
-        private void gamesListMenu_ItemClick(object sender, MahApps.Metro.Controls.ItemClickEventArgs args)
-        {
-            if (gamesListMenu.SelectedItem == null) return;
-            var selGame = (GbxGame)gamesListMenu.SelectedItem;
-            if (!selGame.IsEnabled) return;
-            openInComboBox.SelectedItem = selGame;
-            curFolder = selGame.MapsFolder;
-            UpdateMapList(selGame.MapsFolder);
-            GbxGameController.SelectedGbxGame = selGame;
-        }
+        #region DragOutMaps
 
         void DragOutMaps(MapInfo[] mapInfos)
         {
@@ -229,5 +239,34 @@ namespace GbxMapBrowser
                 DragOutMaps(selMaps);
         }
 
+        #endregion
+
+        #region DragInMaps
+        void CopyFilesToFolder(string[] filesLocation, string folderToCopyFiles)
+        {
+            foreach (var path in filesLocation)
+            {
+                FileInfo fileInfo = new FileInfo(path);
+                try
+                {
+                    fileInfo.CopyTo(folderToCopyFiles + "\\" + fileInfo.Name);
+                }
+                catch (Exception e)
+                {
+                    if (e is IOException) { }
+                    else throw;
+                }
+            }
+        }
+
+        private void mapListView_Drop(object sender, DragEventArgs e)
+        {
+            string[] paths = (string[])(e.Data).GetData(DataFormats.FileDrop, false);
+            var mapsPathsQuery = from mappath in paths
+                                 where mappath.EndsWith("Map.Gbx") || mappath.EndsWith("Replay.Gbx")
+                                 select mappath;
+            CopyFilesToFolder(mapsPathsQuery.ToArray(), curFolder);
+        }
+        #endregion
     }
 }
