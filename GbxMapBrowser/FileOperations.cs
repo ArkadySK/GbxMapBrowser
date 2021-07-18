@@ -98,7 +98,7 @@ namespace GbxMapBrowser
             var renameDialog = new Window();
             renameDialog.Content = renamePage;
             renameDialog.Height = 200;
-            renameDialog.Width = 200;
+            renameDialog.Width = 300;
             renameDialog.ShowDialog();
             /*
             string newMapName = "";

@@ -34,7 +34,11 @@ namespace GbxMapBrowser
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            string newName = newNameTextBox.Text;
+            if (newName.EndsWith("Map.Gbx") || newName.EndsWith("Replay.Gbx"))
+                throw new NotImplementedException("the returning of value is not implemented yet");//TO DO: RETURN THE VALUE to parent thread
+            else
+                MessageBox.Show("Map file must end with '.Map.Gbx'!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
