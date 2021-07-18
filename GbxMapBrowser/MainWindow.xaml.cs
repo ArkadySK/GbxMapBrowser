@@ -242,6 +242,21 @@ namespace GbxMapBrowser
         #endregion
 
         #region DragInMaps
+        private void mapListView_Drop(object sender, DragEventArgs e)
+        {
+            string[] paths = (string[])(e.Data).GetData(DataFormats.FileDrop, false);
+            var mapsPathsQuery = from mappath in paths
+                                 where mappath.EndsWith("Map.Gbx") || mappath.EndsWith("Replay.Gbx")
+                                 select mappath;
+            var MapPathsArray = mapsPathsQuery.ToArray();
+            if (MapPathsArray.Length == 0) return;
+
+            CopyFilesToFolder(MapPathsArray, curFolder);
+            UpdateMapList(curFolder);
+        }
+        #endregion
+
+        #region FileOperations
         void CopyFilesToFolder(string[] filesLocation, string folderToCopyFiles)
         {
             foreach (var path in filesLocation)
@@ -254,19 +269,66 @@ namespace GbxMapBrowser
                 catch (Exception e)
                 {
                     if (e is IOException) { }
-                    else throw;
+                    else throw e;
                 }
             }
         }
 
-        private void mapListView_Drop(object sender, DragEventArgs e)
+        void DeleteFile(MapInfo mapInfo)
         {
-            string[] paths = (string[])(e.Data).GetData(DataFormats.FileDrop, false);
-            var mapsPathsQuery = from mappath in paths
-                                 where mappath.EndsWith("Map.Gbx") || mappath.EndsWith("Replay.Gbx")
-                                 select mappath;
-            CopyFilesToFolder(mapsPathsQuery.ToArray(), curFolder);
+            var messageBoxResult = MessageBox.Show($"Are you sure to delete {mapInfo.MapName} \nPath: {mapInfo.MapFullName}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if(messageBoxResult == MessageBoxResult.Yes)
+            {
+                new FileInfo(mapInfo.MapFullName).Delete();
+            }
         }
         #endregion
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (mapListView.SelectedItem == null) return;
+            if (e.Key == Key.Delete)
+            {
+                DeleteFile((MapInfo)mapListView.SelectedItem);
+                UpdateMapList(curFolder);
+            }
+            if(e.SystemKey == Key.F10)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #region ContextMenuEvents
+
+        private void ContextMenuDelete_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            DeleteFile((MapInfo)mapListView.SelectedItem);
+            UpdateMapList(curFolder);
+        }
+
+        private void ContextMenuRenameFile_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            //throw new NotImplementedException();
+
+            string oldMapName = ((MapInfo)mapListView.SelectedItem).MapFullName;
+            
+            
+            Page1 page1 = new Page1(oldMapName);
+            page1.Visibility = Visibility.Visible;
+            var renameDialog = new Window();
+            renameDialog.Content = page1;
+            renameDialog.Height = page1.Height;
+            renameDialog.ShowDialog();
+
+            string newMapName = "";
+            var mapInfoPaths = new string[] { newMapName };
+            //CopyFilesToFolder(mapInfoPaths, curFolder);
+        }
+        #endregion
+
+        private void ContextMenuRenameMap_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
