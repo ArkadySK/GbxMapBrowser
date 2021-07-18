@@ -14,22 +14,27 @@ using System.Windows.Shapes;
 namespace GbxMapBrowser
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for RenamePage.xaml:
     /// </summary>
-    public partial class Page1 : Page
+    public partial class RenamePage : Page
     {
-        public Page1()
+        public RenamePage()
         {
             InitializeComponent();
             
         }
-        public Page1(string oldName)
+        public RenamePage(string oldName)
         {
             InitializeComponent();
             oldNameTextBox.Text = oldName;
             newNameTextBox.Text = oldName;
             newNameTextBox.Select(0, oldName.Length);
             newNameTextBox.Focus();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

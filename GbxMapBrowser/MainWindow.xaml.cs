@@ -142,20 +142,7 @@ namespace GbxMapBrowser
 
         #endregion
 
-        private void parentFolderButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var parentFolder = (Directory.GetParent(curFolder));
-                if(parentFolder!=null)
-                curFolder = parentFolder.FullName;
-            }
-            catch (Exception ee) {
-                MessageBox.Show(ee.Message);
-            }
-            UpdateMapList(curFolder);
-        }
-
+        #region AdressBarButtonsEvents
         private void refreshMapsButton_Click(object sender, RoutedEventArgs e)
         {
             UpdateMapList(curFolder);
@@ -173,6 +160,22 @@ namespace GbxMapBrowser
             curFolder = currentFolderTextBox.Text;
             UpdateMapList(curFolder);
         }
+
+        private void parentFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var parentFolder = (Directory.GetParent(curFolder));
+                if (parentFolder != null)
+                    curFolder = parentFolder.FullName;
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+            }
+            UpdateMapList(curFolder);
+        }
+        #endregion
 
         private void mapListView_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -260,91 +263,69 @@ namespace GbxMapBrowser
             var MapPathsArray = mapsPathsQuery.ToArray();
             if (MapPathsArray.Length == 0) return;
 
-            CopyFilesToFolder(MapPathsArray, curFolder);
+            FileOperations.CopyFilesToFolder(MapPathsArray, curFolder);
             UpdateMapList(curFolder);
         }
         #endregion
 
-        #region FileOperations
-        void CopyFilesToFolder(string[] filesLocation, string folderToCopyFiles)
+       
+        #region MapOperations
+        void DeleteMap(MapInfo mapInfo)
         {
-            foreach (var path in filesLocation)
+            var messageBoxResult = MessageBox.Show($"Are you sure to delete {mapInfo.MapName} \nPath: {mapInfo.MapFullName}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (messageBoxResult == MessageBoxResult.Yes)
             {
-                FileInfo fileInfo = new FileInfo(path);
-                try
-                {
-                    fileInfo.CopyTo(folderToCopyFiles + "\\" + fileInfo.Name);
-                }
-                catch (Exception e)
-                {
-                    if (e is IOException) { }
-                    else throw e;
-                }
+                FileOperations.DeleteFile(mapInfo.MapFullName);
             }
         }
 
-        void DeleteFile(MapInfo mapInfo)
+        void RenameMap(MapInfo mapInfo)
         {
-            var messageBoxResult = MessageBox.Show($"Are you sure to delete {mapInfo.MapName} \nPath: {mapInfo.MapFullName}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if(messageBoxResult == MessageBoxResult.Yes)
-            {
-                new FileInfo(mapInfo.MapFullName).Delete();
-            }
+
         }
         #endregion
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (mapListView.SelectedItem == null) return;
+            MapInfo selMap = (MapInfo)mapListView.SelectedItem;
             if (e.Key == Key.Delete)
             {
-                DeleteFile((MapInfo)mapListView.SelectedItem);
+                DeleteMap(selMap);
                 UpdateMapList(curFolder);
             }
-            if(e.SystemKey == Key.F10)
-            {
+            if(e.SystemKey == Key.F10)           
                 throw new NotImplementedException();
-            }
+            if (e.SystemKey == Key.F2)
+                RenameMap(selMap);
+            if (e.SystemKey == Key.LeftAlt)
+                FileOperations.ShowFileProperties(selMap.MapFullName);
         }
 
         #region ContextMenuEvents
 
         private void ContextMenuDelete_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            DeleteFile((MapInfo)mapListView.SelectedItem);
+            DeleteMap((MapInfo)mapListView.SelectedItem);
             UpdateMapList(curFolder);
         }
 
         private void ContextMenuRenameFile_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            //throw new NotImplementedException();
-
             string oldMapName = ((MapInfo)mapListView.SelectedItem).MapFullName;
-            
-            
-            Page1 page1 = new Page1(oldMapName);
-            page1.Visibility = Visibility.Visible;
-            var renameDialog = new Window();
-            renameDialog.Content = page1;
-            renameDialog.Height = page1.Height;
-            renameDialog.ShowDialog();
-
-            string newMapName = "";
-            var mapInfoPaths = new string[] { newMapName };
-            //CopyFilesToFolder(mapInfoPaths, curFolder);
+            FileOperations.RenameFile(oldMapName);
         }
         #endregion
 
         private void ContextMenuRenameMap_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
+            MapInfo selMap = (MapInfo)mapListView.SelectedItem;
         }
-
 
         private void ContextMenuProperties_MouseUp(object sender, MouseButtonEventArgs e)
         {
             var path = ((MapInfo)mapListView.SelectedItem).MapFullName;
-            FileProperties.ShowFileProperties(path);
+            FileOperations.ShowFileProperties(path);
         }
     }
 
