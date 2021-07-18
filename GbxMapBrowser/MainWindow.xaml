@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition x:Name="mapPreviewColumn" Width="*"/>
         </Grid.ColumnDefinitions>
         <!--<GridSplitter Grid.Column="0" Grid.Row="1" Width="3" HorizontalAlignment="Right" Panel.ZIndex="10"/>-->
         <GridSplitter Grid.Column="1"  Grid.Row="1" Width="3" HorizontalAlignment="Left" Panel.ZIndex="10"/>
@@ -61,6 +61,8 @@
                                         <Label Padding="0" MouseUp="ContextMenuDelete_MouseUp">Delete</Label>
                                         <Label Padding="0" MouseUp="ContextMenuRenameFile_MouseUp">Rename File</Label>
                                         <Label Padding="0" MouseUp="ContextMenuRenameMap_MouseUp">Rename Map</Label>
+                                        <Separator/>
+                                        <Label Padding="0" MouseUp="ContextMenuProperties_MouseUp">Properties</Label>
                                     </ContextMenu>
                                 </Grid.ContextMenu>
                             </Grid>

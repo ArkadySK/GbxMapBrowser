@@ -35,12 +35,21 @@ namespace GbxMapBrowser
             InitializeComponent();
             LoadGbxGameList();
             UpdateMapList(curFolder);
+            UpdateMapPreviewVisibility(Properties.Settings.Default.ShowMapPreviewColumn);
             //Properties.Settings.Default.IsFirstRun = true;
 
             if (Properties.Settings.Default.IsFirstRun)
             {
                 ShowGbxGamesWindow();
             }
+        }
+
+        void UpdateMapPreviewVisibility(bool isVis)
+        {
+            if(isVis)
+                mapPreviewColumn.Width = new GridLength(1, GridUnitType.Star);
+            else
+                mapPreviewColumn.Width = new GridLength(0, GridUnitType.Star);
         }
 
         #region GbxGameListInit
@@ -330,5 +339,13 @@ namespace GbxMapBrowser
         {
 
         }
+
+
+        private void ContextMenuProperties_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var path = ((MapInfo)mapListView.SelectedItem).MapFullName;
+            FileProperties.ShowFileProperties(path);
+        }
     }
+
 }

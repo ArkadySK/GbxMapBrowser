@@ -70,5 +70,17 @@ namespace GbxMapBrowser.Properties {
                 this["IsFirstRun"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowMapPreviewColumn {
+            get {
+                return ((bool)(this["ShowMapPreviewColumn"]));
+            }
+            set {
+                this["ShowMapPreviewColumn"] = value;
+            }
+        }
     }
 }
