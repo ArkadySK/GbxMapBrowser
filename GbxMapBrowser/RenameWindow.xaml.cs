@@ -16,14 +16,15 @@ namespace GbxMapBrowser
     /// <summary>
     /// Interaction logic for RenamePage.xaml:
     /// </summary>
-    public partial class RenamePage : Page
+    public partial class RenameWindow : Window
     {
-        public RenamePage()
+        public string newName { get; set; } 
+        public RenameWindow()
         {
             InitializeComponent();
             
         }
-        public RenamePage(string oldName)
+        public RenameWindow(string oldName)
         {
             InitializeComponent();
             oldNameTextBox.Text = oldName;
@@ -34,9 +35,12 @@ namespace GbxMapBrowser
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string newName = newNameTextBox.Text;
-            if (newName.EndsWith("Map.Gbx") || newName.EndsWith("Replay.Gbx"))
-                throw new NotImplementedException("the returning of value is not implemented yet");//TO DO: RETURN THE VALUE to parent thread
+            string newNametemp = newNameTextBox.Text;
+            if (newNametemp.EndsWith("Map.Gbx") || newNametemp.EndsWith("Replay.Gbx"))
+            {
+                newName = newNametemp;
+                this.Close();
+            }
             else
                 MessageBox.Show("Map file must end with '.Map.Gbx'!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }

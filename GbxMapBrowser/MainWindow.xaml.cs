@@ -294,11 +294,11 @@ namespace GbxMapBrowser
                 DeleteMap(selMap);
                 UpdateMapList(curFolder);
             }
-            if(e.SystemKey == Key.F10)           
-                throw new NotImplementedException();
+           /* if(e.SystemKey == Key.F10)   //ALT + F10        
+                throw new NotImplementedException(); //context menu*/
             if (e.SystemKey == Key.F2)
                 RenameMap(selMap);
-            if (e.SystemKey == Key.LeftAlt)
+            if (e.SystemKey == Key.LeftAlt) //ALT + ENTER
                 FileOperations.ShowFileProperties(selMap.MapFullName);
         }
 
@@ -314,9 +314,9 @@ namespace GbxMapBrowser
         {
             string oldMapName = ((MapInfo)mapListView.SelectedItem).MapFullName;
             FileOperations.RenameFile(oldMapName);
+            UpdateMapList(curFolder);
         }
-        #endregion
-
+        
         private void ContextMenuRenameMap_MouseUp(object sender, MouseButtonEventArgs e)
         {
             MapInfo selMap = (MapInfo)mapListView.SelectedItem;
@@ -327,6 +327,7 @@ namespace GbxMapBrowser
             var path = ((MapInfo)mapListView.SelectedItem).MapFullName;
             FileOperations.ShowFileProperties(path);
         }
+        #endregion
     }
 
 }

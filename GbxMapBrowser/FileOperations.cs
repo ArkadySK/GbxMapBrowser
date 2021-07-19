@@ -62,7 +62,7 @@ namespace GbxMapBrowser
                 try
                 {
                     string newName;
-                    if (newfileNames.Length == 0)
+                    if (newfileNames == null)
                         newName = fileInfo.Name;
                     else
                         newName = newfileNames[i];
@@ -92,20 +92,18 @@ namespace GbxMapBrowser
             string shortFileName = GetShortNameFromFilePath(oldpath);
             string curFolder = GetFolderFromFilePath(oldpath);
 
-            RenamePage renamePage = new RenamePage(shortFileName);
-            renamePage.Visibility = Visibility.Visible;
-
-            var renameDialog = new Window();
-            renameDialog.Content = renamePage;
+            RenameWindow renameDialog = new RenameWindow(shortFileName);
+            
             renameDialog.Height = 200;
             renameDialog.Width = 300;
             renameDialog.ShowDialog();
-            /*
-            string newMapName = "";
-            var mapInfoPaths = new string[] { newMapName };
-            CopyFilesToFolder(mapInfoPaths, curFolder, new string[] {"" });
-            DeleteFile(oldpath);*/
 
+            if (string.IsNullOrEmpty(renameDialog.newName)) return;
+            string newMapName = renameDialog.newName;
+            var mapInfoPaths = new string[] { oldpath }; 
+            var newMapInfoPaths = new string[] { newMapName };
+            CopyFilesToFolder(mapInfoPaths, curFolder, newMapInfoPaths);
+            DeleteFile(oldpath);
         }
 
         private static string GetShortNameFromFilePath(string path)
