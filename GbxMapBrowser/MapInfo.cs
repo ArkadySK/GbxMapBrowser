@@ -16,6 +16,7 @@ namespace GbxMapBrowser
     class MapInfo
     {
         public string MapName { get; }
+        public string ExactMapName { get; }
         public string MapFullName { get; }
         private string shortName;
         public string Author { get; }
@@ -54,6 +55,7 @@ namespace GbxMapBrowser
                 CGameCtnChallenge challenge = gbxMap.MainNode;
                 
                 MapName = ToReadableText(challenge.MapName);
+                ExactMapName = challenge.MapName;
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))
                     Author = challenge.AuthorLogin;
                 else
@@ -98,7 +100,31 @@ namespace GbxMapBrowser
             }
         }
 
-        public BitmapImage ConvertToImageSource(Bitmap src)
+        public void RenameAndSave(string newName)
+        {
+            GameBox gbx = new GameBox();
+
+            try
+            {
+                gbx = GameBox.Parse(MapFullName);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            if (gbx is GameBox<CGameCtnChallenge> gbxMap)
+            {
+                CGameCtnChallenge challenge = gbxMap.MainNode;
+                challenge.MapName = newName;
+                gbxMap.Save(MapFullName);
+            }
+            else
+                throw new NotImplementedException("Only Maps could be renamed.");
+            
+        }
+
+            public BitmapImage ConvertToImageSource(Bitmap src)
         {
             MemoryStream ms = new MemoryStream();
             ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);

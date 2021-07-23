@@ -281,7 +281,10 @@ namespace GbxMapBrowser
 
         void RenameMap(MapInfo mapInfo)
         {
-
+            RenameWindow renameWindow = new RenameWindow(mapInfo.ExactMapName, false);
+            renameWindow.ShowDialog();
+            if (String.IsNullOrEmpty(renameWindow.newName)) return;
+            mapInfo.RenameAndSave(renameWindow.newName);
         }
         #endregion
 
@@ -294,10 +297,13 @@ namespace GbxMapBrowser
                 DeleteMap(selMap);
                 UpdateMapList(curFolder);
             }
-           /* if(e.SystemKey == Key.F10)   //ALT + F10        
-                throw new NotImplementedException(); //context menu*/
+            /* if(e.SystemKey == Key.F10)   //ALT + F10        
+                 throw new NotImplementedException(); //context menu*/
             if (e.SystemKey == Key.F2)
+            {
                 RenameMap(selMap);
+                UpdateMapList(curFolder);
+            }
             if (e.SystemKey == Key.LeftAlt) //ALT + ENTER
                 FileOperations.ShowFileProperties(selMap.MapFullName);
         }
@@ -320,6 +326,8 @@ namespace GbxMapBrowser
         private void ContextMenuRenameMap_MouseUp(object sender, MouseButtonEventArgs e)
         {
             MapInfo selMap = (MapInfo)mapListView.SelectedItem;
+            RenameMap(selMap);
+            UpdateMapList(curFolder);
         }
 
         private void ContextMenuProperties_MouseUp(object sender, MouseButtonEventArgs e)

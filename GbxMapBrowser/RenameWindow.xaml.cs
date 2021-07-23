@@ -18,24 +18,35 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class RenameWindow : Window
     {
-        public string newName { get; set; } 
-        public RenameWindow()
+        public string newName { get; set; }
+        bool isFile = true;
+
+        public RenameWindow(string oldName, bool IsFile)
         {
+            if (isFile)
+                this.Title = "Rename File";
+            else
+                this.Title = "Rename Map";
+
             InitializeComponent();
-            
-        }
-        public RenameWindow(string oldName)
-        {
-            InitializeComponent();
+            isFile = IsFile;
             oldNameTextBox.Text = oldName;
             newNameTextBox.Text = oldName;
             newNameTextBox.Select(0, oldName.Length);
             newNameTextBox.Focus();
         }
 
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string newNametemp = newNameTextBox.Text;
+            if(!isFile)
+            {
+                newName = newNametemp;
+                this.Close();
+                return;
+            }
+
             if (newNametemp.EndsWith("Map.Gbx") || newNametemp.EndsWith("Replay.Gbx"))
             {
                 newName = newNametemp;

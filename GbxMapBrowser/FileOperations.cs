@@ -92,11 +92,9 @@ namespace GbxMapBrowser
             string shortFileName = GetShortNameFromFilePath(oldpath);
             string curFolder = GetFolderFromFilePath(oldpath);
 
-            RenameWindow renameDialog = new RenameWindow(shortFileName);
+            RenameWindow renameDialog = new RenameWindow(shortFileName, true);
             
-            renameDialog.Height = 200;
-            renameDialog.Width = 300;
-            renameDialog.ShowDialog();
+           renameDialog.ShowDialog();
 
             if (string.IsNullOrEmpty(renameDialog.newName)) return;
             string newMapName = renameDialog.newName;

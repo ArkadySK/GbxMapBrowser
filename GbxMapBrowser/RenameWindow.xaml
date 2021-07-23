@@ -5,8 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GbxMapBrowser"
       mc:Ignorable="d" 
-      d:DesignWidth="250"
-      Title="">
+      Width="420"
+      Height="200"
+      Title="Rename..." WindowStyle="ToolWindow">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
