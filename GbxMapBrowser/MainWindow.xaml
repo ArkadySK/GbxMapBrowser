@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GbxMapBrowser"
         xmlns:System="clr-namespace:System;assembly=System.Runtime" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="GbxMapBrowser.MainWindow"
         mc:Ignorable="d"
-        Title="Gbx Map Browser (Preview)" Height="700" Width="1000" MinHeight="400" MinWidth="600" DataContext="MapInfoController" KeyDown="Window_KeyDown">
+        Title="Gbx Map Browser (Preview)" Height="750" Width="1000" MinHeight="400" MinWidth="600" DataContext="MapInfoController" KeyDown="Window_KeyDown" Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
@@ -132,7 +132,17 @@
             <Image Grid.Row="7" Margin="5 1" Source="/Data/Medals/BronzeMedal.png"/>
         </Grid>
 
-        <StackPanel VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Margin="10" Panel.ZIndex="10">
+        
+        <Rectangle VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Panel.ZIndex="19" Height="210">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#0000"/>
+                    <GradientStop Color="{DynamicResource MahApps.Colors.ThemeBackground}" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <StackPanel VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Margin="10" Panel.ZIndex="20">
             <Label Padding="1" Style="{StaticResource DefaultUIStyle}" Content="Open in:"/>
             <ComboBox x:Name="openInComboBox" FontSize="15" Margin="0 5 0 10" Height="40">
                 <ComboBox.ItemTemplate>
