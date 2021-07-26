@@ -33,7 +33,7 @@ namespace GbxMapBrowser
 
         public MapInfo(string fullnamepath)
         {
-            GameBox gbx = new GameBox();
+            GameBox gbx;
             shortName = fullnamepath.Split("\\").Last();
 
             try
@@ -52,7 +52,7 @@ namespace GbxMapBrowser
 
             if (gbx is GameBox<CGameCtnChallenge> gbxMap)
             {
-                CGameCtnChallenge challenge = gbxMap.MainNode;
+                CGameCtnChallenge challenge = gbxMap.Node;
                 
                 MapName = ToReadableText(challenge.MapName);
                 ExactMapName = challenge.MapName;
@@ -77,7 +77,8 @@ namespace GbxMapBrowser
                 ObjectiveAuthor = challenge.TMObjective_AuthorTime.GetValueOrDefault().ToStringTM();
                 Titlepack = challenge.TitleID;
 
-                EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".dds"));
+                Uri enviImagePath = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".png");
+                EnviImage = new BitmapImage(enviImagePath);
 
                 if (challenge.Thumbnail == null) return;
                 var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail);
@@ -91,7 +92,7 @@ namespace GbxMapBrowser
             }
             else if (gbx is GameBox<CGameCtnReplayRecord> gbxReplay)
             {
-                CGameCtnReplayRecord replay = gbxReplay.MainNode;
+                CGameCtnReplayRecord replay = gbxReplay.Node;
                 EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 Author = ToReadableText(replay.AuthorNickname);
@@ -102,7 +103,7 @@ namespace GbxMapBrowser
 
         public void RenameAndSave(string newName)
         {
-            GameBox gbx = new GameBox();
+            GameBox gbx;
 
             try
             {
@@ -115,7 +116,7 @@ namespace GbxMapBrowser
 
             if (gbx is GameBox<CGameCtnChallenge> gbxMap)
             {
-                CGameCtnChallenge challenge = gbxMap.MainNode;
+                CGameCtnChallenge challenge = gbxMap.Node;
                 challenge.MapName = newName;
                 gbxMap.Save(MapFullName);
             }

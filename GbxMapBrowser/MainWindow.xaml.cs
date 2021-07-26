@@ -290,7 +290,7 @@ namespace GbxMapBrowser
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (mapListView.SelectedItem == null) return;
+            if (!(mapListView.SelectedItem is MapInfo)) return;
             MapInfo selMap = (MapInfo)mapListView.SelectedItem;
             if (e.Key == Key.Delete)
             {
