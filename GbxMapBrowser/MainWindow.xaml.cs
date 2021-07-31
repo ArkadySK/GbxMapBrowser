@@ -268,40 +268,20 @@ namespace GbxMapBrowser
         }
         #endregion
 
-       
-        #region MapOperations
-        void DeleteMap(MapInfo mapInfo)
-        {
-            var messageBoxResult = MessageBox.Show($"Are you sure to delete {mapInfo.MapName} \nPath: {mapInfo.MapFullName}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
-                FileOperations.DeleteFile(mapInfo.MapFullName);
-            }
-        }
-
-        void RenameMap(MapInfo mapInfo)
-        {
-            RenameWindow renameWindow = new RenameWindow(mapInfo.ExactMapName, false);
-            renameWindow.ShowDialog();
-            if (String.IsNullOrEmpty(renameWindow.newName)) return;
-            mapInfo.RenameAndSave(renameWindow.newName);
-        }
-        #endregion
-
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (!(mapListView.SelectedItem is MapInfo)) return;
             MapInfo selMap = (MapInfo)mapListView.SelectedItem;
             if (e.Key == Key.Delete)
             {
-                DeleteMap(selMap);
+                MapOperations.DeleteMap(selMap);
                 UpdateMapList(curFolder);
             }
             /* if(e.SystemKey == Key.F10)   //ALT + F10        
                  throw new NotImplementedException(); //context menu*/
             if (e.SystemKey == Key.F2)
             {
-                RenameMap(selMap);
+                MapOperations.RenameMap(selMap);
                 UpdateMapList(curFolder);
             }
             if (e.SystemKey == Key.LeftAlt) //ALT + ENTER
@@ -312,7 +292,7 @@ namespace GbxMapBrowser
 
         private void ContextMenuDelete_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            DeleteMap((MapInfo)mapListView.SelectedItem);
+            MapOperations.DeleteMap((MapInfo)mapListView.SelectedItem);
             UpdateMapList(curFolder);
         }
 
@@ -326,7 +306,7 @@ namespace GbxMapBrowser
         private void ContextMenuRenameMap_MouseUp(object sender, MouseButtonEventArgs e)
         {
             MapInfo selMap = (MapInfo)mapListView.SelectedItem;
-            RenameMap(selMap);
+            MapOperations.RenameMap(selMap);
             UpdateMapList(curFolder);
         }
 
