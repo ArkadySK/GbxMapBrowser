@@ -112,7 +112,7 @@ namespace GbxMapBrowser
             return folders.ToArray();
         }
 
-        string[] GetMapInfos(string folder)
+        string[] GetMapPaths(string folder)
         {
             List<string> mapInfos = new List<string>();
             try
@@ -130,7 +130,8 @@ namespace GbxMapBrowser
         {
             string[] folders = GetFolders(mapsFolder);
 
-            var mapFiles = GetMapInfos(mapsFolder);
+            var mapTasks = new List<Task>();
+            var mapFiles = GetMapPaths(mapsFolder);
             MapInfoController.ClearMapList();
             
             foreach (var f in folders)
@@ -139,18 +140,19 @@ namespace GbxMapBrowser
             }      
             foreach (string mapfullpath in mapFiles)
             {
-                await MapInfoController.AddMap(mapfullpath);
+                mapTasks.Add(MapInfoController.AddMap(mapfullpath));
             }
-            Task.Delay(10);
-            Dispatcher.Invoke(() => {
+            
+            await Task.WhenAll(mapTasks.ToArray());
+            Application.Current.Dispatcher.Invoke(() => 
+            {
+                Title = MapInfoController.MapList.Count.ToString();
                 mapListView.ItemsSource = null;
-                mapListView.ItemsSource = MapInfoController.MapList;
                 currentFolderTextBox.Text = mapsFolder;
             }
             );
-
+            //Dispatcher.Invoke(() => mapListView.ItemsSource = MapInfoController.MapList);
         }
-
         #endregion
 
         #region AdressBarButtonsEvents
@@ -166,10 +168,10 @@ namespace GbxMapBrowser
             explorerProcess.Start();
         }
 
-        private async void GoButton_Click(object sender, RoutedEventArgs e)
+        private void GoButton_Click(object sender, RoutedEventArgs e)
         {
             curFolder = currentFolderTextBox.Text;
-            await UpdateMapList(curFolder);
+            UpdateMapList(curFolder);
         }
 
         private async void parentFolderButton_Click(object sender, RoutedEventArgs e)
@@ -193,7 +195,7 @@ namespace GbxMapBrowser
             if(mapListView.SelectedItem is FolderInfo)
             {
                 curFolder = ((FolderInfo)mapListView.SelectedItem).FolderFullPath;
-                 UpdateMapList(curFolder);
+                UpdateMapList(curFolder);
             }
         }
 
