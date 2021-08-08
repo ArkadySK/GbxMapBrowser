@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
@@ -15,7 +15,7 @@ namespace GbxMapBrowser
             MapList.Add(folderInfo);
         }
 
-        public void AddMap(string fullnamepath)
+        public async Task AddMap(string fullnamepath)
         {
             bool isOldTM = false;
             bool isNewTM = false;
@@ -24,7 +24,7 @@ namespace GbxMapBrowser
             if (fullnamepath.Contains("Map.Gbx", StringComparison.OrdinalIgnoreCase)) isNewTM = true;
             if (fullnamepath.Contains("Replay.Gbx", StringComparison.OrdinalIgnoreCase)) isReplay = true;
             if (!isOldTM && !isNewTM && !isReplay) return;
-            MapList.Add(new MapInfo(fullnamepath));
+            await Task.Run(() => MapList.Add(new MapInfo(fullnamepath)));
         }
         
         public void ClearMapList()

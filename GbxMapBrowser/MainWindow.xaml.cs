@@ -23,9 +23,9 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class MainWindow : Window
     {
+        string curFolder = "";
         MapInfoController MapInfoController = new MapInfoController();
         GbxGameController GbxGameController = new GbxGameController();
-        string curFolder;
         SearchOption searchOption;
 
          public MainWindow()
@@ -34,7 +34,6 @@ namespace GbxMapBrowser
             searchOption = SearchOption.TopDirectoryOnly;
             InitializeComponent();
             LoadGbxGameList();
-            UpdateMapList(curFolder);
             UpdateMapPreviewVisibility(Properties.Settings.Default.ShowMapPreviewColumn);
             //Properties.Settings.Default.IsFirstRun = true;
 
@@ -42,7 +41,14 @@ namespace GbxMapBrowser
             {
                 ShowGbxGamesWindow();
             }
+            
         }
+
+        private async void Window_LoadedAsync(object sender, RoutedEventArgs e)
+        {
+            await Task.Run(() => UpdateMapList(curFolder));           
+        }
+
 
         void UpdateMapPreviewVisibility(bool isVis)
         {
@@ -106,7 +112,7 @@ namespace GbxMapBrowser
             return folders.ToArray();
         }
 
-        private string[] GetMapInfos(string folder)
+        string[] GetMapInfos(string folder)
         {
             List<string> mapInfos = new List<string>();
             try
@@ -120,32 +126,37 @@ namespace GbxMapBrowser
             return mapInfos.ToArray();
         }
 
-        void UpdateMapList(string mapsFolder)
+        async Task UpdateMapList(string mapsFolder)
         {
-            mapListView.ItemsSource = null;
             string[] folders = GetFolders(mapsFolder);
 
             var mapFiles = GetMapInfos(mapsFolder);
-            currentFolderTextBox.Text = mapsFolder;
             MapInfoController.ClearMapList();
-
+            
             foreach (var f in folders)
             {
                 MapInfoController.AddFolder(f);
             }      
-            foreach (string mapfullpath  in mapFiles)
+            foreach (string mapfullpath in mapFiles)
             {
-                MapInfoController.AddMap(mapfullpath);
+                await MapInfoController.AddMap(mapfullpath);
             }
-            mapListView.ItemsSource = MapInfoController.MapList;
+            Task.Delay(10);
+            Dispatcher.Invoke(() => {
+                mapListView.ItemsSource = null;
+                mapListView.ItemsSource = MapInfoController.MapList;
+                currentFolderTextBox.Text = mapsFolder;
+            }
+            );
+
         }
 
         #endregion
 
         #region AdressBarButtonsEvents
-        private void refreshMapsButton_Click(object sender, RoutedEventArgs e)
+        private async void refreshMapsButton_Click(object sender, RoutedEventArgs e)
         {
-            UpdateMapList(curFolder);
+            await UpdateMapList(curFolder);
         }
 
         private void OpenInExplorerButton_Click(object sender, RoutedEventArgs e)
@@ -155,13 +166,13 @@ namespace GbxMapBrowser
             explorerProcess.Start();
         }
 
-        private void GoButton_Click(object sender, RoutedEventArgs e)
+        private async void GoButton_Click(object sender, RoutedEventArgs e)
         {
             curFolder = currentFolderTextBox.Text;
-            UpdateMapList(curFolder);
+            await UpdateMapList(curFolder);
         }
 
-        private void parentFolderButton_Click(object sender, RoutedEventArgs e)
+        private async void parentFolderButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -173,16 +184,16 @@ namespace GbxMapBrowser
             {
                 MessageBox.Show(ee.Message);
             }
-            UpdateMapList(curFolder);
+            await UpdateMapList(curFolder);
         }
         #endregion
 
-        private void mapListView_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void mapListView_PreviewMouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
         {
             if(mapListView.SelectedItem is FolderInfo)
             {
                 curFolder = ((FolderInfo)mapListView.SelectedItem).FolderFullPath;
-                UpdateMapList(curFolder);
+                 UpdateMapList(curFolder);
             }
         }
 
@@ -217,7 +228,7 @@ namespace GbxMapBrowser
             if(e.Key == Key.Enter)
             {
                 curFolder = currentFolderTextBox.Text;
-                UpdateMapList(curFolder);
+                Task.Run(() => UpdateMapList(curFolder));
             }
         }
 
@@ -264,7 +275,7 @@ namespace GbxMapBrowser
             if (MapPathsArray.Length == 0) return;
 
             FileOperations.CopyFilesToFolder(MapPathsArray, curFolder);
-            UpdateMapList(curFolder);
+            Task.Run(() => UpdateMapList(curFolder));
         }
         #endregion
 
@@ -275,14 +286,14 @@ namespace GbxMapBrowser
             if (e.Key == Key.Delete)
             {
                 MapOperations.DeleteMap(selMap);
-                UpdateMapList(curFolder);
+                Task.Run(() => UpdateMapList(curFolder));
             }
             /* if(e.SystemKey == Key.F10)   //ALT + F10        
                  throw new NotImplementedException(); //context menu*/
             if (e.SystemKey == Key.F2)
             {
                 MapOperations.RenameMap(selMap);
-                UpdateMapList(curFolder);
+                Task.Run(() => UpdateMapList(curFolder));
             }
             if (e.SystemKey == Key.LeftAlt) //ALT + ENTER
                 FileOperations.ShowFileProperties(selMap.MapFullName);
@@ -293,21 +304,21 @@ namespace GbxMapBrowser
         private void ContextMenuDelete_MouseUp(object sender, MouseButtonEventArgs e)
         {
             MapOperations.DeleteMap((MapInfo)mapListView.SelectedItem);
-            UpdateMapList(curFolder);
+            Task.Run(() => UpdateMapList(curFolder));
         }
 
         private void ContextMenuRenameFile_MouseUp(object sender, MouseButtonEventArgs e)
         {
             string oldMapName = ((MapInfo)mapListView.SelectedItem).MapFullName;
             FileOperations.RenameFile(oldMapName);
-            UpdateMapList(curFolder);
+            Task.Run(() => UpdateMapList(curFolder));
         }
         
         private void ContextMenuRenameMap_MouseUp(object sender, MouseButtonEventArgs e)
         {
             MapInfo selMap = (MapInfo)mapListView.SelectedItem;
             MapOperations.RenameMap(selMap);
-            UpdateMapList(curFolder);
+            Task.Run(() => UpdateMapList(curFolder));
         }
 
         private void ContextMenuProperties_MouseUp(object sender, MouseButtonEventArgs e)

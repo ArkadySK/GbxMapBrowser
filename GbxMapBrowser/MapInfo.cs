@@ -54,7 +54,7 @@ namespace GbxMapBrowser
             if (gbx is CGameCtnChallenge gbxMap)
             {
                 CGameCtnChallenge challenge = gbxMap;
-                
+
                 MapName = ToReadableText(challenge.MapName);
                 ExactMapName = challenge.MapName;
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))
@@ -76,6 +76,7 @@ namespace GbxMapBrowser
                 ObjectiveSilver = TimeSpanToString(challenge.TMObjective_SilverTime);
                 ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
                 ObjectiveAuthor = TimeSpanToString(challenge.TMObjective_AuthorTime);
+            
                 Titlepack = challenge.TitleID;
 
                 Uri enviImagePath = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".png");
@@ -84,13 +85,14 @@ namespace GbxMapBrowser
                 if (challenge.Thumbnail == null) return;
                 var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail);
 
-                if (thumbnailMemoryStream == null) throw new Exception("HELO your buffer is empty :(");
-                {
-                    Bitmap mapThumbnail = new Bitmap(new StreamReader(thumbnailMemoryStream).BaseStream);
-                    MapThumbnail = ConvertToImageSource(mapThumbnail);
-                }
+                if (thumbnailMemoryStream == null) throw new Exception("buffer is empty");
+                
+                Bitmap mapThumbnail = new Bitmap(new StreamReader(thumbnailMemoryStream).BaseStream);
+                MapThumbnail = ConvertToImageSource(mapThumbnail);
+                
 
-            }/*
+
+            }
             else if (gbx is CGameCtnReplayRecord gbxReplay)
             {
                 CGameCtnReplayRecord replay = gbxReplay;
@@ -99,7 +101,7 @@ namespace GbxMapBrowser
                 Author = ToReadableText(replay.AuthorNickname);
                 MapName = shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
                 Titlepack = replay.TitleID;
-            }*/
+            }
         }
 
         string TimeSpanToString(TimeSpan? timeSpan)

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GbxMapBrowser"
         xmlns:System="clr-namespace:System;assembly=System.Runtime" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         mc:Ignorable="d"
-        Title="Gbx Map Browser" Height="750" Width="1000" MinHeight="400" MinWidth="600" DataContext="MapInfoController" KeyDown="Window_KeyDown" Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
+        Title="Gbx Map Browser" Height="750" Width="1000" MinHeight="400" MinWidth="600" DataContext="MapInfoController" KeyDown="Window_KeyDown" Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Loaded="Window_LoadedAsync">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
@@ -34,7 +34,7 @@
         <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="5" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="50" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
             <mah:HamburgerMenu.Content>
                 <!--Map list, the right part-->
-                <ListView x:Name="mapListView" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" MouseDoubleClick="mapListView_PreviewMouseDoubleClick" AllowDrop="True" DragDrop.Drop="mapListView_Drop" PreviewMouseDown="mapListView_PreviewMouseDown" >
+                <ListView x:Name="mapListView" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" MouseDoubleClick="mapListView_PreviewMouseDoubleClickAsync" AllowDrop="True" DragDrop.Drop="mapListView_Drop" PreviewMouseDown="mapListView_PreviewMouseDown" >
                     <ListView.Resources>
                         <DataTemplate DataType="{x:Type local:FolderInfo}">
                             <StackPanel x:Name="mapListViewItem" Orientation="Horizontal">
