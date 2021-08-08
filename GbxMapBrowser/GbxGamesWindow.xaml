@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GbxMapBrowser"
         mc:Ignorable="d"
-        Title="GbxGamesWindow" Height="320" Width="600" Closing="Window_Closing">
+        Title="Configure Gbx Games" Height="320" Width="600" Closing="Window_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -41,13 +41,19 @@
         <!--GbxGame Settings Panel-->
         <StackPanel Grid.Column="1">
             <Label Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Content="{Binding SelectedItem.Name, ElementName=listView, FallbackValue='Choose a game'}"/>
-            <Button Margin="5" Click="Button_Click" Style="{x:Null}" Background="Black">
+            <Button Margin="5" Click="ButtonChangeInstallLocation_Click" Style="{x:Null}" Background="Black">
                 <Label Style="{StaticResource DefaultUIStyle}">Change Install Location</Label>
             </Button>
+            <Button Margin="5" Style="{x:Null}" Background="Black" Click="ButtonResetInstallLocation_Click">
+                <Label Style="{StaticResource DefaultUIStyle}">Reset Install Location</Label>
+            </Button>
+            
             <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsEnabled, ElementName=listView}">
                 <Label Style="{StaticResource DefaultUIStyle}" Content="Enable this game"/>
             </CheckBox>
-
+            <Button Margin="5" Style="{x:Null}" Background="Black" Click="ButtonSaveAllChanges_Click">
+                <Label Style="{StaticResource DefaultUIStyle}">Save All Changes</Label>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
