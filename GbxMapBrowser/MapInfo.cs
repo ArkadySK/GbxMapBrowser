@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
+using GBX.NET.Engines.MwFoundations;
 
 namespace GbxMapBrowser
 {
@@ -33,12 +34,12 @@ namespace GbxMapBrowser
 
         public MapInfo(string fullnamepath)
         {
-            GameBox gbx;
+            CMwNod gbx;
             shortName = fullnamepath.Split("\\").Last();
-
+            
             try
             {
-                gbx = GameBox.Parse(fullnamepath);
+                gbx = GameBox.ParseNodeHeader(fullnamepath);
             }
             catch (Exception e)
             {
@@ -50,9 +51,9 @@ namespace GbxMapBrowser
 
             MapFullName = fullnamepath;
 
-            if (gbx is GameBox<CGameCtnChallenge> gbxMap)
+            if (gbx is CGameCtnChallenge gbxMap)
             {
-                CGameCtnChallenge challenge = gbxMap.Node;
+                CGameCtnChallenge challenge = gbxMap;
                 
                 MapName = ToReadableText(challenge.MapName);
                 ExactMapName = challenge.MapName;
@@ -62,7 +63,7 @@ namespace GbxMapBrowser
                     Author = ToReadableText(challenge.AuthorNickname);
 
                 CopperPrice = challenge.Cost.ToString();
-
+                /*
                 if (string.IsNullOrEmpty(challenge.ChallengeParameters.MapType))
                 {
                     if (challenge.Mode.HasValue)
@@ -70,11 +71,11 @@ namespace GbxMapBrowser
                 }
                 else
                     MapType = "Gamemode: " + challenge.ChallengeParameters.MapType;
-
-                ObjectiveBronze = challenge.TMObjective_BronzeTime.GetValueOrDefault().ToStringTM();
-                ObjectiveSilver = challenge.TMObjective_SilverTime.GetValueOrDefault().ToStringTM();
-                ObjectiveGold = challenge.TMObjective_GoldTime.GetValueOrDefault().ToStringTM();
-                ObjectiveAuthor = challenge.TMObjective_AuthorTime.GetValueOrDefault().ToStringTM();
+                */
+                ObjectiveBronze = TimeSpanToString(challenge.TMObjective_BronzeTime);
+                ObjectiveSilver = TimeSpanToString(challenge.TMObjective_SilverTime);
+                ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
+                ObjectiveAuthor = TimeSpanToString(challenge.TMObjective_AuthorTime);
                 Titlepack = challenge.TitleID;
 
                 Uri enviImagePath = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".png");
@@ -89,16 +90,22 @@ namespace GbxMapBrowser
                     MapThumbnail = ConvertToImageSource(mapThumbnail);
                 }
 
-            }
-            else if (gbx is GameBox<CGameCtnReplayRecord> gbxReplay)
+            }/*
+            else if (gbx is CGameCtnReplayRecord gbxReplay)
             {
-                CGameCtnReplayRecord replay = gbxReplay.Node;
+                CGameCtnReplayRecord replay = gbxReplay;
                 EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 Author = ToReadableText(replay.AuthorNickname);
                 MapName = shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
                 Titlepack = replay.TitleID;
-            }
+            }*/
+        }
+
+        string TimeSpanToString(TimeSpan? timeSpan)
+        {
+            if (!timeSpan.HasValue) return "-:--.---";
+            return timeSpan.GetValueOrDefault().ToStringTM();
         }
 
         public void RenameAndSave(string newName)
