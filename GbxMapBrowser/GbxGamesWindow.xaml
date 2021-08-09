@@ -47,13 +47,13 @@
             <Button Margin="5" Style="{x:Null}" Background="Black" Click="ButtonResetInstallLocation_Click">
                 <Label Style="{StaticResource DefaultUIStyle}">Reset Install Location</Label>
             </Button>
-            
+
             <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsEnabled, ElementName=listView}">
                 <Label Style="{StaticResource DefaultUIStyle}" Content="Enable this game"/>
             </CheckBox>
-            <Button Margin="5" Style="{x:Null}" Background="Black" Click="ButtonSaveAllChanges_Click">
-                <Label Style="{StaticResource DefaultUIStyle}">Save All Changes</Label>
-            </Button>
         </StackPanel>
+        <Button Margin="5" Height="34" Grid.Column="1" VerticalAlignment="Bottom" Style="{x:Null}" Background="{DynamicResource MahApps.Brushes.AccentBase}" Click="ButtonSaveAllChanges_Click">
+            <Label Style="{StaticResource DefaultUIStyle}">Save All Changes</Label>
+        </Button>
     </Grid>
 </Window>
