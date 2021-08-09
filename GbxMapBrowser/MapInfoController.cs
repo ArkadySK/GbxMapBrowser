@@ -17,13 +17,6 @@ namespace GbxMapBrowser
 
         public async Task AddMap(string fullnamepath)
         {
-            bool isOldTM = false;
-            bool isNewTM = false;
-            bool isReplay = false;
-            if (fullnamepath.Contains("Challenge.Gbx", StringComparison.OrdinalIgnoreCase)) isOldTM = true;
-            if (fullnamepath.Contains("Map.Gbx", StringComparison.OrdinalIgnoreCase)) isNewTM = true;
-            if (fullnamepath.Contains("Replay.Gbx", StringComparison.OrdinalIgnoreCase)) isReplay = true;
-            if (!isOldTM && !isNewTM && !isReplay) return;
             await Task.Run(() => MapList.Add(new MapInfo(fullnamepath)));
         }
         

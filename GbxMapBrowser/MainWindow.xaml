@@ -53,18 +53,18 @@
                                 <Image Source="{Binding EnviImage}" Grid.Column="0" Margin="5"/>
                                 <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="2" Margin="5"/>
                                 <Grid.ContextMenu>
-                                    <ContextMenu>
+                                    <ContextMenu >
                                         <!--
                                         <Label Padding="0">Cut</Label>
                                         <Label Padding="0">Copy</Label>
                                         <Label Padding="0">Paste</Label>
                                         <Separator/>
                                         -->
-                                        <Label Padding="0" MouseUp="ContextMenuDelete_MouseUp">Delete</Label>
-                                        <Label Padding="0" MouseUp="ContextMenuRenameFile_MouseUp">Rename File</Label>
-                                        <Label Padding="0" MouseUp="ContextMenuRenameMap_MouseUp">Rename Map</Label>
+                                        <MenuItem Header="Delete" Click="ContextMenuDelete_Click"/>
+                                        <MenuItem Header="Rename File" Click="ContextMenuRenameFile_Click"/>
+                                        <MenuItem Header="Rename Map" Click="ContextMenuRenameMap_Click"/>
                                         <Separator/>
-                                        <Label Padding="0" MouseUp="ContextMenuProperties_MouseUp">Properties</Label>
+                                        <MenuItem Header="Properties" Click="ContextMenuProperties_Click"/>
                                     </ContextMenu>
                                 </Grid.ContextMenu>
                             </Grid>

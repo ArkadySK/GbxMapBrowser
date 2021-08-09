@@ -50,6 +50,7 @@ namespace GbxMapBrowser
             }
 
             MapFullName = fullnamepath;
+            
 
             if (gbx is CGameCtnChallenge gbxMap)
             {
@@ -63,15 +64,15 @@ namespace GbxMapBrowser
                     Author = ToReadableText(challenge.AuthorNickname);
 
                 CopperPrice = challenge.Cost.ToString();
-                /*
-                if (string.IsNullOrEmpty(challenge.ChallengeParameters.MapType))
-                {
-                    if (challenge.Mode.HasValue)
-                        MapType = "Gamemode: " + challenge.Mode.Value.ToString();
-                }
-                else
-                    MapType = "Gamemode: " + challenge.ChallengeParameters.MapType;
-                */
+                
+                //if (string.IsNullOrEmpty(challenge.ChallengeParameters.MapType))
+                //{
+                //    if (challenge.Mode.HasValue)
+                //        MapType = "Gamemode: " + challenge.Mode.Value.ToString();
+                //}
+                //else
+                //    MapType = "Gamemode: " + challenge.ChallengeParameters.MapType;
+
                 ObjectiveBronze = TimeSpanToString(challenge.TMObjective_BronzeTime);
                 ObjectiveSilver = TimeSpanToString(challenge.TMObjective_SilverTime);
                 ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
@@ -79,8 +80,10 @@ namespace GbxMapBrowser
             
                 Titlepack = challenge.TitleID;
 
+                
                 Uri enviImagePath = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".png");
                 EnviImage = new BitmapImage(enviImagePath);
+                EnviImage.Freeze();
 
                 if (challenge.Thumbnail == null) return;
                 var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail);
@@ -89,7 +92,7 @@ namespace GbxMapBrowser
                 
                 Bitmap mapThumbnail = new Bitmap(new StreamReader(thumbnailMemoryStream).BaseStream);
                 MapThumbnail = ConvertToImageSource(mapThumbnail);
-                
+                MapThumbnail.Freeze();
 
 
             }
@@ -97,7 +100,9 @@ namespace GbxMapBrowser
             {
                 CGameCtnReplayRecord replay = gbxReplay;
                 EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
+                EnviImage.Freeze();
                 MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
+                MapThumbnail.Freeze();
                 Author = ToReadableText(replay.AuthorNickname);
                 MapName = shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
                 Titlepack = replay.TitleID;
