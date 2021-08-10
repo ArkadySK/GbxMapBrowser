@@ -31,12 +31,12 @@ namespace GbxMapBrowser
         public ImageSource EnviImage { get; }
         public ImageSource MapThumbnail { get; }
 
-
         public MapInfo(string fullnamepath)
         {
             CMwNod gbx;
             shortName = fullnamepath.Split("\\").Last();
-            
+            MapFullName = fullnamepath;
+
             try
             {
                 gbx = GameBox.ParseNodeHeader(fullnamepath);
@@ -48,9 +48,6 @@ namespace GbxMapBrowser
                 Debug.WriteLine("Error: Map '" + fullnamepath + "' - impossible to load" + Environment.NewLine + e.Message);
                 return;
             }
-
-            MapFullName = fullnamepath;
-            
 
             if (gbx is CGameCtnChallenge gbxMap)
             {
@@ -93,7 +90,6 @@ namespace GbxMapBrowser
                 Bitmap mapThumbnail = new Bitmap(new StreamReader(thumbnailMemoryStream).BaseStream);
                 MapThumbnail = ConvertToImageSource(mapThumbnail);
                 MapThumbnail.Freeze();
-
 
             }
             else if (gbx is CGameCtnReplayRecord gbxReplay)

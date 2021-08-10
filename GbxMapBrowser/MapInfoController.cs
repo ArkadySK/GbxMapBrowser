@@ -7,24 +7,45 @@ namespace GbxMapBrowser
 {
     class MapInfoController
     {
-        public List<object> MapList { get; set; } = new List<object>();
+        public IReadOnlyList<object> MapList {
+            get
+            {
+                return mapList.AsReadOnly();
+            }
+        }
+
+        private List<FolderInfo> folderInfosList = new List<FolderInfo>();
+        private List<MapInfo> mapInfosList = new List<MapInfo>();
+        private List<object> mapList = new List<object>();
 
         public void AddFolder(string fullnamepath)
         {
             FolderInfo folderInfo = new FolderInfo(fullnamepath);
-            MapList.Add(folderInfo);
+            folderInfosList.Add(folderInfo);
         }
 
         public async Task AddMap(string fullnamepath)
         {
-            await Task.Run(() => MapList.Add(new MapInfo(fullnamepath)));
-        }
-        
-        public void ClearMapList()
-        {
-            MapList.Clear();
+            if(fullnamepath.Contains(".Map.Gbx") || fullnamepath.Contains(".Replay.Gbx") || fullnamepath.Contains(".Challenge.Gbx"))
+                await Task.Run(() => mapInfosList.Add(new MapInfo(fullnamepath)));
         }
 
+        public void ClearMapList()
+        {
+            mapList.Clear();
+            folderInfosList.Clear();
+            mapInfosList.Clear();
+        }
+
+        public async Task SortMapList()
+        {
+            var orderedMapInfosList = from map in mapInfosList
+                           orderby map.MapName
+                           select map;
+            mapList.Clear();
+            mapList.AddRange(folderInfosList);
+            await Task.Run(()=> mapList.AddRange(orderedMapInfosList));
+        }
 
         public MapInfo[] GetMapsByName(string[] mapNames)
         {
@@ -42,7 +63,7 @@ namespace GbxMapBrowser
         {
             foreach (var mi in mapInfos)
             {
-                if (MapList.Contains(mi)) return true;
+                if (mapList.Contains(mi)) return true;
             }
             return false;
         }
