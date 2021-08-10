@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -99,6 +101,34 @@ namespace GbxMapBrowser
                 MessageBox.Show("Folder '" + MapsFolder + "' not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
+        }
+
+        public void GetInstallationDialog()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                Title = "Please locate the " + TargetExeName + " (game: " + Name + ")",
+            };
+            //fixni to pls
+            var dialogResult = openFileDialog.ShowDialog();
+            if (!dialogResult.HasValue) return;
+
+            if (dialogResult.Value)
+            {
+                var exeName = openFileDialog.FileName.Split("\\").Last();
+                if (exeName == TargetExeName)
+                {
+                    InstalationFolder = openFileDialog.FileName.Replace("\\" + exeName, "");
+                    UpdateMapsFolder();
+                    IsEnabled = true;
+                }
+                else
+                    MessageBox.Show("Wrong exe file! '" + exeName + "' Executable names do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
         }
     }
 }

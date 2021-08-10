@@ -12,7 +12,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ListView x:Name="listView" ItemsSource="{Binding GbxGames}">
+        <ListView x:Name="listView" ItemsSource="{Binding GbxGames}" MouseDoubleClick="listView_MouseDoubleClick" >
             <!--GbxGame Item Template-->
             <ListView.ItemTemplate>
                 <DataTemplate>

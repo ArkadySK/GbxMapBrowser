@@ -62,30 +62,7 @@ namespace GbxMapBrowser
                 MessageBox.Show("Can't change game folder - please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            OpenFileDialog openFileDialog = new OpenFileDialog()
-            {
-                CheckFileExists = true,
-                CheckPathExists = true,
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-                Title = "Please locate the " + selGame.TargetExeName + " (game: " + selGame.Name + ")",
-            };
-            //fixni to pls
-            var dialogResult = openFileDialog.ShowDialog();
-            if (!dialogResult.HasValue) return;
-
-            if (dialogResult.Value) { 
-                var exeName = openFileDialog.FileName.Split("\\").Last();
-                if (exeName == selGame.TargetExeName)
-                {
-                    selGame.InstalationFolder = openFileDialog.FileName.Replace("\\"+exeName, "");
-                    selGame.UpdateMapsFolder();
-                    selGame.IsEnabled = true;
-                }
-                else
-                    MessageBox.Show("Wrong exe file! '" + exeName + "' Executable names do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
-            }
-
+            selGame.GetInstallationDialog();
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
 
@@ -106,9 +83,19 @@ namespace GbxMapBrowser
 
         }
 
+
         private void ButtonSaveAllChanges_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void listView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var selGame = (GbxGame)listView.SelectedItem;
+            if (selGame == null) return;
+            selGame.GetInstallationDialog();
+            listView.ItemsSource = null;
+            listView.ItemsSource = GbxGameController.GbxGames;
         }
     }
 }
