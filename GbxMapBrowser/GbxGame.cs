@@ -112,7 +112,6 @@ namespace GbxMapBrowser
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
                 Title = "Please locate the " + TargetExeName + " (game: " + Name + ")",
             };
-            //fixni to pls
             var dialogResult = openFileDialog.ShowDialog();
             if (!dialogResult.HasValue) return;
 
@@ -127,7 +126,6 @@ namespace GbxMapBrowser
                 }
                 else
                     MessageBox.Show("Wrong exe file! '" + exeName + "' Executable names do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
         }
     }
