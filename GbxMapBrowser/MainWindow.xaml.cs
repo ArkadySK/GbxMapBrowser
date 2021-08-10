@@ -158,7 +158,7 @@ namespace GbxMapBrowser
 
             sw.Stop();
             decimal s = sw.ElapsedMilliseconds / 1000m;
-            Dispatcher.Invoke(()=>Title = $"Gbx Map Browser (loaded in {s}s)");
+            Debug.WriteLine($"loaded in {s}s");
         }
         #endregion
 
