@@ -195,36 +195,46 @@ namespace GbxMapBrowser
 
         private async void mapListBox_PreviewMouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
         {
-            if (mapListBox.SelectedItem is FolderInfo)
+            if (mapListBox.SelectedItem is FolderInfo selFolder)
             {
-                curFolder = ((FolderInfo)mapListBox.SelectedItem).FolderFullPath;
+                curFolder = selFolder.FolderFullPath;
                 await UpdateMapList(curFolder);
                 Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList);
             }
+            else if (mapListBox.SelectedItem is MapInfo mapInfo)
+            {
+                var selGame = GetSelectedGame();
+                if (selGame == null) return;
+                mapInfo.OpenMap(selGame);
+            }
         }
 
-        void OpenMap(string mapname)
+        private void mapListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!(mapListBox.SelectedItem is MapInfo)) return;
+
+            var selMap = (MapInfo)mapListBox.SelectedItem;
+            var fullMap = new MapInfo(selMap.MapFullName, false);
+            mapPreviewFrame.Content = new MapPreviewPage(fullMap);
+        }
+
+        GbxGame GetSelectedGame()
         {
             var selGame = (GbxGame)openInComboBox.SelectedItem;
             if (selGame == null)
             {
                 MessageBox.Show("Choose a game to launch your map with!", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
-                return;
+                return null;
             }
+            return selGame;
 
-            string path = selGame.InstalationFolder + "\\" + selGame.TargetExeName;
-
-            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(path, "/useexedir /singleinst /file=\"" + mapname + "\"");
-            //ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(path, "/useexedir /bench=\"C:\\Users\\Adam\\Documents\\Trackmania2020\\Replays\\My Replays\ClassicMod Showcase.Replay.Gbx\"");
-            Process gameGbx = new Process();
-            gameGbx.StartInfo = gameGbxStartInfo;
-            gameGbx.Start();
         }
 
         private void ButtonPlay_Click(object sender, RoutedEventArgs e)
         {
-            if (mapListBox.SelectedItem is MapInfo)
-                OpenMap(((MapInfo)mapListBox.SelectedItem).MapFullName);
+            if (!(mapListBox.SelectedItem is MapInfo)) return;
+            if (GetSelectedGame() == null) return;
+            (mapListBox.SelectedItem as MapInfo).OpenMap(GetSelectedGame());
         }
 
 
@@ -343,5 +353,7 @@ namespace GbxMapBrowser
             FileOperations.ShowFileProperties(path);
         }
         #endregion
+
+        
     }
 }

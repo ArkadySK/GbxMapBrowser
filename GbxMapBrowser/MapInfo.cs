@@ -14,7 +14,7 @@ using GBX.NET.Engines.MwFoundations;
 
 namespace GbxMapBrowser
 {
-    class MapInfo
+    public class MapInfo
     {
         public string MapName { get; }
         public string ExactMapName { get; }
@@ -31,7 +31,7 @@ namespace GbxMapBrowser
         public ImageSource EnviImage { get; }
         public ImageSource MapThumbnail { get; }
 
-        public MapInfo(string fullnamepath)
+        public MapInfo(string fullnamepath, bool basicInfoOnly)
         {
             CMwNod gbx;
             shortName = fullnamepath.Split("\\").Last();
@@ -39,7 +39,11 @@ namespace GbxMapBrowser
 
             try
             {
+                if(basicInfoOnly)
                 gbx = GameBox.ParseNodeHeader(fullnamepath);
+                else
+                gbx = GameBox.ParseNode(fullnamepath);
+
             }
             catch (Exception e)
             {
@@ -55,6 +59,17 @@ namespace GbxMapBrowser
 
                 MapName = ToReadableText(challenge.MapName);
                 ExactMapName = challenge.MapName;
+
+                Titlepack = challenge.TitleID;
+
+                Uri enviImagePath = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".png");
+                EnviImage = new BitmapImage(enviImagePath);
+                EnviImage.Freeze();
+
+                ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
+
+                if (basicInfoOnly) return;
+
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))
                     Author = challenge.AuthorLogin;
                 else
@@ -62,26 +77,18 @@ namespace GbxMapBrowser
 
                 CopperPrice = challenge.Cost.ToString();
                 
-                //if (string.IsNullOrEmpty(challenge.ChallengeParameters.MapType))
-                //{
-                //    if (challenge.Mode.HasValue)
-                //        MapType = "Gamemode: " + challenge.Mode.Value.ToString();
-                //}
-                //else
-                //    MapType = "Gamemode: " + challenge.ChallengeParameters.MapType;
+                if (string.IsNullOrEmpty(challenge.ChallengeParameters.MapType))
+                {
+                    if (challenge.Mode.HasValue)
+                        MapType = "Gamemode: " + challenge.Mode.Value.ToString();
+                }
+                else
+                    MapType = "Gamemode: " + challenge.ChallengeParameters.MapType;
 
                 ObjectiveBronze = TimeSpanToString(challenge.TMObjective_BronzeTime);
                 ObjectiveSilver = TimeSpanToString(challenge.TMObjective_SilverTime);
-                ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
                 ObjectiveAuthor = TimeSpanToString(challenge.TMObjective_AuthorTime);
             
-                Titlepack = challenge.TitleID;
-
-                
-                Uri enviImagePath = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".png");
-                EnviImage = new BitmapImage(enviImagePath);
-                EnviImage.Freeze();
-
                 if (challenge.Thumbnail == null) return;
                 var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail);
 
@@ -97,6 +104,7 @@ namespace GbxMapBrowser
                 CGameCtnReplayRecord replay = gbxReplay;
                 EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 EnviImage.Freeze();
+                if (basicInfoOnly) return;
                 MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 MapThumbnail.Freeze();
                 Author = ToReadableText(replay.AuthorNickname);
@@ -135,7 +143,7 @@ namespace GbxMapBrowser
             
         }
 
-            public BitmapImage ConvertToImageSource(Bitmap src)
+        BitmapImage ConvertToImageSource(Bitmap src)
         {
             MemoryStream ms = new MemoryStream();
             ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
@@ -152,6 +160,17 @@ namespace GbxMapBrowser
             string formattedName = defaultname;      
             formattedName = Formatter.Deformat(formattedName);
             return formattedName;
+        }
+
+
+        public void OpenMap(GbxGame selGame)
+        {
+            string path = selGame.InstalationFolder + "\\" + selGame.TargetExeName;
+
+            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(path, "/useexedir /singleinst /file=\"" + MapName + "\"");
+            Process gameGbx = new Process();
+            gameGbx.StartInfo = gameGbxStartInfo;
+            gameGbx.Start();
         }
     }
 }
