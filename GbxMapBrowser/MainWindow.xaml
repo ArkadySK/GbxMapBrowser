@@ -34,10 +34,10 @@
         <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="5" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="50" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
             <mah:HamburgerMenu.Content>
                 <!--Map list, the right part-->
-                <ListBox x:Name="mapListView" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" MouseDoubleClick="mapListView_PreviewMouseDoubleClickAsync" AllowDrop="True" DragDrop.Drop="mapListView_Drop" PreviewMouseDown="mapListView_PreviewMouseDown" >
+                <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" MouseDoubleClick="mapListBox_PreviewMouseDoubleClickAsync" AllowDrop="True" DragDrop.Drop="mapListBox_Drop" PreviewMouseDown="mapListBox_PreviewMouseDown" >
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type local:FolderInfo}">
-                            <StackPanel x:Name="mapListViewItem" Orientation="Horizontal">
+                            <StackPanel x:Name="mapListBoxItem" Orientation="Horizontal">
                                 <Image Source="/Data/UIIcons/Folder.png" Width="50"></Image>
                                 <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding FolderName}" Grid.Column="1" Margin="5"/>
                             </StackPanel>
@@ -105,29 +105,29 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label x:Name="nameLabel" Content="{Binding SelectedItem.MapName, ElementName=mapListView, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="11"/>
+            <Label x:Name="nameLabel" Content="{Binding SelectedItem.MapName, ElementName=mapListBox, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="11"/>
             <Label FontSize="18" Content="{Binding Content, ElementName=nameLabel}" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="10" Foreground="{DynamicResource MahApps.Brushes.Flyout.Background}">
                 <Label.Effect>
                     <BlurEffect Radius="5" KernelType="Gaussian"/>
                 </Label.Effect>
             </Label>
-            <Label Content="{Binding SelectedItem.FolderName, ElementName=mapListView, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="10"/>
+            <Label Content="{Binding SelectedItem.FolderName, ElementName=mapListBox, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="10"/>
 
-            <Image Source="{Binding SelectedItem.MapThumbnail, ElementName=mapListView}" Grid.ColumnSpan="2" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
+            <Image Source="{Binding SelectedItem.MapThumbnail, ElementName=mapListBox}" Grid.ColumnSpan="2" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="-1"/>
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
-            <Label Content="{Binding SelectedItem.Author, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
-            <Label Content="{Binding SelectedItem.CopperPrice, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
-            <Label Content="{Binding SelectedItem.MapType, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="2" Panel.ZIndex="10"/>
-            <Label Content="{Binding SelectedItem.Titlepack, ElementName=mapListView, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="3" Panel.ZIndex="10"/>
-            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveAuthor, ElementName=mapListView}" Grid.Column="1" Grid.Row="4"/>
-            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveGold, ElementName=mapListView}" Grid.Column="1" Grid.Row="5"/>
-            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveSilver, ElementName=mapListView}" Grid.Column="1" Grid.Row="6"/>
-            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveBronze, ElementName=mapListView}" Grid.Column="1" Grid.Row="7"/>
+            <Label Content="{Binding SelectedItem.Author, ElementName=mapListBox, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
+            <Label Content="{Binding SelectedItem.CopperPrice, ElementName=mapListBox, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
+            <Label Content="{Binding SelectedItem.MapType, ElementName=mapListBox, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="2" Panel.ZIndex="10"/>
+            <Label Content="{Binding SelectedItem.Titlepack, ElementName=mapListBox, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="3" Panel.ZIndex="10"/>
+            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveAuthor, ElementName=mapListBox}" Grid.Column="1" Grid.Row="4"/>
+            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveGold, ElementName=mapListBox}" Grid.Column="1" Grid.Row="5"/>
+            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveSilver, ElementName=mapListBox}" Grid.Column="1" Grid.Row="6"/>
+            <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding SelectedItem.ObjectiveBronze, ElementName=mapListBox}" Grid.Column="1" Grid.Row="7"/>
             <Image Grid.Row="4" Margin="5 1" Source="/Data/Medals/NadeoMedal.png"/>
             <Image Grid.Row="5" Margin="5 1" Source="/Data/Medals/GoldMedal.png"/>
             <Image Grid.Row="6" Margin="5 1" Source="/Data/Medals/SilverMedal.png"/>

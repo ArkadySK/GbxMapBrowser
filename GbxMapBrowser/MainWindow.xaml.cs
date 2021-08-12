@@ -134,7 +134,7 @@ namespace GbxMapBrowser
             sw.Start();
             Application.Current.Dispatcher.Invoke(() =>
             {
-                mapListView.ItemsSource = null;
+                mapListBox.ItemsSource = null;
                 currentFolderTextBox.Text = mapsFolder;
             }
             );
@@ -154,7 +154,7 @@ namespace GbxMapBrowser
             }
             await Task.WhenAll(mapTasks.ToArray());
             await MapInfoController.SortMapList();
-            mapListView.ItemsSource = MapInfoController.MapList;
+            mapListBox.ItemsSource = MapInfoController.MapList;
 
             sw.Stop();
             decimal s = sw.ElapsedMilliseconds / 1000m;
@@ -166,7 +166,7 @@ namespace GbxMapBrowser
         private async void refreshMapsButton_Click(object sender, RoutedEventArgs e)
         {
             await UpdateMapList(curFolder);
-            Dispatcher.Invoke(() => mapListView.ItemsSource = MapInfoController.MapList);
+            Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList);
         }
 
         private void OpenInExplorerButton_Click(object sender, RoutedEventArgs e)
@@ -193,13 +193,13 @@ namespace GbxMapBrowser
         }
         #endregion
 
-        private async void mapListView_PreviewMouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
+        private async void mapListBox_PreviewMouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
         {
-            if (mapListView.SelectedItem is FolderInfo)
+            if (mapListBox.SelectedItem is FolderInfo)
             {
-                curFolder = ((FolderInfo)mapListView.SelectedItem).FolderFullPath;
+                curFolder = ((FolderInfo)mapListBox.SelectedItem).FolderFullPath;
                 await UpdateMapList(curFolder);
-                Dispatcher.Invoke(() => mapListView.ItemsSource = MapInfoController.MapList);
+                Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList);
             }
         }
 
@@ -223,8 +223,8 @@ namespace GbxMapBrowser
 
         private void ButtonPlay_Click(object sender, RoutedEventArgs e)
         {
-            if (mapListView.SelectedItem is MapInfo)
-                OpenMap(((MapInfo)mapListView.SelectedItem).MapFullName);
+            if (mapListBox.SelectedItem is MapInfo)
+                OpenMap(((MapInfo)mapListBox.SelectedItem).MapFullName);
         }
 
 
@@ -234,7 +234,7 @@ namespace GbxMapBrowser
             {
                 curFolder = currentFolderTextBox.Text;
                 await UpdateMapList(curFolder);
-                Dispatcher.Invoke(() => mapListView.ItemsSource = MapInfoController.MapList);
+                Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList);
             }
         }
 
@@ -246,18 +246,18 @@ namespace GbxMapBrowser
             Array.ForEach(mapInfos, mfo => files.Add(mfo.MapFullName));
 
             var mapFile = new DataObject(DataFormats.FileDrop, files.ToArray());
-            DragDrop.DoDragDrop((DependencyObject)mapListView, mapFile, DragDropEffects.Copy);
+            DragDrop.DoDragDrop((DependencyObject)mapListBox, mapFile, DragDropEffects.Copy);
         }
 
-        private void mapListView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void mapListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left) return;
-            if (mapListView.SelectedItem == null) return;
-            if (!(mapListView.SelectedItem is MapInfo)) return; //DOROB NA VIAC MAP
+            if (mapListBox.SelectedItem == null) return;
+            if (!(mapListBox.SelectedItem is MapInfo)) return; //DOROB NA VIAC MAP
             if (!(e.MouseDevice.DirectlyOver is TextBlock)) return;
             string lastSelMapName = (e.MouseDevice.DirectlyOver as TextBlock).Text;
             List<string> mapNames = new List<string>();
-            foreach (var m in mapListView.SelectedItems)
+            foreach (var m in mapListBox.SelectedItems)
             {
                 mapNames.Add((m as MapInfo).MapName);
             }
@@ -271,7 +271,7 @@ namespace GbxMapBrowser
         #endregion
 
         #region DragInMaps
-        private async void mapListView_Drop(object sender, DragEventArgs e)
+        private async void mapListBox_Drop(object sender, DragEventArgs e)
         {
             string[] paths = (string[])(e.Data).GetData(DataFormats.FileDrop, false);
             var mapsPathsQuery = from mappath in paths
@@ -288,8 +288,8 @@ namespace GbxMapBrowser
 
         private async void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!(mapListView.SelectedItem is MapInfo)) return;
-            MapInfo selMap = (MapInfo)mapListView.SelectedItem;
+            if (!(mapListBox.SelectedItem is MapInfo)) return;
+            MapInfo selMap = (MapInfo)mapListBox.SelectedItem;
             if (e.Key == Key.Delete)
             {
                 MapOperations.DeleteMap(selMap);
@@ -312,8 +312,8 @@ namespace GbxMapBrowser
 
         private async void ContextMenuDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (!(mapListView.SelectedItem is MapInfo)) return;
-            var selMap = (MapInfo)mapListView.SelectedItem;
+            if (!(mapListBox.SelectedItem is MapInfo)) return;
+            var selMap = (MapInfo)mapListBox.SelectedItem;
             await Task.Run(() => MapOperations.DeleteMap(selMap));
             await UpdateMapList(curFolder);
             
@@ -321,8 +321,8 @@ namespace GbxMapBrowser
 
         private async void ContextMenuRenameFile_Click(object sender, RoutedEventArgs e)
         {
-            if (!(mapListView.SelectedItem is MapInfo)) return;
-            string oldMapName = ((MapInfo)mapListView.SelectedItem).MapFullName;
+            if (!(mapListBox.SelectedItem is MapInfo)) return;
+            string oldMapName = ((MapInfo)mapListBox.SelectedItem).MapFullName;
             FileOperations.RenameFile(oldMapName);
             await UpdateMapList(curFolder);
             
@@ -330,8 +330,8 @@ namespace GbxMapBrowser
 
         private async void ContextMenuRenameMap_Click(object sender, RoutedEventArgs e)
         {
-            if (!(mapListView.SelectedItem is MapInfo)) return;
-            MapInfo selMap = (MapInfo)mapListView.SelectedItem;
+            if (!(mapListBox.SelectedItem is MapInfo)) return;
+            MapInfo selMap = (MapInfo)mapListBox.SelectedItem;
             MapOperations.RenameMap(selMap);
             await UpdateMapList(curFolder);
             
@@ -339,7 +339,7 @@ namespace GbxMapBrowser
 
         private void ContextMenuProperties_Click(object sender, RoutedEventArgs e)
         {
-            var path = ((MapInfo)mapListView.SelectedItem).MapFullName;
+            var path = ((MapInfo)mapListBox.SelectedItem).MapFullName;
             FileOperations.ShowFileProperties(path);
         }
         #endregion
