@@ -13,7 +13,8 @@ namespace GbxMapBrowser
             Tuple.Create("TM2U_Island@adamkooo", "TM2Island"),  
             Tuple.Create("TMOneSpeed@unbitn", "TMOneSpeed"),
             Tuple.Create("TMOneAlpine@unbitn", "TMOneAlpine"),
-            Tuple.Create("TrackMania", "TMNextStadium")
+            Tuple.Create("Trackmania", "TMNextStadium"),
+            Tuple.Create("OrbitalDev", "TMNextStadium")          
         };
 
         //find titlepack first, then environment
