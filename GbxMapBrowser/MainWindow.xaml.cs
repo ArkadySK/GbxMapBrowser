@@ -130,6 +130,7 @@ namespace GbxMapBrowser
 
         async Task UpdateMapList(string mapsFolder)
         {
+            UpdateMapPreview(null);
             Stopwatch sw = new Stopwatch();
             sw.Start();
             Application.Current.Dispatcher.Invoke(() =>
@@ -199,7 +200,7 @@ namespace GbxMapBrowser
             {
                 curFolder = selFolder.FolderFullPath;
                 await UpdateMapList(curFolder);
-                Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList);
+                Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList);;
             }
             else if (mapListBox.SelectedItem is MapInfo mapInfo)
             {
@@ -209,19 +210,18 @@ namespace GbxMapBrowser
             }
         }
 
-        void UpdateMapPreview(MapInfo mapInfo)
+        void UpdateMapPreview(object data)
         {
             if (mapPreviewFrame.CanGoBack)
                 mapPreviewFrame.RemoveBackEntry();
             mapPreviewFrame.Content = null;
-            if (mapInfo == null) return;
-            mapPreviewFrame.Content = new MapPreviewPage(mapInfo);
+            if (data == null) return;
+            mapPreviewFrame.Content = new MapPreviewPage(data);
         }
 
         private void mapListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!(mapListBox.SelectedItem is MapInfo)) return;
-
             var selMap = (MapInfo)mapListBox.SelectedItem;
             UpdateMapPreview(selMap);
         }

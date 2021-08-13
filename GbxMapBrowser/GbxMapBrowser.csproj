@@ -169,6 +169,18 @@
     <None Update="Data\GameIcons\TMUF.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Titlepacks\TM2Island.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Titlepacks\TMNextStadium.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Titlepacks\TMOneAlpine.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Titlepacks\TMOneSpeed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\UIIcons\Error.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

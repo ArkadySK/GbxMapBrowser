@@ -62,7 +62,7 @@ namespace GbxMapBrowser
 
                 Titlepack = challenge.TitleID;
 
-                Uri enviImagePath = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + challenge.Collection + ".png");
+                Uri enviImagePath = EnviManager.GetEnvironmentImagePath(challenge.Collection, Titlepack);
                 EnviImage = new BitmapImage(enviImagePath);
                 EnviImage.Freeze();
 

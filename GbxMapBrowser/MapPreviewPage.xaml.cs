@@ -21,15 +21,17 @@ namespace GbxMapBrowser
     {
         MapInfo Map;
 
-        public MapPreviewPage(MapInfo mapInfo)
+        public MapPreviewPage(object data)
         {       
             InitializeComponent();
             Opacity = 0;
-            Map = mapInfo;
+            if(data is MapInfo)
+            Map = (MapInfo)data;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Map == null) return;
             await Task.Delay(new TimeSpan(50000));
             Map = await Task.Run(() => new MapInfo(Map.MapFullName, false));
             DataContext = Map;
