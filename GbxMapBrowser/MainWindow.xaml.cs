@@ -221,8 +221,8 @@ namespace GbxMapBrowser
 
         private void mapListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!(mapListBox.SelectedItem is MapInfo)) return;
-            var selMap = (MapInfo)mapListBox.SelectedItem;
+            if (mapListBox.SelectedItem == null) return;
+            var selMap = (object)mapListBox.SelectedItem;
             UpdateMapPreview(selMap);
         }
 
