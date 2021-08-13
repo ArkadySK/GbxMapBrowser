@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GbxMapBrowser"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MapPreviewPage">
+      Title="MapPreviewPage" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,7 +24,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="nameLabel" Content="{Binding MapName, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="11"/>
+        <Label Content="{Binding MapName, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="11"/>
         <Label FontSize="18" Content="{Binding Content, ElementName=nameLabel}" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="10" Foreground="{DynamicResource MahApps.Brushes.Flyout.Background}">
             <Label.Effect>
                 <BlurEffect Radius="5" KernelType="Gaussian"/>
@@ -32,21 +32,25 @@
         </Label>
         <Label Content="{Binding FolderName, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="10"/>
 
-        <Image Source="{Binding MapThumbnail}" Grid.ColumnSpan="2" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
+        <Image x:Name="mapImage" Source="{Binding MapThumbnail}" Grid.ColumnSpan="2" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1"/>
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Label Content="{Binding Author, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
-        <Label Content="{Binding CopperPrice, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="1" Panel.ZIndex="10"/>
-        <Label Content="{Binding MapType, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="2" Panel.ZIndex="10"/>
-        <Label Content="{Binding Titlepack, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="3" Panel.ZIndex="10"/>
-        <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveAuthor}" Grid.Column="1" Grid.Row="4"/>
-        <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="1" Grid.Row="5"/>
-        <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveSilver}" Grid.Column="1" Grid.Row="6"/>
-        <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveBronze}" Grid.Column="1" Grid.Row="7"/>
+        <Label Grid.ColumnSpan="2" Grid.Row="1" Content="{Binding Author, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Label Style="{StaticResource DefaultUIStyle}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{Binding CopperPrice, FallbackValue='0'}"/>
+            <Label Style="{StaticResource DefaultUIStyle}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content=" C"/>
+        </StackPanel>
+        <Label Grid.ColumnSpan="2" Grid.Row="2" Panel.ZIndex="10" Content="{Binding MapType, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
+        <Label Grid.ColumnSpan="2" Grid.Row="3" Content="{Binding Titlepack, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
+        
+        <Label Grid.Column="1" Grid.Row="4" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveAuthor}"/>
+        <Label Grid.Column="1" Grid.Row="5" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}"/>
+        <Label Grid.Column="1" Grid.Row="6" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveSilver}"/>
+        <Label Grid.Column="1" Grid.Row="7" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveBronze}"/>
         <Image Grid.Row="4" Margin="5 1" Source="/Data/Medals/NadeoMedal.png"/>
         <Image Grid.Row="5" Margin="5 1" Source="/Data/Medals/GoldMedal.png"/>
         <Image Grid.Row="6" Margin="5 1" Source="/Data/Medals/SilverMedal.png"/>

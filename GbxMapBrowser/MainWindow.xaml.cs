@@ -209,13 +209,21 @@ namespace GbxMapBrowser
             }
         }
 
+        void UpdateMapPreview(MapInfo mapInfo)
+        {
+            if (mapPreviewFrame.CanGoBack)
+                mapPreviewFrame.RemoveBackEntry();
+            mapPreviewFrame.Content = null;
+            if (mapInfo == null) return;
+            mapPreviewFrame.Content = new MapPreviewPage(mapInfo);
+        }
+
         private void mapListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!(mapListBox.SelectedItem is MapInfo)) return;
 
             var selMap = (MapInfo)mapListBox.SelectedItem;
-            var fullMap = new MapInfo(selMap.MapFullName, false);
-            mapPreviewFrame.Content = new MapPreviewPage(fullMap);
+            UpdateMapPreview(selMap);
         }
 
         GbxGame GetSelectedGame()
