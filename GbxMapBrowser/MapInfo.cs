@@ -30,6 +30,7 @@ namespace GbxMapBrowser
         public string ObjectiveAuthor { get; }
         public ImageSource EnviImage { get; }
         public ImageSource MapThumbnail { get; }
+        public bool IsWorking { get; }
 
         public MapInfo(string fullnamepath, bool basicInfoOnly)
         {
@@ -43,13 +44,14 @@ namespace GbxMapBrowser
                 gbx = GameBox.ParseNodeHeader(fullnamepath);
                 else
                 gbx = GameBox.ParseNode(fullnamepath);
-
+                IsWorking = true;
             }
             catch (Exception e)
             {
                 MapName = "ERROR (" + shortName + ")";
                 EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png"));
                 Debug.WriteLine("Error: Map '" + fullnamepath + "' - impossible to load" + Environment.NewLine + e.Message);
+                IsWorking = false;
                 return;
             }
 

@@ -26,7 +26,9 @@ namespace GbxMapBrowser
             InitializeComponent();
             Opacity = 0;
             if (data is MapInfo)
-                Map = (MapInfo)data;
+            {
+                Map = (MapInfo)data;   
+            }
             else if (data is FolderInfo)
             {
                 mapNameLabel.Content = (data as FolderInfo).FolderName;
@@ -41,6 +43,7 @@ namespace GbxMapBrowser
                 await Task.Delay(new TimeSpan(50000));
                 Map = await Task.Run(() => new MapInfo(Map.MapFullName, false));
                 DataContext = Map;
+                if (!Map.IsWorking) HideAllExceptHeader();
             }
             FadeInAnimation();
         }

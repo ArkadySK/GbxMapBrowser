@@ -7,7 +7,7 @@ namespace GbxMapBrowser
 {
     public static class EnviManager
     {
-        public static string[] EnviLibrary = new string[] { "Bay", "Canyon", "Coast", "Desert", "Island", "Lagoon", "Rally", "Snow", "Stadium", "Stadium256", "Valley", "Storm" };
+        public static string[] EnviLibrary = new string[] { "Alpine", "Bay", "Canyon", "Coast", "Island", "Lagoon", "Rally", "Speed", "Stadium", "Stadium256", "Storm", "Valley" };
         public static List<Tuple<string, string>> TitlepackLibrary = new List<Tuple<string, string>> //tuple contains: tp id, tp image
         { 
             Tuple.Create("TM2U_Island@adamkooo", "TM2Island"),  
