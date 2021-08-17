@@ -37,13 +37,13 @@
                 <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" MouseDoubleClick="mapListBox_PreviewMouseDoubleClickAsync" AllowDrop="True" DragDrop.Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" PreviewMouseDown="mapListBox_PreviewMouseDown" >
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type local:FolderInfo}">
-                            <StackPanel x:Name="mapListBoxItem" Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
                                 <Image Source="/Data/UIIcons/Folder.png" Width="50"></Image>
                                 <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding FolderName}" Grid.Column="1" Margin="5"/>
                             </StackPanel>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type local:MapInfo}">
-                            <Grid>
+                            <Grid x:Name="mapListBox_Item" ContextMenu="{StaticResource MapContextMenu}" ContextMenuOpening="mapListBox_Item_ContextMenuOpening">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition />
@@ -52,21 +52,6 @@
                                 <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding MapName}" Grid.Column="1" Margin="5"/>
                                 <Image Source="{Binding EnviImage}" Grid.Column="0" Margin="5"/>
                                 <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="2" Margin="5"/>
-                                <Grid.ContextMenu>
-                                    <ContextMenu >
-                                        <!--
-                                        <Label Padding="0">Cut</Label>
-                                        <Label Padding="0">Copy</Label>
-                                        <Label Padding="0">Paste</Label>
-                                        <Separator/>
-                                        -->
-                                        <MenuItem Header="Delete" Click="ContextMenuDelete_Click"/>
-                                        <MenuItem Header="Rename File" Click="ContextMenuRenameFile_Click"/>
-                                        <MenuItem Header="Rename Map" Click="ContextMenuRenameMap_Click"/>
-                                        <Separator/>
-                                        <MenuItem Header="Properties" Click="ContextMenuProperties_Click"/>
-                                    </ContextMenu>
-                                </Grid.ContextMenu>
                             </Grid>
                         </DataTemplate>
                     </ListBox.Resources>

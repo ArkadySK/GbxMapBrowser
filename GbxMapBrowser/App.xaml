@@ -29,6 +29,20 @@
                 <Setter Property="Background" Value="{x:Null}"/>
                 <Setter Property="BorderThickness" Value="0"/>
             </Style>
+
+            <ContextMenu x:Key="MapContextMenu">
+                <!--
+                <Label Padding="0">Cut</Label>
+                <Label Padding="0">Copy</Label>
+                <Label Padding="0">Paste</Label>
+                <Separator/>
+                -->
+                <MenuItem Header="Delete"/>
+                <MenuItem Header="Rename File"/>
+                <MenuItem Header="Rename Map"/>
+                <Separator/>
+                <MenuItem Header="Properties"/>
+            </ContextMenu>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

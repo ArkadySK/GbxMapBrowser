@@ -47,7 +47,7 @@ namespace GbxMapBrowser
         private async void Window_LoadedAsync(object sender, RoutedEventArgs e)
         {
             await UpdateMapList(curFolder);
-            
+
         }
 
 
@@ -190,7 +190,7 @@ namespace GbxMapBrowser
                 MessageBox.Show(ee.Message);
             }
             await UpdateMapList(curFolder);
-            
+
         }
         #endregion
 
@@ -200,7 +200,7 @@ namespace GbxMapBrowser
             {
                 curFolder = selFolder.FolderFullPath;
                 await UpdateMapList(curFolder);
-                Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList);;
+                Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList); ;
             }
             else if (mapListBox.SelectedItem is MapInfo mapInfo)
             {
@@ -252,7 +252,6 @@ namespace GbxMapBrowser
             {
                 curFolder = currentFolderTextBox.Text;
                 await UpdateMapList(curFolder);
-                Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList);
             }
         }
 
@@ -300,68 +299,94 @@ namespace GbxMapBrowser
 
             FileOperations.CopyFilesToFolder(MapPathsArray, curFolder);
             await UpdateMapList(curFolder);
-            
+
         }
         #endregion
 
         private async void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!(mapListBox.SelectedItem is MapInfo)) return;
+            /*if (e.Key == Key.Return)
+            {
+                await UpdateMapList(curFolder);
+            }*/
+
+            if (!(mapListBox.SelectedItem is MapInfo)) return; //must be selected map
+
             MapInfo selMap = (MapInfo)mapListBox.SelectedItem;
             if (e.Key == Key.Delete)
             {
                 MapOperations.DeleteMap(selMap);
                 await UpdateMapList(curFolder);
-                
+
             }
-            /* if(e.SystemKey == Key.F10)   //ALT + F10        
-                 throw new NotImplementedException(); //context menu*/
+            if (Keyboard.Modifiers == ModifierKeys.Alt && Keyboard.IsKeyDown(Key.F10))   //ALT + F10        
+                ShowContextMenu(); //context menu
             if (e.SystemKey == Key.F2)
             {
                 MapOperations.RenameMap(selMap);
                 await UpdateMapList(curFolder);
-                
+
             }
-            if (e.SystemKey == Key.LeftAlt) //ALT + ENTER
+            if (Keyboard.IsKeyDown(Key.Enter) && Keyboard.Modifiers == ModifierKeys.Alt) //ALT + ENTER
                 FileOperations.ShowFileProperties(selMap.MapFullName);
         }
 
         #region ContextMenuEvents
 
-        private async void ContextMenuDelete_Click(object sender, RoutedEventArgs e)
+        void ShowContextMenu()
+        {
+            if (mapListBox.SelectedItem == null) return;
+            if (!(mapListBox.SelectedItem is MapInfo)) return;
+
+            ContextMenu contextMenu = (ContextMenu)FindResource("MapContextMenu");
+            contextMenu.PlacementTarget = mapListBox;
+            contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
+            contextMenu.IsOpen = true;
+        }
+ 
+        private void mapListBox_Item_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            ContextMenu contextMenu = (ContextMenu)((Grid)sender).ContextMenu;
+            contextMenu.PreviewMouseDown += ContextMenu_PreviewMouseDown;
+
+        }
+
+        private async void ContextMenu_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (!(mapListBox.SelectedItem is MapInfo)) return;
+            if (!(e.Source is MenuItem)) return;
+            
             var selMap = (MapInfo)mapListBox.SelectedItem;
-            await Task.Run(() => MapOperations.DeleteMap(selMap));
-            await UpdateMapList(curFolder);
-            
-        }
-
-        private async void ContextMenuRenameFile_Click(object sender, RoutedEventArgs e)
-        {
-            if (!(mapListBox.SelectedItem is MapInfo)) return;
-            string oldMapName = ((MapInfo)mapListBox.SelectedItem).MapFullName;
-            FileOperations.RenameFile(oldMapName);
-            await UpdateMapList(curFolder);
-            
-        }
-
-        private async void ContextMenuRenameMap_Click(object sender, RoutedEventArgs e)
-        {
-            if (!(mapListBox.SelectedItem is MapInfo)) return;
-            MapInfo selMap = (MapInfo)mapListBox.SelectedItem;
-            MapOperations.RenameMap(selMap);
-            await UpdateMapList(curFolder);
-            
-        }
-
-        private void ContextMenuProperties_Click(object sender, RoutedEventArgs e)
-        {
-            var path = ((MapInfo)mapListBox.SelectedItem).MapFullName;
-            FileOperations.ShowFileProperties(path);
+            var selMenuItem = (MenuItem)e.Source;
+            switch (selMenuItem.Header)
+            {
+                case "Delete":
+                    {
+                        MapOperations.DeleteMap(selMap);
+                        await UpdateMapList(curFolder);
+                        break;
+                    }
+                case "Rename File":
+                    {
+                        var oldMapName = selMap.MapFullName;
+                        FileOperations.RenameFile(oldMapName);
+                        await UpdateMapList(curFolder);
+                        break;
+                    }
+                case "Rename Map":
+                    {
+                        MapOperations.RenameMap(selMap);
+                        await UpdateMapList(curFolder);
+                        break;
+                    }
+                case "Properties":
+                    {
+                        var path = ((MapInfo)mapListBox.SelectedItem).MapFullName;
+                        FileOperations.ShowFileProperties(path);
+                        break;
+                    }
+            }
         }
         #endregion
-
-        
     }
 }
