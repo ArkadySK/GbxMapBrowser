@@ -50,15 +50,6 @@ namespace GbxMapBrowser
 
         }
 
-
-        void UpdateMapPreviewVisibility(bool isVis)
-        {
-            if (isVis)
-                mapPreviewColumn.Width = new GridLength(1, GridUnitType.Star);
-            else
-                mapPreviewColumn.Width = new GridLength(0, GridUnitType.Star);
-        }
-
         #region GbxGameListInit
         void LoadGbxGameList()
         {
@@ -194,20 +185,35 @@ namespace GbxMapBrowser
         }
         #endregion
 
-        private async void mapListBox_PreviewMouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
+        private async Task MapListBoxLaunchItemAsync(object selItem)
         {
-            if (mapListBox.SelectedItem is FolderInfo selFolder)
+            if (selItem is FolderInfo selFolder)
             {
                 curFolder = selFolder.FolderFullPath;
                 await UpdateMapList(curFolder);
                 Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList); ;
             }
-            else if (mapListBox.SelectedItem is MapInfo mapInfo)
+            else if (selItem is MapInfo mapInfo)
             {
                 var selGame = GetSelectedGame();
                 if (selGame == null) return;
                 mapInfo.OpenMap(selGame);
             }
+        }
+
+        private async void mapListBox_PreviewMouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
+        {
+            await MapListBoxLaunchItemAsync(mapListBox.SelectedItem);
+        }
+
+        #region MapPreviewPane
+
+        void UpdateMapPreviewVisibility(bool isVis)
+        {
+            if (isVis)
+                mapPreviewColumn.Width = new GridLength(1, GridUnitType.Star);
+            else
+                mapPreviewColumn.Width = new GridLength(0, GridUnitType.Star);
         }
 
         void UpdateMapPreview(object data)
@@ -235,7 +241,6 @@ namespace GbxMapBrowser
                 return null;
             }
             return selGame;
-
         }
 
         private void ButtonPlay_Click(object sender, RoutedEventArgs e)
@@ -244,16 +249,7 @@ namespace GbxMapBrowser
             if (GetSelectedGame() == null) return;
             (mapListBox.SelectedItem as MapInfo).OpenMap(GetSelectedGame());
         }
-
-
-        private async void currentFolderTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                curFolder = currentFolderTextBox.Text;
-                await UpdateMapList(curFolder);
-            }
-        }
+        #endregion
 
         #region DragOutMaps
 
@@ -303,23 +299,50 @@ namespace GbxMapBrowser
         }
         #endregion
 
-        private async void Window_KeyDown(object sender, KeyEventArgs e)
+        #region KeyPresses
+
+        private async void currentFolderTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            /*if (e.Key == Key.Return)
+            if (e.Key == Key.Enter)
             {
+                curFolder = currentFolderTextBox.Text;
                 await UpdateMapList(curFolder);
-            }*/
+            }
+        }
+
+
+        private async void mapListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                await MapListBoxLaunchItemAsync(mapListBox.SelectedItem);
+            }
+
+            if(e.Key == Key.Back)
+            {
+                try
+                {
+                    var parentFolder = (Directory.GetParent(curFolder));
+                    if (parentFolder != null)
+                        curFolder = parentFolder.FullName;
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message);
+                }
+                await UpdateMapList(curFolder);
+            }
 
             if (!(mapListBox.SelectedItem is MapInfo)) return; //must be selected map
-
             MapInfo selMap = (MapInfo)mapListBox.SelectedItem;
+
             if (e.Key == Key.Delete)
             {
                 MapOperations.DeleteMap(selMap);
                 await UpdateMapList(curFolder);
 
             }
-            if (Keyboard.Modifiers == ModifierKeys.Alt && Keyboard.IsKeyDown(Key.F10))   //ALT + F10        
+            if (Keyboard.Modifiers == ModifierKeys.Shift && Keyboard.IsKeyDown(Key.F10))   //SHIFT + F10        
                 ShowContextMenu(); //context menu
             if (e.SystemKey == Key.F2)
             {
@@ -331,7 +354,9 @@ namespace GbxMapBrowser
                 FileOperations.ShowFileProperties(selMap.MapFullName);
         }
 
-        #region ContextMenuEvents
+        #endregion
+
+        #region ContextMenu
 
         void ShowContextMenu()
         {
@@ -348,7 +373,6 @@ namespace GbxMapBrowser
         {
             ContextMenu contextMenu = (ContextMenu)((Grid)sender).ContextMenu;
             contextMenu.PreviewMouseDown += ContextMenu_PreviewMouseDown;
-
         }
 
         private async void ContextMenu_PreviewMouseDown(object sender, MouseButtonEventArgs e)

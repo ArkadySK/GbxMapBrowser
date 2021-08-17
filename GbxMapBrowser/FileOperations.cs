@@ -106,11 +106,17 @@ namespace GbxMapBrowser
 
         private static string GetShortNameFromFilePath(string path)
         {
+            while (path.EndsWith("\\")) 
+                path = path.Remove(path.Length - 1);
+
             return path.Split("\\").ToList().Last();
         }
 
-        private static string GetFolderFromFilePath(string path)
-        {
+        public static string GetFolderFromFilePath(string path)
+        { 
+            while (path.EndsWith("\\")) 
+                path = path.Remove(path.Length - 1);
+
             var shortFileName = GetShortNameFromFilePath(path);
             string newPath = path.Replace(shortFileName, "");
             return newPath;

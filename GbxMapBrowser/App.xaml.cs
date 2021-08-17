@@ -8,6 +8,5 @@ namespace GbxMapBrowser
 {
     public partial class App : Application
     {
-       //public const ContextMenu MapContextMenu = nameof(MapContextMenu);
     }
 }
