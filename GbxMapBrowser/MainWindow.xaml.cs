@@ -189,6 +189,7 @@ namespace GbxMapBrowser
             {
                 curFolder = selFolder.FolderFullPath;
                 await UpdateMapList(curFolder);
+                UpdateMapPreview(null);
             }
             else if (selItem is MapInfo mapInfo)
             {
@@ -196,6 +197,8 @@ namespace GbxMapBrowser
                 if (selGame == null) return;
                 mapInfo.OpenMap(selGame);
             }
+            else if (selItem is null)
+                MessageBox.Show("Select a map to launch", "Impossible to load map", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
         private async void mapListBox_PreviewMouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
@@ -232,7 +235,7 @@ namespace GbxMapBrowser
         GbxGame GetSelectedGame()
         {
             var selGame = (GbxGame)openInComboBox.SelectedItem;
-            if (selGame == null)
+            if (selGame == null || !selGame.IsEnabled)
             {
                 MessageBox.Show("Choose a game to launch your map with!", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
                 return null;
@@ -240,11 +243,9 @@ namespace GbxMapBrowser
             return selGame;
         }
 
-        private void ButtonPlay_Click(object sender, RoutedEventArgs e)
+        private async void ButtonPlay_Click(object sender, RoutedEventArgs e)
         {
-            if (!(mapListBox.SelectedItem is MapInfo)) return;
-            if (GetSelectedGame() == null) return;
-            (mapListBox.SelectedItem as MapInfo).OpenMap(GetSelectedGame());
+            await MapListBoxLaunchItemAsync(mapListBox.SelectedItem);
         }
         #endregion
 
