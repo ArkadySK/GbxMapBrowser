@@ -15,7 +15,7 @@
         
             <Style x:Key="DigitalTimeStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="15"/>
-                <Setter Property="FontWeight" Value="DemiBold"/>
+                <Setter Property="FontWeight" Value="Thin"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
             <Style x:Key="DefaultUIStyle" TargetType="Label">
