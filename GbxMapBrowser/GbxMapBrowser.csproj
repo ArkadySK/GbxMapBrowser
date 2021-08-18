@@ -169,6 +169,18 @@
     <None Update="Data\GameIcons\TMUF.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Data\MoodIcons\Day.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\MoodIcons\Night.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\MoodIcons\Sunrise.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\MoodIcons\Sunset.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Titlepacks\TM2Island.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
