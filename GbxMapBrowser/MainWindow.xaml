@@ -7,16 +7,16 @@
         xmlns:System="clr-namespace:System;assembly=System.Runtime" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         mc:Ignorable="d"
         Title="Gbx Map Browser" Height="750" Width="1000" MinHeight="400" MinWidth="600" DataContext="MapInfoController" Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Loaded="Window_LoadedAsync">
-    <Grid Margin="5">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition x:Name="mapPreviewColumn" Width="*"/>
         </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Column="1"  Grid.Row="1" Width="3" HorizontalAlignment="Left" Panel.ZIndex="10"/>
+        <GridSplitter Grid.Column="1" Grid.Row="1" Width="3" HorizontalAlignment="Left" Panel.ZIndex="10"/>
         <Grid HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -25,13 +25,18 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="parentFolderButton" Content="⏏" Click="parentFolderButton_Click"/>
-            <TextBox x:Name="currentFolderTextBox" FontSize="16" Margin="5 0" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="currentFolderTextBox_KeyUp" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="currentFolderTextBox" FontSize="16" BorderThickness="0" Margin="5 0" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="currentFolderTextBox_KeyUp" Grid.ColumnSpan="2"/>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" Grid.Column="3" HorizontalAlignment="Center" Margin="0 0 5 0" Content="⟳" Click="refreshMapsButton_Click"/>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="OpenInExplorerButton" Grid.Column="4" HorizontalAlignment="Center" Content="📁" Click="OpenInExplorerButton_Click"/>
+            <Rectangle Fill="Gray" Grid.Row="1" Height="1" Grid.ColumnSpan="5"/>
         </Grid>
-        <Button Grid.Row="1" Panel.ZIndex="10" Style="{StaticResource AddressButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Click="manageGamesButton_Click" Padding="-5" FontSize="35">⚙️</Button>
-        <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="5" Margin="0 5 0 0" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="50" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
+        <Button Grid.Row="1" Panel.ZIndex="10" Width="48" Height="48" Style="{StaticResource AddressButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Click="manageGamesButton_Click" Padding="-5" FontSize="35">⚙️</Button>
+        <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="5" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="48" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
             <mah:HamburgerMenu.Content>
 
                 <!--Map list, the right part-->
@@ -75,7 +80,7 @@
 
 
         <!--Map Preview window-->
-        <Frame x:Name="mapPreviewFrame" Grid.Column="1" Grid.Row="1" Margin="5 5 0 0" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="mapPreviewFrame" Grid.Column="1" Grid.Row="1" Margin="5" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
 
         <!--The translation color effect-->
         <Rectangle VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Panel.ZIndex="19" Height="210">
@@ -88,7 +93,7 @@
         </Rectangle>
 
         <!--Play Button-->
-        <StackPanel VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Margin="5 5 0 0" Panel.ZIndex="20">
+        <StackPanel VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Margin="5" Panel.ZIndex="20">
             <Label Padding="1" Style="{StaticResource DefaultUIStyle}" Content="Open in:"/>
             <ComboBox x:Name="openInComboBox" FontSize="15" Margin="0 5 0 10" Height="40">
                 <ComboBox.ItemTemplate>

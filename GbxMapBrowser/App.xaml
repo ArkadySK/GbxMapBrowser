@@ -23,7 +23,7 @@
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
             <Style x:Key="AddressButtonStyle" TargetType="{x:Type Button}">
-                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="FontSize" Value="28"/>
                 <Setter Property="Width" Value="48"/>
                 <Setter Property="Height" Value="48"/>
                 <Setter Property="Padding" Value="0"/>
