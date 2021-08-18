@@ -41,13 +41,11 @@ namespace GbxMapBrowser
             {
                 ShowGbxGamesWindow();
             }
-
         }
 
         private async void Window_LoadedAsync(object sender, RoutedEventArgs e)
         {
             await UpdateMapList(curFolder);
-
         }
 
         #region GbxGameListInit
@@ -191,7 +189,6 @@ namespace GbxMapBrowser
             {
                 curFolder = selFolder.FolderFullPath;
                 await UpdateMapList(curFolder);
-                Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList); ;
             }
             else if (selItem is MapInfo mapInfo)
             {
@@ -309,7 +306,6 @@ namespace GbxMapBrowser
                 await UpdateMapList(curFolder);
             }
         }
-
 
         private async void mapListBox_KeyDown(object sender, KeyEventArgs e)
         {
