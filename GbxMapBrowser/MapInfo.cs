@@ -24,13 +24,13 @@ namespace GbxMapBrowser
         public string CopperPrice { get; }
         public string MapType { get; }
         public string Titlepack { get; }
-        public string MapTime { get; }
+        public Uri MoodIcon { get; }
         public string Description { get; }
         public string ObjectiveBronze { get; }
         public string ObjectiveSilver { get; }
         public string ObjectiveGold { get; }
         public string ObjectiveAuthor { get; }
-        public ImageSource EnviImage { get; }
+        public Uri EnviImage { get; }
         public ImageSource MapThumbnail { get; }
         public bool IsWorking { get; }
 
@@ -51,7 +51,7 @@ namespace GbxMapBrowser
             catch (Exception e)
             {
                 MapName = "ERROR (" + shortName + ")";
-                EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png"));
+                EnviImage = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
                 Debug.WriteLine("Error: Map '" + fullnamepath + "' - impossible to load" + Environment.NewLine + e.Message);
                 IsWorking = false;
                 return;
@@ -67,14 +67,13 @@ namespace GbxMapBrowser
                 Titlepack = challenge.TitleID;
 
                 Uri enviImagePath = EnviManager.GetEnvironmentImagePath(challenge.Collection, Titlepack);
-                EnviImage = new BitmapImage(enviImagePath);
-                EnviImage.Freeze();
+                EnviImage = enviImagePath;
 
                 ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
 
                 if (basicInfoOnly) return;
                 Description = challenge.Comments;
-                MapTime = challenge.Decoration.ID;
+                MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.ID);
 
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))
                     Author = challenge.AuthorLogin;
@@ -108,8 +107,7 @@ namespace GbxMapBrowser
             else if (gbx is CGameCtnReplayRecord gbxReplay)
             {
                 CGameCtnReplayRecord replay = gbxReplay;
-                EnviImage = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
-                EnviImage.Freeze();
+                EnviImage = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png");
                 if (basicInfoOnly) return;
                 MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 MapThumbnail.Freeze();
