@@ -24,6 +24,8 @@ namespace GbxMapBrowser
         public string CopperPrice { get; }
         public string MapType { get; }
         public string Titlepack { get; }
+        public string MapTime { get; }
+        public string Description { get; }
         public string ObjectiveBronze { get; }
         public string ObjectiveSilver { get; }
         public string ObjectiveGold { get; }
@@ -71,6 +73,8 @@ namespace GbxMapBrowser
                 ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
 
                 if (basicInfoOnly) return;
+                Description = challenge.Comments;
+                MapTime = challenge.Decoration.ID;
 
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))
                     Author = challenge.AuthorLogin;

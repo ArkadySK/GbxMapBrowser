@@ -9,12 +9,7 @@
       Title="MapPreviewPage" Loaded="Page_Loaded">
 
     <Grid x:Name="mainGrid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="medalColumn" Width="38"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -24,34 +19,47 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="mapNameLabel" Content="{Binding MapName, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="11"/>
-        <Label FontSize="18" Content="{Binding Content, ElementName=nameLabel}" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="0" Panel.ZIndex="10" Foreground="{DynamicResource MahApps.Brushes.Flyout.Background}">
+        <Label x:Name="mapNameLabel" Content="{Binding MapName, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="11"/>
+        <Label FontSize="18" Content="{Binding Content, ElementName=nameLabel}" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="10" Foreground="{DynamicResource MahApps.Brushes.Flyout.Background}">
             <Label.Effect>
                 <BlurEffect Radius="5" KernelType="Gaussian"/>
             </Label.Effect>
         </Label>
-        <Image x:Name="mapImage" Source="{Binding MapThumbnail}" Grid.ColumnSpan="2" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
+        <Image x:Name="mapImage" Source="{Binding MapThumbnail}" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1"/>
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Label Grid.ColumnSpan="2" Grid.Row="1" Content="{Binding Author, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+        <Label Grid.Row="1" Content="{Binding Author, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <Label Style="{StaticResource DefaultUIStyle}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{Binding CopperPrice, FallbackValue='0'}"/>
             <Label Style="{StaticResource DefaultUIStyle}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content=" C"/>
         </StackPanel>
-        <Label Grid.ColumnSpan="2" Grid.Row="2" Panel.ZIndex="10" Content="{Binding MapType, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
-        <Label Grid.ColumnSpan="2" Grid.Row="3" Content="{Binding Titlepack, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
+        <Label Grid.Row="2" Panel.ZIndex="10" Content="{Binding MapType, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
+        <Label Grid.Row="3" Content="{Binding Titlepack, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
+        <Label Grid.Row="4" Content="{Binding MapTime, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
         
-        <Label Grid.Column="1" Grid.Row="4" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveAuthor}"/>
-        <Label Grid.Column="1" Grid.Row="5" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}"/>
-        <Label Grid.Column="1" Grid.Row="6" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveSilver}"/>
-        <Label Grid.Column="1" Grid.Row="7" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveBronze}"/>
-        <Image Grid.Row="4" Margin="5 1" Source="/Data/Medals/NadeoMedal.png"/>
-        <Image Grid.Row="5" Margin="5 1" Source="/Data/Medals/GoldMedal.png"/>
-        <Image Grid.Row="6" Margin="5 1" Source="/Data/Medals/SilverMedal.png"/>
-        <Image Grid.Row="7" Margin="5 1" Source="/Data/Medals/BronzeMedal.png"/>
+        <StackPanel x:Name="medalsStackPanel" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel>
+                <Image Grid.Row="4" Source="/Data/Medals/NadeoMedal.png" Height="50"/>
+                <Label Grid.Column="1" Grid.Row="4" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveAuthor}"/>
+            </StackPanel>
+            <StackPanel>
+                <Image Grid.Row="5" Source="/Data/Medals/GoldMedal.png" Height="50"/>
+                <Label Grid.Column="1" Grid.Row="5" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}"/>
+            </StackPanel>
+            <StackPanel>
+                <Image Grid.Row="6" Source="/Data/Medals/SilverMedal.png" Height="50"/>
+                <Label Grid.Column="1" Grid.Row="6" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveSilver}"/>
+            </StackPanel>
+            <StackPanel>
+                <Image Grid.Row="7" Source="/Data/Medals/BronzeMedal.png" Height="50"/>
+                <Label Grid.Column="1" Grid.Row="7" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveBronze}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <TextBlock TextWrapping="Wrap" Grid.Row="6" Text="{Binding Description, FallbackValue=''}" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom"/>
     </Grid>
 </Page>
