@@ -22,12 +22,46 @@
                 <Setter Property="FontSize" Value="15"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-            <Style x:Key="AddressButtonStyle" TargetType="Button">
+            <Style x:Key="AddressButtonStyle" TargetType="{x:Type Button}">
                 <Setter Property="FontSize" Value="25"/>
-                <Setter Property="Width" Value="40"/>
+                <Setter Property="Width" Value="48"/>
+                <Setter Property="Height" Value="48"/>
                 <Setter Property="Padding" Value="0"/>
-                <Setter Property="Background" Value="{x:Null}"/>
+                <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
+                                <!-- Background Rectangle (bg of the control) -->
+                                <Rectangle x:Name="backgroundRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="{TemplateBinding Background}" StrokeThickness="1" Fill="Transparent" />
+                                <!-- Present Content (text) of the button. -->
+                                <DockPanel Name="myContentPresenterDockPanel">
+                                    <ContentPresenter x:Name="myContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" />
+                                </DockPanel>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+
+                                <!-- Set properties when mouse pointer is over the button. -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <!-- Change the color of the outer rectangle when user mouses over it. -->
+                                    <Setter Property ="Rectangle.Fill" TargetName="backgroundRectangle" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                                    <Setter Property ="Rectangle.Opacity" TargetName="backgroundRectangle" Value=".5" />
+
+                                    <!-- Sets the glass opacity to 1, therefore, the glass "appears" when user mouses over it. -->
+                                    <Setter Property="ContentPresenter.Opacity" TargetName="myContentPresenter" Value=".85" />
+                                </Trigger>
+                                <!-- Set properties when button has focus. -->
+                                <Trigger Property="IsFocused" Value="true">
+                                    <Setter Property="Rectangle.Opacity" Value="1" />
+                                    <Setter Property="Rectangle.Stroke" TargetName="backgroundRectangle" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                    <Setter Property="Rectangle.Opacity" Value="1"/>
+                                </Trigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <ContextMenu x:Key="MapContextMenu">
