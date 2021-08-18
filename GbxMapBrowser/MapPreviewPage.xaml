@@ -39,7 +39,7 @@
         </StackPanel>
         <Label Grid.Row="2" Panel.ZIndex="10" Content="{Binding MapType, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
         <Label Grid.Row="3" Content="{Binding Titlepack, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
-        <Label Grid.Row="4" Content="{Binding MapTime, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
+        <Image Grid.Row="0" Source="{Binding MoodIcon}" Height="50" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         
         <StackPanel x:Name="medalsStackPanel" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel>
