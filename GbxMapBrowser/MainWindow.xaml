@@ -27,7 +27,7 @@
             </Grid.ColumnDefinitions>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="parentFolderButton" Content="⏏" Click="parentFolderButton_Click"/>
             <TextBox x:Name="currentFolderTextBox" FontSize="16" Margin="5 0" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="currentFolderTextBox_KeyUp" Grid.ColumnSpan="2"/>
-            <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" Grid.Column="3" HorizontalAlignment="Center" Content="⟳" Click="refreshMapsButton_Click"/>
+            <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" Grid.Column="3" HorizontalAlignment="Center" Margin="0 0 5 0" Content="⟳" Click="refreshMapsButton_Click"/>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="OpenInExplorerButton" Grid.Column="4" HorizontalAlignment="Center" Content="📁" Click="OpenInExplorerButton_Click"/>
         </Grid>
         <Button Grid.Row="1" Panel.ZIndex="10" Style="{StaticResource AddressButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Click="manageGamesButton_Click" Padding="-5" FontSize="35">⚙️</Button>
