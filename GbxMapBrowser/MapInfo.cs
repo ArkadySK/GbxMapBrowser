@@ -108,11 +108,12 @@ namespace GbxMapBrowser
             {
                 CGameCtnReplayRecord replay = gbxReplay;
                 EnviImage = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png");
+                MapName = shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
+                ObjectiveGold = TimeSpanToString(replay.Time);
                 if (basicInfoOnly) return;
                 MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 MapThumbnail.Freeze();
                 Author = ToReadableText(replay.AuthorNickname);
-                MapName = shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
                 Titlepack = replay.TitleID;
             }
         }
