@@ -7,59 +7,65 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MapPreviewPage" Loaded="Page_Loaded">
+    <!--  -->
 
-    <Grid x:Name="mainGrid">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <Label x:Name="mapNameLabel" Content="{Binding MapName, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="11"/>
-        <Label FontSize="18" Content="{Binding Content, ElementName=nameLabel}" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="10" Foreground="{DynamicResource MahApps.Brushes.Flyout.Background}">
-            <Label.Effect>
-                <BlurEffect Radius="5" KernelType="Gaussian"/>
-            </Label.Effect>
-        </Label>
-        <Image x:Name="mapImage" Source="{Binding MapThumbnail}" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
+        <Image x:Name="mapImage" Source="{Binding MapThumbnail}" MinHeight="50" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1"/>
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Label Grid.Row="1" Content="{Binding Author, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+        <Label x:Name="mapNameLabel" Content="{Binding MapName, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="12" Background="{x:Null}"/>
+        <Label  HorizontalAlignment="Stretch" Panel.ZIndex="10" Background="#7F000000" Height="32" VerticalAlignment="Top"/>
+        <Label FontSize="18" Content="{Binding Content, ElementName=nameLabel}" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="11" Foreground="{DynamicResource MahApps.Brushes.Flyout.Background}">
+            <Label.Effect>
+                <BlurEffect Radius="5" KernelType="Gaussian"/>
+            </Label.Effect>
+        </Label>
+        <Image Source="{Binding MoodIcon}" Height="50" Margin="5 0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
             <Label Style="{StaticResource DefaultUIStyle}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{Binding CopperPrice, FallbackValue='0'}"/>
             <Label Style="{StaticResource DefaultUIStyle}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content=" C"/>
         </StackPanel>
-        <Label Grid.Row="2" Panel.ZIndex="10" Content="{Binding MapType, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
-        <Label Grid.Row="3" Content="{Binding Titlepack, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
-        <Image Grid.Row="0" Source="{Binding MoodIcon}" Height="50" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        
-        <StackPanel x:Name="medalsStackPanel" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
-            <StackPanel>
-                <Image Grid.Row="4" Source="/Data/Medals/NadeoMedal.png" Height="50"/>
-                <Label Grid.Column="1" Grid.Row="4" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveAuthor}"/>
-            </StackPanel>
-            <StackPanel>
-                <Image Grid.Row="5" Source="/Data/Medals/GoldMedal.png" Height="50"/>
-                <Label Grid.Column="1" Grid.Row="5" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}"/>
-            </StackPanel>
-            <StackPanel>
-                <Image Grid.Row="6" Source="/Data/Medals/SilverMedal.png" Height="50"/>
-                <Label Grid.Column="1" Grid.Row="6" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveSilver}"/>
-            </StackPanel>
-            <StackPanel>
-                <Image Grid.Row="7" Source="/Data/Medals/BronzeMedal.png" Height="50"/>
-                <Label Grid.Column="1" Grid.Row="7" Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveBronze}"/>
-            </StackPanel>
-        </StackPanel>
 
-        <TextBlock TextWrapping="Wrap" Grid.Row="6" Text="{Binding Description, FallbackValue=''}" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom"/>
+        <StackPanel x:Name="infoStackPanel"  Grid.Row="1" Margin="10">
+            <Label Content="{Binding Author, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+            <Label Panel.ZIndex="10" Content="{Binding MapType, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
+            <Label Content="{Binding Titlepack, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
+
+                <!--Medals grid-->
+            <Grid Grid.Row="5" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="3">
+                    <Image Source="/Data/Medals/NadeoMedal.png" MaxHeight="70"/>
+                    <Label Style="{StaticResource DigitalTimeStyle}" Padding="0" HorizontalAlignment="Center" Content="{Binding ObjectiveAuthor}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="3">
+                    <Image Source="/Data/Medals/GoldMedal.png" MaxHeight="70"/>
+                    <Label Style="{StaticResource DigitalTimeStyle}" Padding="0" HorizontalAlignment="Center" Content="{Binding ObjectiveGold}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Margin="3">
+                    <Image Source="/Data/Medals/SilverMedal.png" MaxHeight="70"/>
+                    <Label Style="{StaticResource DigitalTimeStyle}" Padding="0" HorizontalAlignment="Center" Content="{Binding ObjectiveSilver}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Margin="3">
+                    <Image Source="/Data/Medals/BronzeMedal.png" MaxHeight="70"/>
+                    <Label Style="{StaticResource DigitalTimeStyle}" Padding="0" HorizontalAlignment="Center" Content="{Binding ObjectiveBronze}"/>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock TextWrapping="Wrap" Text="{Binding Description, FallbackValue=''}" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom"/>
+        </StackPanel>
     </Grid>
 </Page>

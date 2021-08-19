@@ -80,20 +80,20 @@
 
 
         <!--Map Preview window-->
-        <Frame x:Name="mapPreviewFrame" Grid.Column="1" Grid.Row="1" Margin="5" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="mapPreviewFrame" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
 
         <!--The translation color effect-->
-        <Rectangle VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Panel.ZIndex="19" Height="210">
+        <Rectangle VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Panel.ZIndex="19" Height="180">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#0000"/>
-                    <GradientStop Color="{DynamicResource MahApps.Colors.ThemeBackground}" Offset="0.5"/>
+                    <GradientStop Color="{DynamicResource MahApps.Colors.ThemeBackground}" Offset="0.65"/>
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
 
         <!--Play Button-->
-        <StackPanel VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Margin="5" Panel.ZIndex="20">
+        <StackPanel VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Margin="10" Panel.ZIndex="20">
             <Label Padding="1" Style="{StaticResource DefaultUIStyle}" Content="Open in:"/>
             <ComboBox x:Name="openInComboBox" FontSize="15" Margin="0 5 0 10" Height="40">
                 <ComboBox.ItemTemplate>

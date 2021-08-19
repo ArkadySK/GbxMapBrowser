@@ -56,7 +56,7 @@ namespace GbxMapBrowser
 
         void HideAllExceptHeader()
         {
-            medalsStackPanel.Visibility = Visibility.Collapsed;
+            infoStackPanel.Visibility = Visibility.Collapsed;
         }
     }
 }
