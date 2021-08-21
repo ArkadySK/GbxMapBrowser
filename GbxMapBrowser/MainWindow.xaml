@@ -80,7 +80,7 @@
 
 
         <!--Map Preview window-->
-        <Frame x:Name="mapPreviewFrame" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="mapPreviewFrame" Grid.Column="1" Margin="0 0 0 100" Grid.Row="1" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
 
         <!--The translation color effect-->
         <Rectangle VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Panel.ZIndex="19" Height="180">
