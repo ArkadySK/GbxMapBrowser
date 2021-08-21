@@ -61,7 +61,7 @@
                 </Grid>
             </Viewbox>
 
-            <TextBlock TextWrapping="Wrap" Text="{Binding Description, FallbackValue=''}" FontSize="15" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom"/>
+            <TextBlock TextWrapping="Wrap"  Text="{Binding Description, FallbackValue=''}" FontSize="15" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom" FontStyle="Italic"/>
         </StackPanel>
     </Grid>
 </Page>

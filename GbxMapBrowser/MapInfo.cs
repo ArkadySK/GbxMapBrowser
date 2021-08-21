@@ -74,7 +74,7 @@ namespace GbxMapBrowser
                 if (basicInfoOnly) return;
 
                 if(!string.IsNullOrEmpty(challenge.Comments))
-                    Description = "Description: " + Environment.NewLine + ToReadableText(challenge.Comments);
+                    Description = ToReadableText(challenge.Comments);
                 MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.ID);
 
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))
