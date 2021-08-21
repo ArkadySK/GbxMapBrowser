@@ -72,7 +72,9 @@ namespace GbxMapBrowser
                 ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
 
                 if (basicInfoOnly) return;
-                Description = challenge.Comments;
+
+                if(!string.IsNullOrEmpty(challenge.Comments))
+                    Description = "Description: " + Environment.NewLine + ToReadableText(challenge.Comments);
                 MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.ID);
 
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))

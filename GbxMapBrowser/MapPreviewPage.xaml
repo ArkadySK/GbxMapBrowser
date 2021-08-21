@@ -33,7 +33,7 @@
             <Label Panel.ZIndex="10" Content="{Binding MapType, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
             <Label Content="{Binding Titlepack, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" VerticalAlignment="Bottom"/>
 
-            <Viewbox ScrollViewer.PanningMode="HorizontalOnly"  StretchDirection="DownOnly">
+            <Viewbox Margin="0 10" ScrollViewer.PanningMode="HorizontalOnly"  StretchDirection="DownOnly">
                 <!--Medals grid-->
                 <Grid Grid.Row="5"  HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
@@ -61,7 +61,7 @@
                 </Grid>
             </Viewbox>
 
-            <TextBlock Padding="0 5 0 0" TextWrapping="Wrap" Text="{Binding Description, FallbackValue=''}" FontSize="13" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding Description, FallbackValue=''}" FontSize="15" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom"/>
         </StackPanel>
     </Grid>
 </Page>
