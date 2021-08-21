@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition x:Name="mapPreviewColumn" Width="*"/>
+            <ColumnDefinition x:Name="mapPreviewColumn" MinWidth="220"/>
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="3" HorizontalAlignment="Left" Panel.ZIndex="10"/>
         <Grid HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
