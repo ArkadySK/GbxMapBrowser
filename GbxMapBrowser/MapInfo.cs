@@ -70,10 +70,12 @@ namespace GbxMapBrowser
                 EnviImage = enviImagePath;
 
                 ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
-
                 if (basicInfoOnly) return;
+                ObjectiveBronze = TimeSpanToString(challenge.TMObjective_BronzeTime);
+                ObjectiveSilver = TimeSpanToString(challenge.TMObjective_SilverTime);
+                ObjectiveAuthor = TimeSpanToString(challenge.TMObjective_AuthorTime);
 
-                if(!string.IsNullOrEmpty(challenge.Comments))
+                if (!string.IsNullOrEmpty(challenge.Comments))
                     Description = ToReadableText(challenge.Comments);
                 MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.ID);
 
@@ -87,15 +89,11 @@ namespace GbxMapBrowser
                 if (string.IsNullOrEmpty(challenge.ChallengeParameters.MapType))
                 {
                     if (challenge.Mode.HasValue)
-                        MapType = "Gamemode: " + challenge.Mode.Value.ToString();
+                        MapType = challenge.Mode.Value.ToString();
                 }
                 else
-                    MapType = "Gamemode: " + challenge.ChallengeParameters.MapType;
+                    MapType = challenge.ChallengeParameters.MapType;
 
-                ObjectiveBronze = TimeSpanToString(challenge.TMObjective_BronzeTime);
-                ObjectiveSilver = TimeSpanToString(challenge.TMObjective_SilverTime);
-                ObjectiveAuthor = TimeSpanToString(challenge.TMObjective_AuthorTime);
-            
                 if (challenge.Thumbnail == null) return;
                 var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail);
 
