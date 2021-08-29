@@ -37,11 +37,73 @@ namespace GbxMapBrowser
             mapInfosList.Clear();
         }
 
-        public async Task SortMapList()
+        public async Task SortMapList(SortKind.Kind sortkind)
         {
-            var orderedMapInfosList = from map in mapInfosList
-                           orderby map.MapName
-                           select map;
+            IOrderedEnumerable<MapInfo> orderedMapInfosList = null;
+            switch (sortkind)
+            {
+                case SortKind.Kind.ByNameAscending:
+                {
+                    orderedMapInfosList = from map in mapInfosList
+                                            orderby map.MapName ascending
+                                            select map;
+                    break;
+                }
+                case SortKind.Kind.ByNameDescending:
+                {
+                    orderedMapInfosList = from map in mapInfosList
+                                            orderby map.MapName descending
+                                            select map;
+                    break;
+                }
+                case SortKind.Kind.ByDateModifiedAscending:
+                {
+                    orderedMapInfosList = from map in mapInfosList
+                                            orderby map.DateModified ascending
+                                            select map;
+                    break;
+                }
+                case SortKind.Kind.ByDateModifiedDescending:
+                {
+                    orderedMapInfosList = from map in mapInfosList
+                                            orderby map.DateModified descending
+                                            select map;
+                    break;
+                }
+
+
+
+
+                case SortKind.Kind.BySizeAscending:
+                {
+                    orderedMapInfosList = from map in mapInfosList
+                                            orderby map.FileSize ascending
+                                            select map;
+                    break;
+                }
+                case SortKind.Kind.BySizeDescending:
+                {
+                    orderedMapInfosList = from map in mapInfosList
+                                            orderby map.FileSize descending
+                                            select map;
+                    break;
+                }
+                case SortKind.Kind.ByLendthAscending:
+                {
+                    orderedMapInfosList = from map in mapInfosList
+                                            orderby map.ObjectiveGold ascending
+                                            select map;
+                    break;
+                }
+                case SortKind.Kind.ByLendthDescending:
+                {
+                    orderedMapInfosList = from map in mapInfosList
+                                            orderby map.ObjectiveGold descending
+                                            select map;
+                    break;
+                }
+            }
+            
             mapList.Clear();
             mapList.AddRange(folderInfosList);
             await Task.Run(()=> mapList.AddRange(orderedMapInfosList));

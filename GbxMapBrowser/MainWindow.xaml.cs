@@ -27,6 +27,7 @@ namespace GbxMapBrowser
         MapInfoController MapInfoController = new MapInfoController();
         GbxGameController GbxGameController = new GbxGameController();
         SearchOption searchOption;
+        SortKind.Kind sortKind = SortKind.Kind.ByNameAscending;
 
         public MainWindow()
         {
@@ -144,7 +145,7 @@ namespace GbxMapBrowser
                 mapTasks.Add(mapTask);
             }
             await Task.WhenAll(mapTasks.ToArray());
-            await MapInfoController.SortMapList();
+            await MapInfoController.SortMapList(sortKind);
             mapListBox.ItemsSource = MapInfoController.MapList;
 
             sw.Stop();
@@ -154,10 +155,21 @@ namespace GbxMapBrowser
         #endregion
 
         #region AdressBarButtonsEvents
+
+        private async void sortMapsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var sortMapsButtonTexts = new string[] { "AB ⬆️", "AB ⬇️", "📅 ⬆️", "📅 ⬇️", "MB ⬆️", "MB ⬇️", "⏱️ ⬆️", "⏱️ ⬇️"};
+            if (sortKind < (SortKind.Kind)7)
+                sortKind += 1;
+            else sortKind = 0;
+
+            await UpdateMapList(curFolder);
+            sortMapsButton.Content = sortMapsButtonTexts[(int)sortKind];
+        }
+
         private async void refreshMapsButton_Click(object sender, RoutedEventArgs e)
         {
             await UpdateMapList(curFolder);
-            Dispatcher.Invoke(() => mapListBox.ItemsSource = MapInfoController.MapList);
         }
 
         private void OpenInExplorerButton_Click(object sender, RoutedEventArgs e)
@@ -410,5 +422,6 @@ namespace GbxMapBrowser
             }
         }
         #endregion
+
     }
 }

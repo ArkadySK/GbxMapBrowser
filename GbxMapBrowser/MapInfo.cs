@@ -18,10 +18,11 @@ namespace GbxMapBrowser
     {
         public string MapName { get; }
         public string ExactMapName { get; }
-        public DateTime DateCreated { get; }
+        public DateTime DateModified { get; }
+        public long FileSize { get; }
         public string DateCreatedString { get {
-                if (DateCreated == null) return "NO DATE";
-                return DateCreated.ToString("dd.MM.yyyy"); //String.Format("dd:MM:yyyy", DateCreated);
+                if (DateModified == null) return "NO DATE";
+                return DateModified.ToString("dd.MM.yyyy"); //String.Format("dd:MM:yyyy", DateCreated);
             } }
         public string MapFullName { get; }
         private string shortName;
@@ -45,7 +46,8 @@ namespace GbxMapBrowser
             shortName = fullnamepath.Split("\\").Last();
             MapFullName = fullnamepath;
             FileInfo mapfileInfo = new FileInfo(fullnamepath);
-            DateCreated = mapfileInfo.LastWriteTime;
+            DateModified = mapfileInfo.LastWriteTime;
+            FileSize = mapfileInfo.Length;
 
             try
             {
