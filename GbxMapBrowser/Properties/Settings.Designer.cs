@@ -82,5 +82,17 @@ namespace GbxMapBrowser.Properties {
                 this["ShowMapPreviewColumn"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TMTurboFolder {
+            get {
+                return ((string)(this["TMTurboFolder"]));
+            }
+            set {
+                this["TMTurboFolder"] = value;
+            }
+        }
     }
 }

@@ -77,7 +77,7 @@ namespace GbxMapBrowser
                         string foldername = line.Replace("UserSubDir=", "");
                         MapsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + foldername + "\\Tracks\\Challenges";
                     }
-                    else if (line.Contains("UserDir=")) //TMNext alebo MP
+                    else if (line.Contains("UserDir=")) //TMNext or MP
                     {
                         string foldername = line.Replace("UserDir=", "");
                         if (foldername.Contains("{userdocs}"))
@@ -86,19 +86,32 @@ namespace GbxMapBrowser
                             MapsFolder = foldername + "\\Maps";
                         }
                         else if (foldername.Contains("{")) MessageBox.Show("Unknown mapdata folder");
-                        else MapsFolder = foldername + "\\Maps";
+                        else 
+                        {
+                            MapsFolder = foldername + "\\Maps";
+                        }
                     }
                 }
             }
             if (!Directory.Exists(MapsFolder))
             {
-                if(this.TargetExeName == "Trackmania.exe")
+                if(this.Name == "TM 2020")
                 {
                     MapsFolder = MapsFolder.Replace("\\Maps", "2020\\Maps");
                 }
-                
-                if(!Directory.Exists(MapsFolder))
-                MessageBox.Show("Folder '" + MapsFolder + "' not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                else if (this.Name == "TM Turbo") //it's TMT, search for longest folder and then find maps subfolder
+                {
+                    string mainTMTFolder = MapsFolder.Replace("\\Maps", "");
+                    var allDirs = Directory.GetDirectories(mainTMTFolder);
+                    var sortDirsByNamelendth = from dir in allDirs
+                                               orderby dir.Length descending
+                                               select dir;
+                    Console.WriteLine(sortDirsByNamelendth.ToArray()[0]);
+                    MapsFolder = sortDirsByNamelendth.ToArray()[0] + "\\MapsGhosts";
+                }
+
+                if (!Directory.Exists(MapsFolder))
+                MessageBox.Show("Error Game: " + this.Name + Environment.NewLine + " Folder '" + MapsFolder + "' not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }

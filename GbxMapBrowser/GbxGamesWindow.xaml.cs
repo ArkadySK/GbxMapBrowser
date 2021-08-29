@@ -35,7 +35,8 @@ namespace GbxMapBrowser
             }
             Properties.Settings.Default.TMForeverFolder = GbxGameController.GbxGames[0].InstalationFolder;
             Properties.Settings.Default.ManiaPlanetFolder = GbxGameController.GbxGames[1].InstalationFolder;
-            Properties.Settings.Default.TMNextFolder = GbxGameController.GbxGames[2].InstalationFolder;
+            Properties.Settings.Default.TMTurboFolder = GbxGameController.GbxGames[2].InstalationFolder;
+            Properties.Settings.Default.TMNextFolder = GbxGameController.GbxGames[3].InstalationFolder;
 
             foreach (var gbxGame in GbxGameController.GbxGames)
             {

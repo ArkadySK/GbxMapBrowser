@@ -55,6 +55,7 @@ namespace GbxMapBrowser
             openInComboBox.ItemsSource = GbxGameController.GbxGames;
             GbxGameController.AddGbxGame("TM Forever", Properties.Settings.Default.TMForeverFolder, "TmForever.exe");
             GbxGameController.AddGbxGame("ManiaPlanet", Properties.Settings.Default.ManiaPlanetFolder, "ManiaPlanet.exe");
+            GbxGameController.AddGbxGame("TM Turbo", Properties.Settings.Default.TMTurboFolder, "TrackmaniaTurbo.exe");
             GbxGameController.AddGbxGame("TM 2020", Properties.Settings.Default.TMNextFolder, "Trackmania.exe");
         }
 
