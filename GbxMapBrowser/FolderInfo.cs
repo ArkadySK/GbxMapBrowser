@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GbxMapBrowser
 {
@@ -9,6 +8,15 @@ namespace GbxMapBrowser
     {
         public string FolderName { get; set; }
         public string FolderFullPath { get; set; }
+        public DateTime DateModified { get; }
+        public string DateModifiedString
+        {
+            get
+            {
+                if (DateModified == null) return "NO DATE";
+                return DateModified.ToString();
+            }
+        }
 
         public FolderInfo(string fullnamepath)
         {
