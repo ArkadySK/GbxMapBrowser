@@ -90,7 +90,7 @@ namespace GbxMapBrowser
         #endregion
 
         #region GetDataAndUpdateUI
-        private string[] GetFolders(string folder)
+        string[] GetFolders(string folder)
         {
             List<string> folders = new List<string>();
             try
@@ -113,14 +113,16 @@ namespace GbxMapBrowser
                 var mapInfosarray = Directory.GetFiles(folder, "*.gbx", searchOption);
                 mapInfos = mapInfosarray.ToList();
             }
-            catch
+            catch (Exception e)
             {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             return mapInfos.ToArray();
         }
 
         async Task UpdateMapList(string mapsFolder)
         {
+            MapInfoController.ClearMapList();
             UpdateMapPreview(null);
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -130,10 +132,10 @@ namespace GbxMapBrowser
                 currentFolderTextBox.Text = mapsFolder;
             }
             );
-            string[] folders = GetFolders(mapsFolder);
+            string[] folders = await Task.Run(() => GetFolders(mapsFolder));
             var mapTasks = new List<Task>();
-            var mapFiles = GetMapPaths(mapsFolder);
-            MapInfoController.ClearMapList();
+            var mapFiles = await Task.Run(() => GetMapPaths(mapsFolder));
+            
 
             foreach (var f in folders)
             {
