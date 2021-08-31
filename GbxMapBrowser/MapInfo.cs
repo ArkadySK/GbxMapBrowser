@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Windows.Media;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using GBX.NET;
 using GBX.NET.Engines.Game;
 using System.Windows.Media.Imaging;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
 using GBX.NET.Engines.MwFoundations;
@@ -20,9 +17,9 @@ namespace GbxMapBrowser
         public string ExactMapName { get; }
         public DateTime DateModified { get; }
         public long FileSize { get; }
-        public string DateCreatedString { get {
+        public string DateModifiedString { get {
                 if (DateModified == null) return "NO DATE";
-                return DateModified.ToString("dd.MM.yyyy"); //String.Format("dd:MM:yyyy", DateCreated);
+                return DateModified.ToShortDateString();
             } }
         public string MapFullName { get; }
         private string shortName;
