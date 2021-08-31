@@ -70,10 +70,6 @@ namespace GbxMapBrowser
                                             select map;
                     break;
                 }
-
-
-
-
                 case SortKind.Kind.BySizeAscending:
                 {
                     orderedMapInfosList = from map in mapInfosList
