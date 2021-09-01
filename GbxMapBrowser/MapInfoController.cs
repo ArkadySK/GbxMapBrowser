@@ -18,10 +18,10 @@ namespace GbxMapBrowser
         private List<MapInfo> mapInfosList = new List<MapInfo>();
         private List<object> mapList = new List<object>();
 
-        public void AddFolder(string fullnamepath)
+        public async void AddFolder(string fullnamepath)
         {
             FolderInfo folderInfo = new FolderInfo(fullnamepath);
-            folderInfosList.Add(folderInfo);
+            await Task.Run(()=>folderInfosList.Add(folderInfo));
         }
 
         public async Task AddMap(string fullnamepath)
@@ -39,70 +39,85 @@ namespace GbxMapBrowser
 
         public async Task SortMapList(SortKind.Kind sortkind)
         {
-            IOrderedEnumerable<MapInfo> orderedMapInfosList = null;
+            IOrderedEnumerable<MapInfo> orderedMapInfos = null; //has value everytime
+            IOrderedEnumerable<FolderInfo> orderedFolderInfos = orderedFolderInfos = from folder in folderInfosList //value is changed only sometimes
+                                                                                     orderby folder.FolderName ascending
+                                                                                     select folder; 
             switch (sortkind)
             {
                 case SortKind.Kind.ByNameAscending:
                 {
-                    orderedMapInfosList = from map in mapInfosList
-                                            orderby map.MapName ascending
-                                            select map;
-                    break;
+                        orderedMapInfos = from map in mapInfosList
+                                                orderby map.MapName ascending
+                                                select map;
+                        orderedFolderInfos = from folder in folderInfosList
+                                            orderby folder.FolderName ascending
+                                            select folder;
+                        break;
                 }
                 case SortKind.Kind.ByNameDescending:
                 {
-                    orderedMapInfosList = from map in mapInfosList
+                        orderedMapInfos = from map in mapInfosList
                                             orderby map.MapName descending
                                             select map;
-                    break;
+                        orderedFolderInfos = from folder in folderInfosList
+                                             orderby folder.FolderName descending
+                                             select folder;
+                        break;
                 }
                 case SortKind.Kind.ByDateModifiedAscending:
                 {
-                    orderedMapInfosList = from map in mapInfosList
-                                            orderby map.DateModified ascending
-                                            select map;
-                    break;
+                        orderedMapInfos = from map in mapInfosList
+                                                orderby map.DateModified ascending
+                                                select map;
+                        orderedFolderInfos = from folder in folderInfosList
+                                             orderby folder.DateModified ascending
+                                             select folder;
+                        break;
                 }
                 case SortKind.Kind.ByDateModifiedDescending:
                 {
-                    orderedMapInfosList = from map in mapInfosList
-                                            orderby map.DateModified descending
-                                            select map;
-                    break;
+                        orderedMapInfos = from map in mapInfosList
+                                                orderby map.DateModified descending
+                                                select map;
+                        orderedFolderInfos = from folder in folderInfosList
+                                             orderby folder.DateModified descending
+                                             select folder;
+                        break;
                 }
                 case SortKind.Kind.BySizeAscending:
                 {
-                    orderedMapInfosList = from map in mapInfosList
-                                            orderby map.FileSize ascending
-                                            select map;
-                    break;
+                        orderedMapInfos = from map in mapInfosList
+                                                orderby map.FileSize ascending
+                                                select map;
+                        break;
                 }
                 case SortKind.Kind.BySizeDescending:
                 {
-                    orderedMapInfosList = from map in mapInfosList
-                                            orderby map.FileSize descending
-                                            select map;
-                    break;
+                        orderedMapInfos = from map in mapInfosList
+                                                orderby map.FileSize descending
+                                                select map;
+                        break;
                 }
                 case SortKind.Kind.ByLendthAscending:
                 {
-                    orderedMapInfosList = from map in mapInfosList
-                                            orderby map.ObjectiveGold ascending
-                                            select map;
-                    break;
+                        orderedMapInfos = from map in mapInfosList
+                                                orderby map.ObjectiveGold ascending
+                                                select map;
+                        break;
                 }
                 case SortKind.Kind.ByLendthDescending:
                 {
-                    orderedMapInfosList = from map in mapInfosList
-                                            orderby map.ObjectiveGold descending
-                                            select map;
-                    break;
+                        orderedMapInfos = from map in mapInfosList
+                                                orderby map.ObjectiveGold descending
+                                                select map;
+                        break;
                 }
             }
             
             mapList.Clear();
-            mapList.AddRange(folderInfosList);
-            await Task.Run(()=> mapList.AddRange(orderedMapInfosList));
+            await Task.Run(() => mapList.AddRange(orderedFolderInfos));
+            await Task.Run(() => mapList.AddRange(orderedMapInfos));
         }
 
         public MapInfo[] GetMapsByName(string[] mapNames)
