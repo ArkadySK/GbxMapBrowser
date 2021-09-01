@@ -17,9 +17,16 @@ namespace GbxMapBrowser
         public string ExactMapName { get; }
         public DateTime DateModified { get; }
         public long FileSize { get; }
+        public string FileSizeString
+        {
+            get
+            {
+                return FileOperations.SizeToString(FileSize);
+            }
+        }
         public string DateModifiedString { get {
                 if (DateModified == null) return "NO DATE";
-                return DateModified.ToShortDateString();
+                return DateModified.ToString();
             } }
         public string MapFullName { get; }
         private string shortName;
@@ -69,7 +76,7 @@ namespace GbxMapBrowser
 
                 MapName = ToReadableText(challenge.MapName);
                 ExactMapName = challenge.MapName;
-
+                Debug.WriteLine("Map added: " + MapName);
                 Titlepack = challenge.TitleID;
 
                 Uri enviImagePath = EnviManager.GetEnvironmentImagePath(challenge.Collection, Titlepack);
