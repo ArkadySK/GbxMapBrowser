@@ -159,13 +159,13 @@ namespace GbxMapBrowser
 
         private async void sortMapsButton_Click(object sender, RoutedEventArgs e)
         {
-            var sortMapsButtonTexts = new string[] { "AB ⬆️", "AB ⬇️", "📅 ⬆️", "📅 ⬇️", "MB ⬆️", "MB ⬇️", "⏱️ ⬆️", "⏱️ ⬇️"};
+            var sortMapsButtonTexts = new string[] { "Name ⬆️", "Name ⬇️", "Date ⬆️", "Date ⬇️", "Size ⬆️", "Size ⬇️", "Lendth ⬆️", "Lendth ⬇️"};
             if (sortKind < (SortKind.Kind)7)
                 sortKind += 1;
             else sortKind = 0;
 
             await UpdateMapList(curFolder);
-            sortMapsButton.Content = sortMapsButtonTexts[(int)sortKind];
+            sortMapsButton.Content = "Sort by: " + sortMapsButtonTexts[(int)sortKind];
         }
 
         private async void refreshMapsButton_Click(object sender, RoutedEventArgs e)

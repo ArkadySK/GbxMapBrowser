@@ -31,17 +31,20 @@
             </Grid.RowDefinitions>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="parentFolderButton" Content="⏏" Click="parentFolderButton_Click"/>
             <TextBox x:Name="currentFolderTextBox" FontSize="16" BorderThickness="0" Margin="5 0" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="currentFolderTextBox_KeyUp"/>
-            <Button Style="{StaticResource AddressButtonStyle}" x:Name="sortMapsButton" Grid.Column="2" HorizontalAlignment="Center" Margin="0 0 5 0" Content="AB ⬆️" Click="sortMapsButton_Click" FontSize="18"/>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" Grid.Column="3" HorizontalAlignment="Center" Margin="0 0 5 0" Content="⟳" Click="refreshMapsButton_Click"/>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="OpenInExplorerButton" Grid.Column="4" HorizontalAlignment="Center" Content="📁" Click="OpenInExplorerButton_Click"/>
-            <Rectangle Fill="Gray" Grid.Row="1" Height="1" Grid.ColumnSpan="5"/>
+            <Rectangle Fill="{DynamicResource MahApps.Brushes.Badged.Background.Disabled}" Grid.Row="1" Height="1" Grid.ColumnSpan="5"/>
         </Grid>
         <Button Grid.Row="1" Panel.ZIndex="10" Width="48" Height="48" Style="{StaticResource AddressButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Click="manageGamesButton_Click" Padding="-5" FontSize="35">⚙️</Button>
         <mah:HamburgerMenu Grid.Row="1" Panel.ZIndex="5" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="48" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
             <mah:HamburgerMenu.Content>
-
                 <!--Map list, the right part-->
-                <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" MouseDoubleClick="mapListBox_PreviewMouseDoubleClickAsync" AllowDrop="True" DragDrop.Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" PreviewMouseDown="mapListBox_PreviewMouseDown" KeyDown="mapListBox_KeyDown" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" MouseDoubleClick="mapListBox_PreviewMouseDoubleClickAsync" AllowDrop="True" DragDrop.Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" PreviewMouseDown="mapListBox_PreviewMouseDown" KeyDown="mapListBox_KeyDown" >
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type local:FolderInfo}">
                             <Grid>
@@ -76,6 +79,18 @@
                         </DataTemplate>
                     </ListBox.Resources>
                 </ListBox>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="{DynamicResource MahApps.Brushes.Badged.Background.Disabled}" Grid.Row="1" Height="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Panel.ZIndex="10"/>
+                        <Label Grid.Column="0" Content="🔎" BorderThickness="0" VerticalContentAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="searchMapsTextBox" Grid.Column="1" Text="search for a map..." Opacity=".5" BorderThickness="0" VerticalContentAlignment="Center" FontSize="15"/>
+                        <Button Style="{StaticResource AddressButtonStyle}" x:Name="sortMapsButton" Grid.Column="2" Content="Sort by: Name ⬆️" Height="Auto" Width="130" Click="sortMapsButton_Click" FontSize="15"/>
+                    </Grid>
+                </Grid>
             </mah:HamburgerMenu.Content>
 
             <!--The Game list, left part of UI-->
