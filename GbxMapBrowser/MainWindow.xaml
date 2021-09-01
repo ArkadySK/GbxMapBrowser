@@ -44,23 +44,34 @@
                 <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.Row="1" MouseDoubleClick="mapListBox_PreviewMouseDoubleClickAsync" AllowDrop="True" DragDrop.Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" PreviewMouseDown="mapListBox_PreviewMouseDown" KeyDown="mapListBox_KeyDown" >
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type local:FolderInfo}">
-                            <StackPanel Orientation="Horizontal">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="158"/>
+                                </Grid.ColumnDefinitions>
                                 <Image Source="/Data/UIIcons/Folder.png" Width="50"></Image>
-                                <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding FolderName}" Grid.Column="1" Margin="5"/>
-                            </StackPanel>
+                                <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="1" Content="{Binding FolderName}" Margin="5"/>
+                                <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding FolderSizeString}" Margin="5"/>
+                                <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="4" Content="{Binding DateModifiedString}" Margin="5"/>
+                            </Grid>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type local:MapInfo}">
                             <Grid x:Name="mapListBox_Item" ContextMenu="{StaticResource MapContextMenu}" ContextMenuOpening="mapListBox_Item_ContextMenuOpening">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="158"/>
                                 </Grid.ColumnDefinitions>
                                 <Image Source="{Binding EnviImage}" Grid.Column="0" Margin="5"/>
                                 <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding MapName}" Grid.Column="1" Margin="5"/>
-                                <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding DateModifiedString}" Grid.Column="2" Margin="5"/>
+                                <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding FileSizeString}" Margin="5"/>
                                 <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="3" Margin="5"/>
+                                <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding DateModifiedString}" Grid.Column="4" Margin="5"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.Resources>

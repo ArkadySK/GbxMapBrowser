@@ -122,8 +122,8 @@ namespace GbxMapBrowser
 
         async Task UpdateMapList(string mapsFolder)
         {
-            MapInfoController.ClearMapList();
             UpdateMapPreview(null);
+            MapInfoController.ClearMapList();
             Stopwatch sw = new Stopwatch();
             sw.Start();
             Application.Current.Dispatcher.Invoke(() =>
@@ -135,15 +135,14 @@ namespace GbxMapBrowser
             string[] folders = await Task.Run(() => GetFolders(mapsFolder));
             var mapTasks = new List<Task>();
             var mapFiles = await Task.Run(() => GetMapPaths(mapsFolder));
-            
-
-            foreach (var f in folders)
+       
+            foreach (var folderPath in folders)
             {
-                MapInfoController.AddFolder(f);
+                Task folderTask = Task.Run(() => MapInfoController.AddFolder(folderPath));
             }
-            foreach (string mapfullpath in mapFiles)
+            foreach (string mapPath in mapFiles)
             {
-                Task mapTask = Task.Run(() => MapInfoController.AddMap(mapfullpath));
+                Task mapTask = Task.Run(() => MapInfoController.AddMap(mapPath));
                 mapTasks.Add(mapTask);
             }
             await Task.WhenAll(mapTasks.ToArray());

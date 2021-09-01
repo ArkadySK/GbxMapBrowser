@@ -121,5 +121,39 @@ namespace GbxMapBrowser
             string newPath = path.Replace(shortFileName, "");
             return newPath;
         }
+
+        public static string SizeToStringOLD(double size)
+        {
+            if (size == 0) return "";
+
+            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+            double len = size;
+            int order = 0;
+            while (len >= 1024 && order < sizes.Length - 1)
+            {
+                order++;
+                len = len / 1024;
+            }
+
+            // Adjust the format string to your preferences. For example "{0:0.#}{1}" would
+            // show a single decimal place, and no space.
+            return String.Format("{0:0.##} {1}", len, sizes[order]);
+        }
+
+        public static string SizeToString(double size)
+        {
+            if (size == 0) return "";
+
+            string[] sizeStrings = { "B", "KB", "MB", "GB", "TB" };
+            int sizeStringsIndex = 0;
+            double readableSize = size;
+
+            while (readableSize >= 1024)
+            {
+                readableSize /= 1024;
+                sizeStringsIndex += 1;
+            }
+            return readableSize.ToString("0.##") + " " + sizeStrings[sizeStringsIndex];
+        }
     }
 }
