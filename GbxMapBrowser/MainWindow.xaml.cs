@@ -424,5 +424,30 @@ namespace GbxMapBrowser
         }
         #endregion
 
+        private async void searchMapsTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = searchMapsTextBox.Text;
+            if (string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+
+            await MapInfoController.FindMaps(text);
+            mapListBox.Items.Refresh();
+        }
+
+        private void searchMapsTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            searchMapsTextBox.Text = "";
+            searchMapsTextBox.Opacity = .9;
+        }
+
+        private async void searchMapsTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            searchMapsTextBox.Opacity = .5;
+            searchMapsTextBox.Text = "search for a map...";
+            MapInfoController.ClearMapList();
+            await UpdateMapList(curFolder);
+        }
     }
 }

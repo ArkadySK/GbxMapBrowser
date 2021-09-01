@@ -37,6 +37,17 @@ namespace GbxMapBrowser
             mapInfosList.Clear();
         }
 
+        public async Task FindMaps(string mapName)
+        {
+            IOrderedEnumerable<MapInfo> foundMapInfos = null;
+            foundMapInfos = from map in mapInfosList
+                            where map.MapName.Contains(mapName, StringComparison.OrdinalIgnoreCase) 
+                            orderby map.MapName ascending
+                            select map;
+            mapList.Clear();
+            await Task.Run(() => mapList.AddRange(foundMapInfos));
+        }
+
         public async Task SortMapList(SortKind.Kind sortkind)
         {
             IOrderedEnumerable<MapInfo> orderedMapInfos = null; //has value everytime
