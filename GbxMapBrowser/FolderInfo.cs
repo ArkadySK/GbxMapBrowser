@@ -7,15 +7,15 @@ namespace GbxMapBrowser
 {
     class FolderInfo
     {
-        public string FolderName { get; set; }
-        public double FolderSize { get; set; }
+        public string FolderName { get; }
+        public double FolderSize { get; }
         public string FolderSizeString { 
             get
             {
                 return FileOperations.SizeToString(FolderSize);
             }
         }
-        public string FolderFullPath { get; set; }
+        public string FolderFullPath { get; }
         public DateTime DateModified { get; }
         public string DateModifiedString
         {
