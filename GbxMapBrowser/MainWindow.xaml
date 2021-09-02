@@ -31,7 +31,7 @@
             </Grid.RowDefinitions>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="parentFolderButton" Content="⏏" Click="parentFolderButton_Click"/>
             <TextBox x:Name="currentFolderTextBox" FontSize="16" BorderThickness="0" Margin="5 0" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="currentFolderTextBox_KeyUp"/>
-            <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" Grid.Column="3" HorizontalAlignment="Center" Margin="0 0 5 0" Content="⟳" Click="refreshMapsButton_Click"/>
+            <Button Style="{StaticResource AddressButtonStyle}" x:Name="refreshMapsButton" Grid.Column="3" HorizontalAlignment="Center" Content="⟳" Click="refreshMapsButton_Click"/>
             <Button Style="{StaticResource AddressButtonStyle}" x:Name="OpenInExplorerButton" Grid.Column="4" HorizontalAlignment="Center" Content="📁" Click="OpenInExplorerButton_Click"/>
             <Rectangle Fill="{DynamicResource MahApps.Brushes.Badged.Background.Disabled}" Grid.Row="1" Height="1" Grid.ColumnSpan="5"/>
         </Grid>

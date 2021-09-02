@@ -128,7 +128,7 @@ namespace GbxMapBrowser
             sw.Start();
             Application.Current.Dispatcher.Invoke(() =>
             {
-                mapListBox.ItemsSource = null;
+                //mapListBox.ItemsSource = null;
                 currentFolderTextBox.Text = mapsFolder;
             }
             );
@@ -139,6 +139,7 @@ namespace GbxMapBrowser
             foreach (var folderPath in folders)
             {
                 Task folderTask = Task.Run(() => MapInfoController.AddFolder(folderPath));
+                mapTasks.Add(folderTask);
             }
             foreach (string mapPath in mapFiles)
             {
@@ -146,12 +147,17 @@ namespace GbxMapBrowser
                 mapTasks.Add(mapTask);
             }
             await Task.WhenAll(mapTasks.ToArray());
+            await Task.Delay(1);
             await MapInfoController.SortMapList(sortKind);
+
             mapListBox.ItemsSource = MapInfoController.MapList;
 
             sw.Stop();
             decimal s = sw.ElapsedMilliseconds / 1000m;
             Debug.WriteLine($"loaded in {s}s");
+            Debug.WriteLine($"Items: {MapInfoController.MapList.Count}, Tasks count: {mapTasks.Count}");
+            mapListBox.Items.Refresh();
+
         }
         #endregion
 

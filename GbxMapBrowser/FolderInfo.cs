@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Diagnostics;
 
 namespace GbxMapBrowser
 {
@@ -31,8 +32,8 @@ namespace GbxMapBrowser
             FolderName = fullnamepath.Split('\\').LastOrDefault();
             FolderFullPath = fullnamepath;
             DirectoryInfo directoryInfo = new DirectoryInfo(fullnamepath);
+            Debug.WriteLine("hello world");
             DateModified = directoryInfo.LastWriteTime;
         } 
-
     }
 }
