@@ -18,16 +18,20 @@ namespace GbxMapBrowser
         private List<MapInfo> mapInfosList = new List<MapInfo>();
         private List<object> mapList = new List<object>();
 
-        public async void AddFolder(string fullnamepath)
+        public async Task AddFolder(string fullnamepath)
         {
-            FolderInfo folderInfo = new FolderInfo(fullnamepath);
-            await Task.Run(()=>folderInfosList.Add(folderInfo));
+            if (fullnamepath == null) return;
+            FolderInfo folderInfo = await Task.Run(() => new FolderInfo(fullnamepath));
+            folderInfosList.Add(folderInfo);
         }
-
+        
         public async Task AddMap(string fullnamepath)
         {
-            if(fullnamepath.Contains(".Map.Gbx", StringComparison.OrdinalIgnoreCase) || fullnamepath.Contains(".Replay.Gbx", StringComparison.OrdinalIgnoreCase) || fullnamepath.Contains(".Challenge.Gbx", StringComparison.OrdinalIgnoreCase))
-                await Task.Run(() => mapInfosList.Add(new MapInfo(fullnamepath, true)));
+            if (fullnamepath.Contains(".Map.Gbx", StringComparison.OrdinalIgnoreCase) || fullnamepath.Contains(".Replay.Gbx", StringComparison.OrdinalIgnoreCase) || fullnamepath.Contains(".Challenge.Gbx", StringComparison.OrdinalIgnoreCase))
+            {
+                MapInfo mapInfo = await Task.Run(() => new MapInfo(fullnamepath, true));
+                mapInfosList.Add(mapInfo);
+            }
         }
 
         public void ClearMapList()
