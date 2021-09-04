@@ -32,7 +32,6 @@ namespace GbxMapBrowser
             FolderName = fullnamepath.Split('\\').LastOrDefault();
             FolderFullPath = fullnamepath;
             DirectoryInfo directoryInfo = new DirectoryInfo(fullnamepath);
-            Debug.WriteLine("hello world");
             DateModified = directoryInfo.LastWriteTime;
         } 
     }

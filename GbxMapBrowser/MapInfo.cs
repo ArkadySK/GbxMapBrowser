@@ -76,7 +76,6 @@ namespace GbxMapBrowser
 
                 MapName = ToReadableText(challenge.MapName);
                 ExactMapName = challenge.MapName;
-                Debug.WriteLine("Map added: " + MapName);
                 Titlepack = challenge.TitleID;
 
                 Uri enviImagePath = EnviManager.GetEnvironmentImagePath(challenge.Collection, Titlepack);
