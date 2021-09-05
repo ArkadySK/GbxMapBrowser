@@ -317,7 +317,7 @@ namespace GbxMapBrowser
         {
             string[] paths = (string[])(e.Data).GetData(DataFormats.FileDrop, false);
             var mapsPathsQuery = from mappath in paths
-                                 where mappath.EndsWith("Map.Gbx") || mappath.EndsWith("Replay.Gbx")
+                                 where mappath.EndsWith("Map.Gbx") || mappath.EndsWith("Challenge.Gbx") || mappath.EndsWith("Replay.Gbx")
                                  select mappath;
             var MapPathsArray = mapsPathsQuery.ToArray();
             if (MapPathsArray.Length == 0) return;
@@ -441,6 +441,8 @@ namespace GbxMapBrowser
         }
         #endregion
 
+        #region Search
+
         private async void searchMapsTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string text = searchMapsTextBox.Text;
@@ -466,5 +468,6 @@ namespace GbxMapBrowser
             MapInfoController.ClearMapList();
             await UpdateMapList(curFolder);
         }
+        #endregion
     }
 }
