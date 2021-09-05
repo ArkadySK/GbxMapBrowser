@@ -6,6 +6,9 @@ It's based on gbx.net libraries: https://github.com/BigBang1112/gbx-net
 
 It uses MahApps Metro UI: https://github.com/MahApps/MahApps.Metro
 
+It uses Octokit: https://github.com/octokit/octokit.net
+
+
 <h2>Features</h2>
 
 - preview a map, see map's information
