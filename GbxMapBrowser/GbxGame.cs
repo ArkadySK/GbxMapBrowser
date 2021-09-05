@@ -109,6 +109,10 @@ namespace GbxMapBrowser
                     Console.WriteLine(sortDirsByNamelendth.ToArray()[0]);
                     MapsFolder = sortDirsByNamelendth.ToArray()[0] + "\\MapsGhosts";
                 }
+                if (this.Name == "TM Nations Forever" || this.Name == "TM United Forever")
+                {
+                    MapsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TMForever\\Tracks\\Challenges";
+                }
 
                 if (!Directory.Exists(MapsFolder))
                 MessageBox.Show("Error Game: " + this.Name + Environment.NewLine + " Folder '" + MapsFolder + "' not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);

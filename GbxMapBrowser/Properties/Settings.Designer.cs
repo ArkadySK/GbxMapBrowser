@@ -26,12 +26,12 @@ namespace GbxMapBrowser.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TMForeverFolder {
+        public string TMUnitedForeverFolder {
             get {
-                return ((string)(this["TMForeverFolder"]));
+                return ((string)(this["TMUnitedForeverFolder"]));
             }
             set {
-                this["TMForeverFolder"] = value;
+                this["TMUnitedForeverFolder"] = value;
             }
         }
         
@@ -92,6 +92,18 @@ namespace GbxMapBrowser.Properties {
             }
             set {
                 this["TMTurboFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TMNationsForeverFolder {
+            get {
+                return ((string)(this["TMNationsForeverFolder"]));
+            }
+            set {
+                this["TMNationsForeverFolder"] = value;
             }
         }
     }

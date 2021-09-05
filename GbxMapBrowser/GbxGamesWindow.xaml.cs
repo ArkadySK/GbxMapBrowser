@@ -33,10 +33,11 @@ namespace GbxMapBrowser
                 if (String.IsNullOrEmpty(game.InstalationFolder)) game.IsEnabled = false;
                 if (!Directory.Exists(game.InstalationFolder)) game.IsEnabled = false;
             }
-            Properties.Settings.Default.TMForeverFolder = GbxGameController.GbxGames[0].InstalationFolder;
-            Properties.Settings.Default.ManiaPlanetFolder = GbxGameController.GbxGames[1].InstalationFolder;
-            Properties.Settings.Default.TMTurboFolder = GbxGameController.GbxGames[2].InstalationFolder;
-            Properties.Settings.Default.TMNextFolder = GbxGameController.GbxGames[3].InstalationFolder;
+            Properties.Settings.Default.TMNationsForeverFolder = GbxGameController.GbxGames[0].InstalationFolder;
+            Properties.Settings.Default.TMUnitedForeverFolder = GbxGameController.GbxGames[1].InstalationFolder;
+            Properties.Settings.Default.ManiaPlanetFolder = GbxGameController.GbxGames[2].InstalationFolder;
+            Properties.Settings.Default.TMTurboFolder = GbxGameController.GbxGames[3].InstalationFolder;
+            Properties.Settings.Default.TMNextFolder = GbxGameController.GbxGames[4].InstalationFolder;
 
             foreach (var gbxGame in GbxGameController.GbxGames)
             {
