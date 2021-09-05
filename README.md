@@ -19,6 +19,7 @@ It uses MahApps Metro UI: https://github.com/MahApps/MahApps.Metro
 - open current folder in windows file explorer
 - show system file dialog
 - custom titlepacks support
+- check for update on start
 
 <h2>Showcase</h2>
 
@@ -28,4 +29,4 @@ It uses MahApps Metro UI: https://github.com/MahApps/MahApps.Metro
 
 **Operating System:** Windows 7 SP1, Windows 8.1, Windows 10 or Windows 11
 
-**Have atleast one game installed from this list:** TrackMania United Forever, ManiaPlanet, TrackMania Turbo or TrackMania2020 (TMNext)
+**Have atleast one game installed from this list:** TrackMania United Forever, TrackMania Nations Forever, ManiaPlanet, TrackMania Turbo or TrackMania2020 (TMNext)
