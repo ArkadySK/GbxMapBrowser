@@ -16,8 +16,7 @@ namespace GbxMapBrowser
         Version CurrentVersion;
         Version LatestVersion;
 
-
-        void Init()
+        public Updater()
         {
             RepositoryOwner = "ArkadySK";
             RepositoryName = "GbxMapBrowser";
@@ -25,12 +24,6 @@ namespace GbxMapBrowser
 
             Github = new GitHubClient(new ProductHeaderValue(RepositoryName + @"-UpdateCheck"));
             _releaseClient = Github.Repository.Release;
-
-        }
-
-        public Updater()
-        {
-            Init();
         }
 
         private Version RemoveV(string version)
@@ -61,14 +54,7 @@ namespace GbxMapBrowser
         {
             Version newVersion = await GetNewVersion();
 
-            if (newVersion == CurrentVersion) // is up to date
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (newVersion == CurrentVersion);       
         }
 
         public void DownloadUpdate()

@@ -37,16 +37,28 @@ namespace GbxMapBrowser
             LoadGbxGameList();
             UpdateMapPreviewVisibility(Properties.Settings.Default.ShowMapPreviewColumn);
             //Properties.Settings.Default.IsFirstRun = true;
-
             if (Properties.Settings.Default.IsFirstRun)
             {
                 ShowGbxGamesWindow();
             }
+
         }
 
         private async void Window_LoadedAsync(object sender, RoutedEventArgs e)
         {
             await UpdateMapList(curFolder);
+
+            Updater updater = new Updater();
+            bool isUpToDate = await updater.IsUpToDate();
+
+            if (!isUpToDate)
+            {
+                MessageBoxResult result = MessageBox.Show("New update is available. \n\nDownload now?", "Update Available", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if(result == MessageBoxResult.Yes)
+                {
+                    updater.DownloadUpdate();
+                }
+            }
         }
 
         #region GbxGameListInit
@@ -133,21 +145,23 @@ namespace GbxMapBrowser
             }
             );
             string[] folders = await Task.Run(() => GetFolders(mapsFolder));
-            var mapTasks = new List<Task>();
             var mapFiles = await Task.Run(() => GetMapPaths(mapsFolder));
-       
+            //var mapTasks = new Task[folders.Length + mapFiles.Length];
+            int i = 0;
+
             foreach (var folderPath in folders)
             {
-                Task folderTask = Task.Run(() => MapInfoController.AddFolder(folderPath));
-                mapTasks.Add(folderTask);
+                await MapInfoController.AddFolder(folderPath);
+                //mapTasks[i] = folderTask;
+                i++;
             }
             foreach (string mapPath in mapFiles)
             {
-                Task mapTask = Task.Run(() => MapInfoController.AddMap(mapPath));
-                mapTasks.Add(mapTask);
+                await MapInfoController.AddMap(mapPath);
+                //mapTasks[i] = mapTask;
+                i++;
             }
-            await Task.WhenAll(mapTasks.ToArray());
-            await Task.Delay(1);
+
             await MapInfoController.SortMapList(sortKind);
 
             mapListBox.ItemsSource = MapInfoController.MapList;
@@ -155,7 +169,7 @@ namespace GbxMapBrowser
             sw.Stop();
             decimal s = sw.ElapsedMilliseconds / 1000m;
             Debug.WriteLine($"loaded in {s}s");
-            Debug.WriteLine($"Items: {MapInfoController.MapList.Count}, Tasks count: {mapTasks.Count}");
+            Debug.WriteLine($"Items: {MapInfoController.MapList.Count}");
             mapListBox.Items.Refresh();
 
         }
