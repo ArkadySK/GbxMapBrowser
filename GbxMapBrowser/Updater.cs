@@ -1,17 +1,67 @@
-﻿using GitHubUpdate;
+﻿using Octokit;
 using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
-    public static class Updater
+    public class Updater
     {
-        public async static Task<bool> IsUpToDate()
-        {
-            var checker = new UpdateChecker("arkadySK", "GbxMapBrowser");
+        private IReleasesClient _releaseClient;
+        private GitHubClient Github;
+        string RepositoryOwner;
+        string RepositoryName;
+        Version CurrentVersion;
+        Version LatestVersion;
 
-            UpdateType update = await checker.CheckUpdate();
-            if (update == UpdateType.None) // up to date
+
+        void Init()
+        {
+            RepositoryOwner = "ArkadySK";
+            RepositoryName = "GbxMapBrowser";
+            CurrentVersion = GetCurrentVersion();
+
+            Github = new GitHubClient(new ProductHeaderValue(RepositoryName + @"-UpdateCheck"));
+            _releaseClient = Github.Repository.Release;
+
+        }
+
+        public Updater()
+        {
+            Init();
+        }
+
+        private Version RemoveV(string version)
+        {
+            return new Version(version.Replace("v", ""));
+        }
+
+        private Version GetCurrentVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version;
+        }
+
+        private async Task<Version> GetNewVersion()
+        {
+            if (String.IsNullOrWhiteSpace(RepositoryName) || String.IsNullOrWhiteSpace(RepositoryOwner)) return null;
+
+            var allReleases = await _releaseClient.GetAll(RepositoryOwner, RepositoryName);
+            var latestRelease = allReleases.FirstOrDefault(release => !release.Prerelease && 
+                                                                    (RemoveV(release.TagName) > CurrentVersion));
+            if (latestRelease != null)
+                LatestVersion = RemoveV(latestRelease.TagName);
+            else
+                LatestVersion = CurrentVersion;
+            return LatestVersion;
+        }
+
+        public async Task<bool> IsUpToDate()
+        {
+            Version newVersion = await GetNewVersion();
+
+            if (newVersion == CurrentVersion) // is up to date
             {
                 return true;
             }
@@ -21,10 +71,14 @@ namespace GbxMapBrowser
             }
         }
 
-        public static void DownloadUpdate()
+        public void DownloadUpdate()
         {
-            var checker = new UpdateChecker("arkadySK", "GbxMapBrowser");
-            checker.DownloadAsset("GbxMapBrowser.zip"); // opens it in the user's browser
+            const string urlTemplate = "https://github.com/{0}/{1}/releases/download/{2}/{3}";
+            var url = string.Format(urlTemplate, RepositoryOwner, RepositoryName, "v" + LatestVersion, "GbxMapBrowser.zip");
+            
+            url = url.Replace("&", "^&");
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+
         }
     }
 }
