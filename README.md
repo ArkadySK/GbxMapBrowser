@@ -1,6 +1,8 @@
 # Gbx Map Browser
-[![image](https://img.shields.io/github/v/release/ArkadySK/GbxMapBrowser?style=for-the-badge)](https://github.com/ArkadySK/GbxMapBrowser/releases)
 <h3>The Gbx Map Browser helps you to browse and explore your '.gbx' map and replay files with ease.</h3>
+
+![image](https://user-images.githubusercontent.com/74670743/132136258-e1d2ec46-d5bf-40c8-af94-067435d58177.png)
+
 
 It's based on gbx.net libraries: https://github.com/BigBang1112/gbx-net
 
