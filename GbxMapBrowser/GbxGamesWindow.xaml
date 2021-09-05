@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GbxMapBrowser"
         mc:Ignorable="d"
-        Title="Configure Gbx Games" Height="320" Width="600" Closing="Window_Closing">
+        Title="Configure Gbx Games" Height="500" Width="600" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
