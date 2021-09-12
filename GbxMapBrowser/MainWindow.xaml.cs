@@ -431,10 +431,17 @@ namespace GbxMapBrowser
                         await UpdateMapList(curFolder);
                         break;
                     }
-                case "Properties":
+                case "File Properties":
                     {
                         var path = ((MapInfo)mapListBox.SelectedItem).MapFullName;
                         FileOperations.ShowFileProperties(path);
+                        break;
+                    }
+                case "Map Properties":
+                    {
+                        var path = ((MapInfo)mapListBox.SelectedItem).MapFullName;
+                        var gbxInfoPage = new GbxInfoPage(path);
+                        mapPreviewFrame.Navigate(gbxInfoPage);
                         break;
                     }
             }
