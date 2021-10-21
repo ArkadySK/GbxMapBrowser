@@ -34,26 +34,41 @@ namespace GbxMapBrowser
             {
                 CMwNod gbx = GameBox.Parse(filePath);
 
-                foreach (var p in gbx.GetType().GetProperties())
+                //infoTextBlock.Text += "Chunks count: " + gbx.Chunks.Count;
+                
+                foreach (var ch in gbx.Chunks)
                 {
-                    if (p == null) continue;
-                    if (!p.CanRead) continue;
+                    
+                    
+                    //infoTextBlock.Text += Environment.NewLine + ch.ToString();
+                    int i = 0;
 
-                    //var otherProperties = p.GetValue(gbx).GetType().GetProperties();
-                    infoTextBlock.Text += string.Format("{0}: ({1})", p.Name, p.GetValue(gbx)) + Environment.NewLine + Environment.NewLine;
-                    /*if(otherProperties.Length > 1)
+                    if(ch.Node is CGameCtnChallenge challenge)
                     {
-                        infoTextBlock.Text += Environment.NewLine + p.Name;
-
-                        foreach (var op in otherProperties)
+                        foreach (var p in challenge.GetType().GetProperties())
                         {
-                            if (op == null) continue;
-                            if (!op.CanRead) continue;
-                            infoTextBlock.Text += string.Format("   {0}: ({1})", op.Name, op.GetValue(gbx)) + Environment.NewLine + Environment.NewLine;
+                            if (p == null) continue;
+                            if (!p.CanRead) continue;
 
+                            try
+                            {
+                                //infoTextBlock.Text += string.Format("{0}: ({1})", p.Name, p.GetValue(challenge)) + Environment.NewLine + Environment.NewLine;
+                            }
+                            catch
+                            {
+                                infoTextBlock.Text += "ERROR: " + p.Name + ": ???";
+                            }
+
+                            finally {                              
+                                i++; 
+                            }
                         }
-                    }*/
+                    }
+                    //if(ch.Node is )
                 }
+
+
+                
                 /*
                 if (gbx is CGameCtnChallenge challenge)
                 {

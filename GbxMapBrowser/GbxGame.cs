@@ -102,6 +102,11 @@ namespace GbxMapBrowser
                 else if (this.Name == "TM Turbo") //it's TMT, search for longest folder and then find maps subfolder
                 {
                     string mainTMTFolder = MapsFolder.Replace("\\Maps", "");
+                    if (!Directory.Exists(mainTMTFolder))
+                    {
+                        Console.WriteLine(this.Name + ": main folder not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                     var allDirs = Directory.GetDirectories(mainTMTFolder);
                     var sortDirsByNamelendth = from dir in allDirs
                                                orderby dir.Length descending
