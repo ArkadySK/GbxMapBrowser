@@ -47,8 +47,8 @@ namespace GbxMapBrowser
             if (Properties.Settings.Default.IsFirstRun)
             {
                 e.Cancel = true;
-                MessageBoxResult result = MessageBox.Show("You have to find the location of atleast one game!" + Environment.NewLine + Environment.NewLine + "Retry?", "Can't continue to use the application.", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-                if(result == MessageBoxResult.Cancel){
+                MessageBoxResult result = MessageBox.Show("You have to find the location of atleast one game!" + Environment.NewLine + Environment.NewLine + "Close program?", "Can't continue to use the application.", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if(result == MessageBoxResult.Yes){
                     e.Cancel = false;
                     App.Current.Shutdown();
                 }
