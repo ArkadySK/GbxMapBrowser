@@ -28,7 +28,7 @@ It uses Octokit: https://github.com/octokit/octokit.net
 
 <h2>Showcase</h2>
 
-![image](https://user-images.githubusercontent.com/74670743/131905957-74d52fda-041f-470b-ad09-fb7cf6567616.png)
+![obrázok](https://user-images.githubusercontent.com/74670743/138522680-894c7f72-54b1-43b7-b197-0aad0a09a975.png)
 
 <h2>Requirements</h2>
 
