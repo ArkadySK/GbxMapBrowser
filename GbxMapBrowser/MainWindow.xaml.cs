@@ -28,6 +28,7 @@ namespace GbxMapBrowser
         GbxGameController GbxGameController = new GbxGameController();
         SearchOption searchOption;
         SortKind.Kind sortKind = SortKind.Kind.ByNameAscending;
+        List<string> History = new List<string>();
 
         public MainWindow()
         {
@@ -131,10 +132,15 @@ namespace GbxMapBrowser
 
         async Task UpdateMapList(string mapsFolder)
         {
+            HistoryManager.AddToHistory(mapsFolder);
             UpdateMapPreview(null);
             MapInfoController.ClearMapList();
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+
+            //update enabled/disabled navigation buttons
+            undoButton.IsEnabled = HistoryManager.CanUndo; 
+            redoButton.IsEnabled = HistoryManager.CanRedo;
+
+
             Application.Current.Dispatcher.Invoke(() =>
             {
                 //mapListBox.ItemsSource = null;
@@ -163,9 +169,6 @@ namespace GbxMapBrowser
 
             mapListBox.ItemsSource = MapInfoController.MapList;
 
-            sw.Stop();
-            decimal s = sw.ElapsedMilliseconds / 1000m;
-            Debug.WriteLine($"loaded in {s}s");
             Debug.WriteLine($"Items: {MapInfoController.MapList.Count}");
             mapListBox.Items.Refresh();
 
@@ -476,5 +479,15 @@ namespace GbxMapBrowser
             await UpdateMapList(curFolder);
         }
         #endregion
+
+        private async void undoButton_Click(object sender, RoutedEventArgs e)
+        {
+            await UpdateMapList(await Task.Run(HistoryManager.RequestPrev));
+        }
+
+        private async void redoButton_Click(object sender, RoutedEventArgs e)
+        {
+            await UpdateMapList(await Task.Run(HistoryManager.RequestNext));
+        }
     }
 }
