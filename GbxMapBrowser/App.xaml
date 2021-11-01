@@ -54,9 +54,12 @@
                                 </Trigger>
                                 <!-- Set properties when button has focus. -->
                                 <Trigger Property="IsFocused" Value="true">
-                                    <Setter Property="Rectangle.Opacity" Value="1" />
                                     <Setter Property="Rectangle.Stroke" TargetName="backgroundRectangle" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
                                     <Setter Property="Rectangle.Opacity" Value="1"/>
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Rectangle.Opacity" Value=".4"/>
                                 </Trigger>
 
                             </ControlTemplate.Triggers>
