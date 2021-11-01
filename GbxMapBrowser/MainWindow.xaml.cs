@@ -200,6 +200,16 @@ namespace GbxMapBrowser
             explorerProcess.Start();
         }
 
+        private async void undoButton_Click(object sender, RoutedEventArgs e)
+        {
+            await UpdateMapList(await Task.Run(HistoryManager.RequestPrev));
+        }
+
+        private async void redoButton_Click(object sender, RoutedEventArgs e)
+        {
+            await UpdateMapList(await Task.Run(HistoryManager.RequestNext));
+        }
+
         private async void parentFolderButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -479,15 +489,5 @@ namespace GbxMapBrowser
             await UpdateMapList(curFolder);
         }
         #endregion
-
-        private async void undoButton_Click(object sender, RoutedEventArgs e)
-        {
-            await UpdateMapList(await Task.Run(HistoryManager.RequestPrev));
-        }
-
-        private async void redoButton_Click(object sender, RoutedEventArgs e)
-        {
-            await UpdateMapList(await Task.Run(HistoryManager.RequestNext));
-        }
     }
 }
