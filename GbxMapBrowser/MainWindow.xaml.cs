@@ -363,7 +363,7 @@ namespace GbxMapBrowser
             {
                 try
                 {
-                    var parentFolder = (Directory.GetParent(curFolder));
+                    var parentFolder = Directory.GetParent(curFolder);
                     if (parentFolder != null)
                         curFolder = parentFolder.FullName;
                 }
@@ -373,6 +373,13 @@ namespace GbxMapBrowser
                 }
                 await UpdateMapList(curFolder);
             }
+
+            if (Keyboard.Modifiers == ModifierKeys.Alt && Keyboard.IsKeyDown(Key.Left))
+                if(HistoryManager.CanUndo)
+                    undoButton_Click(this, null);
+            if (Keyboard.Modifiers == ModifierKeys.Alt && Keyboard.IsKeyDown(Key.Right))
+                if (HistoryManager.CanRedo)
+                    redoButton_Click(this, null);
 
             if (!(mapListBox.SelectedItem is MapInfo)) return; //must be selected map
             MapInfo selMap = (MapInfo)mapListBox.SelectedItem;
