@@ -53,12 +53,13 @@ namespace GbxMapBrowser
         {
             CurrentIndex += 1;
             if(CanRedo) 
-            try
-            {
-                string pathToReturn = HistoryList[CurrentIndex];
-                return pathToReturn;
-            }
-            catch { }
+                try
+                {
+                    string pathToReturn = HistoryList[CurrentIndex];
+                    CurrentIndex -= 1;
+                    return pathToReturn;
+                }
+                catch { }
             return null;
         }
 
