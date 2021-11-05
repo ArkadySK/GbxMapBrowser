@@ -48,7 +48,7 @@
                         <RowDefinition />
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
-                    <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" MouseDoubleClick="mapListBox_PreviewMouseDoubleClickAsync" AllowDrop="True" Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" PreviewMouseDown="mapListBox_PreviewMouseDown" KeyDown="mapListBox_KeyDown" >
+                    <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" ScrollViewer.CanContentScroll="False"  MouseDoubleClick="mapListBox_PreviewMouseDoubleClickAsync" AllowDrop="True" Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" PreviewMouseDown="mapListBox_PreviewMouseDown" KeyDown="mapListBox_KeyDown" >
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type local:FolderInfo}">
                             <Grid>
