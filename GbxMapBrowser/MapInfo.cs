@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Linq;
 using GBX.NET.Engines.MwFoundations;
+using TmEssentials;
 
 namespace GbxMapBrowser
 {
@@ -134,7 +135,7 @@ namespace GbxMapBrowser
         {
             if (!timeSpan.HasValue) return "-:--.---";
             TimeSpan time = timeSpan.GetValueOrDefault();
-            return time.ToString("hh':'mm':'ss");
+            return time.ToTmString();
         }
 
         public void RenameAndSave(string newName)
