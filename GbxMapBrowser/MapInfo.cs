@@ -89,7 +89,7 @@ namespace GbxMapBrowser
 
                 if (!string.IsNullOrEmpty(challenge.Comments))
                     Description = ToReadableText(challenge.Comments);
-                MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.ID);
+                MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.Value.ToString());
 
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))
                     Author = challenge.AuthorLogin;
@@ -133,7 +133,8 @@ namespace GbxMapBrowser
         string TimeSpanToString(TimeSpan? timeSpan)
         {
             if (!timeSpan.HasValue) return "-:--.---";
-            return timeSpan.GetValueOrDefault().ToStringTM();
+            TimeSpan time = timeSpan.GetValueOrDefault();
+            return time.ToString("hh':'mm':'ss");
         }
 
         public void RenameAndSave(string newName)
