@@ -177,7 +177,7 @@ namespace GbxMapBrowser
         string ToReadableText(string defaultname)
         {
             string formattedName = defaultname;      
-            formattedName = Formatter.Deformat(formattedName);
+            formattedName = TmEssentials.Formatter.Deformat(formattedName);
             return formattedName;
         }
 

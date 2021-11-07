@@ -69,12 +69,9 @@
             </Style>
 
             <ContextMenu x:Key="MapContextMenu">
-                <!--
-                <Label Padding="0">Cut</Label>
-                <Label Padding="0">Copy</Label>
-                <Label Padding="0">Paste</Label>
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste"/>
                 <Separator/>
-                -->
                 <MenuItem Header="Delete"/>
                 <MenuItem Header="Rename File"/>
                 <MenuItem Header="Rename Map"/>

@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Diagnostics;
 using System.ArrayExtensions;
+using System.Collections.Specialized;
 
 namespace GbxMapBrowser
 {
@@ -430,8 +431,29 @@ namespace GbxMapBrowser
             
             var selMap = (MapInfo)mapListBox.SelectedItem;
             var selMenuItem = (MenuItem)e.Source;
+            string path = selMap.MapFullName;
+
             switch (selMenuItem.Header)
             {
+                case "Copy":
+                    {
+                        var fileDropList = new StringCollection();
+                        fileDropList.Add(path);
+                        Clipboard.SetFileDropList(fileDropList);
+                        break;
+                    }
+                case "Paste":
+                    {
+                        var curFolder = FileOperations.GetFolderFromFilePath(path);
+                        try
+                        {
+                            string[] clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop);
+                            FileOperations.CopyFilesToFolder(clipboardText, curFolder);
+                        }
+                        catch { }
+                        await UpdateMapList(curFolder);
+                        break;
+                    }
                 case "Delete":
                     {
                         MapOperations.DeleteMap(selMap);
@@ -453,13 +475,11 @@ namespace GbxMapBrowser
                     }
                 case "File Properties":
                     {
-                        var path = ((MapInfo)mapListBox.SelectedItem).MapFullName;
                         FileOperations.ShowFileProperties(path);
                         break;
                     }
                 case "Map Properties":
                     {
-                        var path = ((MapInfo)mapListBox.SelectedItem).MapFullName;
                         var gbxInfoPage = new GbxInfoPage(path);
                         mapPreviewFrame.Navigate(gbxInfoPage);
                         break;
