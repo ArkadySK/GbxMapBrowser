@@ -431,7 +431,7 @@ namespace GbxMapBrowser
             var selMap = (MapInfo)mapListBox.SelectedItem;
             var selMenuItem = (MenuItem)e.Source;
             string path = selMap.MapFullName;
-            e.Handled = true; //avoid running this more than once?
+            e.Handled = true; //avoid running this code more than once
 
             switch (selMenuItem.Header)
             {
