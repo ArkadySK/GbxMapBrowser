@@ -246,7 +246,7 @@ namespace GbxMapBrowser
                 MessageBox.Show("Select a map to launch", "Impossible to load map", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
-        private async void mapListBox_PreviewMouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
+        private async void mapListBox_MouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
         {
             await MapListBoxLaunchItemAsync(mapListBox.SelectedItem);
         }
@@ -417,14 +417,13 @@ namespace GbxMapBrowser
             contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
             contextMenu.IsOpen = true;
         }
- 
+
         private void mapListBox_Item_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            ContextMenu contextMenu = (ContextMenu)((Grid)sender).ContextMenu;
-            contextMenu.PreviewMouseDown += ContextMenu_PreviewMouseDown;
+            ((Grid)sender).ContextMenu.PreviewMouseUp += ContextMenu_PreviewMouseUp;
         }
 
-        private async void ContextMenu_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private async void ContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (!(mapListBox.SelectedItem is MapInfo)) return;
             if (!(e.Source is MenuItem)) return;
@@ -432,6 +431,7 @@ namespace GbxMapBrowser
             var selMap = (MapInfo)mapListBox.SelectedItem;
             var selMenuItem = (MenuItem)e.Source;
             string path = selMap.MapFullName;
+            e.Handled = true; //avoid running this more than once?
 
             switch (selMenuItem.Header)
             {
@@ -447,11 +447,16 @@ namespace GbxMapBrowser
                         var curFolder = FileOperations.GetFolderFromFilePath(path);
                         try
                         {
-                            string[] clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop);
+                            string[] clipboardText = null;
+                            await Task.Run(() =>
+                            Dispatcher.Invoke(() =>
+                            clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop)
+                            )
+                            );
                             FileOperations.CopyFilesToFolder(clipboardText, curFolder);
+                            await UpdateMapList(curFolder);
                         }
                         catch { }
-                        await UpdateMapList(curFolder);
                         break;
                     }
                 case "Delete":
@@ -483,8 +488,9 @@ namespace GbxMapBrowser
                         var gbxInfoPage = new GbxInfoPage(path);
                         mapPreviewFrame.Navigate(gbxInfoPage);
                         break;
-                    }
+                    }              
             }
+            await Task.Delay(100);
         }
         #endregion
 
