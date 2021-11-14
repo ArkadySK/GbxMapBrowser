@@ -9,7 +9,7 @@ namespace GbxMapBrowser
     public static class HistoryManager
     {
         static public event EventHandler UpdateListUI;
-        private static List<string> HistoryList { get; } = new List<string>();
+        private static List<string> HistoryList = new List<string>();
         public static List<string> HistoryListMinimal { 
             get 
             {
@@ -34,29 +34,37 @@ namespace GbxMapBrowser
 
             if(HistoryList.Count > 0)
             {
-                if(CurrentIndex < HistoryList.Count) //doterajsi pocet (curIndex - 1) je v ramci historylistu, potrebujem odstranit zbytkove itemy 
+                if(CurrentIndex < HistoryList.Count) //remove all other items from previous history branch
                     HistoryList.RemoveRange(CurrentIndex, HistoryList.Count - CurrentIndex);
             }
 
             HistoryList.Add(path);
-            CanUndo = true;
+            CheckUndoRedo();
+
             UpdateListUI?.Invoke(null, EventArgs.Empty);
         }
 
+        private static void CheckUndoRedo()
+        {
+            CanUndo = false;
+            CanRedo = false;
+            if (CurrentIndex > 0)
+                CanUndo = true;
+            if(CurrentIndex < HistoryList.Count - 1)
+                CanRedo = true; 
+        }
 
         public static string RequestPrev()
         {
             CurrentIndex -= 1; // go to -1 to the history
-            if(CanUndo)
+            if (CanUndo)
                 try
                 {
+                    CheckUndoRedo();
                     string pathToReturn = HistoryList[CurrentIndex];
-                    CanRedo = true;
                     return pathToReturn;
                 }
-                catch {
-                    throw new Exception("index out of range");
-                }
+                catch {}
 
             return null;
         }
@@ -64,16 +72,15 @@ namespace GbxMapBrowser
         public static string RequestNext()
         {
             CurrentIndex += 1;
+
             if(CanRedo) 
                 try
                 {
+                    CheckUndoRedo();
                     string pathToReturn = HistoryList[CurrentIndex];
                     return pathToReturn;
                 }
-                catch 
-                {
-                    throw new Exception("index out of range");
-                }
+                catch {}
             return null;
         }
 
