@@ -132,7 +132,6 @@ namespace GbxMapBrowser
 
         async Task UpdateMapList(string mapsFolder)
         {
-            HistoryManager.AddToHistory(mapsFolder);
             UpdateMapPreview(null);
             MapInfoController.ClearMapList();
 
@@ -225,6 +224,7 @@ namespace GbxMapBrowser
                 MessageBox.Show(ee.Message);
             }
             await UpdateMapList(curFolder);
+            HistoryManager.AddToHistory(curFolder);
 
         }
         #endregion
@@ -235,6 +235,7 @@ namespace GbxMapBrowser
             {
                 curFolder = selFolder.FolderFullPath;
                 await UpdateMapList(curFolder);
+                HistoryManager.AddToHistory(curFolder);
                 UpdateMapPreview(null);
             }
             else if (selItem is MapInfo mapInfo)
@@ -351,6 +352,7 @@ namespace GbxMapBrowser
             {
                 curFolder = currentFolderTextBox.Text;
                 await UpdateMapList(curFolder);
+                HistoryManager.AddToHistory(curFolder);
             }
         }
 
@@ -374,6 +376,7 @@ namespace GbxMapBrowser
                     MessageBox.Show(ee.Message);
                 }
                 await UpdateMapList(curFolder);
+                HistoryManager.AddToHistory(curFolder);
             }
 
             if (Keyboard.Modifiers == ModifierKeys.Alt && Keyboard.IsKeyDown(Key.Left))
