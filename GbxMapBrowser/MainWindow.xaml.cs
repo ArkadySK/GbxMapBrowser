@@ -60,6 +60,17 @@ namespace GbxMapBrowser
                     updater.DownloadUpdate();
                 }
             }
+
+            HistoryManager.UpdateListUI += HistoryManager_UpdateListUI;
+        }
+
+        private void HistoryManager_UpdateListUI(object sender, EventArgs e)
+        {
+            string tooltip = "";
+            HistoryManager.HistoryListMinimal.ForEach(x => tooltip += x + "\n");
+            tooltip = tooltip.Remove(tooltip.Length - 1);
+            undoButton.ToolTip = tooltip;
+            redoButton.ToolTip = tooltip;
         }
 
         #region GbxGameListInit
