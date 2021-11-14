@@ -8,31 +8,41 @@ namespace GbxMapBrowser
 {
     public static class HistoryManager
     {
-        private static List<string> HistoryList { get; set; } = new List<string>();
+        static public event EventHandler UpdateListUI;
+        private static List<string> HistoryList { get; } = new List<string>();
+        public static List<string> HistoryListMinimal { 
+            get 
+            {
+                List<string> list = new List<string>(); 
+                for(int i = 0; i < 5; i++)
+                {
+                    if(i < HistoryList.Count)
+                        list.Add(HistoryList[i]);
+                }
+                return list;
+            } 
+        }
         public static bool CanUndo { get; private set; } = false; 
         public static bool CanRedo { get; private set; } = false;
         static int CurrentIndex = -1;
 
-        public static void AddToHistory(string path) 
-        { 
-            if (path == null) return; // do not add empty path, do nothing
-            CanUndo = false;
-            CanRedo = false;
+        public static void AddToHistory(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return; // do not add empty path, do nothing
 
-            if (HistoryList.Count > 0)
-                if (HistoryList.Last() == path) return; // skip if the path is already there (in the most recent pos)
+            CurrentIndex++;      
 
-            CurrentIndex += 1;
-            if (CurrentIndex < HistoryList.Count)
-                Console.WriteLine(path);
-            else
-                HistoryList.Add(path);
+            if(HistoryList.Count > 0)
+            {
+                if(CurrentIndex < HistoryList.Count) //doterajsi pocet (curIndex - 1) je v ramci historylistu, potrebujem odstranit zbytkove itemy 
+                    HistoryList.RemoveRange(CurrentIndex, HistoryList.Count - CurrentIndex);
+            }
 
-            if (CurrentIndex > 0)
-                CanUndo= true;
-            if (CurrentIndex < HistoryList.Count - 1)
-                CanRedo = true;
+            HistoryList.Add(path);
+            CanUndo = true;
+            UpdateListUI?.Invoke(null, EventArgs.Empty);
         }
+
 
         public static string RequestPrev()
         {
@@ -41,10 +51,12 @@ namespace GbxMapBrowser
                 try
                 {
                     string pathToReturn = HistoryList[CurrentIndex];
-                    CurrentIndex -= 1;
+                    CanRedo = true;
                     return pathToReturn;
                 }
-                catch { }
+                catch {
+                    throw new Exception("index out of range");
+                }
 
             return null;
         }
@@ -56,10 +68,12 @@ namespace GbxMapBrowser
                 try
                 {
                     string pathToReturn = HistoryList[CurrentIndex];
-                    CurrentIndex -= 1;
                     return pathToReturn;
                 }
-                catch { }
+                catch 
+                {
+                    throw new Exception("index out of range");
+                }
             return null;
         }
 
