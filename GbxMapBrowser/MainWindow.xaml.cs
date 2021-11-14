@@ -202,12 +202,14 @@ namespace GbxMapBrowser
 
         private async void undoButton_Click(object sender, RoutedEventArgs e)
         {
-            await UpdateMapList(await Task.Run(HistoryManager.RequestPrev));
+            curFolder = await Task.Run(HistoryManager.RequestPrev);
+            await UpdateMapList(curFolder);
         }
 
         private async void redoButton_Click(object sender, RoutedEventArgs e)
         {
-            await UpdateMapList(await Task.Run(HistoryManager.RequestNext));
+            curFolder = await Task.Run(HistoryManager.RequestNext);
+            await UpdateMapList(curFolder);
         }
 
         private async void parentFolderButton_Click(object sender, RoutedEventArgs e)
