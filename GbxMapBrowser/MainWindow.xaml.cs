@@ -95,6 +95,7 @@ namespace GbxMapBrowser
             openInComboBox.SelectedItem = selGame;
             curFolder = selGame.MapsFolder;
             await UpdateMapList(selGame.MapsFolder);
+            HistoryManager.AddToHistory(curFolder);
             GbxGameController.SelectedGbxGame = selGame;
         }
         #endregion
@@ -234,8 +235,8 @@ namespace GbxMapBrowser
             if (selItem is FolderInfo selFolder)
             {
                 curFolder = selFolder.FolderFullPath;
-                await UpdateMapList(curFolder);
                 HistoryManager.AddToHistory(curFolder);
+                await UpdateMapList(curFolder);  
                 UpdateMapPreview(null);
             }
             else if (selItem is MapInfo mapInfo)
