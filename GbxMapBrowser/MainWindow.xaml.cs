@@ -29,7 +29,6 @@ namespace GbxMapBrowser
         GbxGameController GbxGameController = new GbxGameController();
         SearchOption searchOption;
         SortKind.Kind sortKind = SortKind.Kind.ByNameAscending;
-        List<string> History = new List<string>();
 
         public MainWindow()
         {
