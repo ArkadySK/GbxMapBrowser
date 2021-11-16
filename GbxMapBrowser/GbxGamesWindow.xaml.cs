@@ -54,6 +54,7 @@ namespace GbxMapBrowser
                 }
             }
             Properties.Settings.Default.Save();
+            GbxGameController.SaveSettings();
         }
 
         private void ButtonChangeInstallLocation_Click(object sender, RoutedEventArgs e)

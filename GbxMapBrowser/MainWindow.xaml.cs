@@ -57,6 +57,7 @@ namespace GbxMapBrowser
                 MessageBoxResult result = MessageBox.Show("New update is available. \n\nDownload now?", "Update Available", MessageBoxButton.YesNo, MessageBoxImage.Information);
                 if(result == MessageBoxResult.Yes)
                 {
+                    GbxGameController.SaveSettings();
                     updater.DownloadUpdate();
                 }
             }
