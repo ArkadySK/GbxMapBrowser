@@ -77,7 +77,7 @@
                 <MenuItem Header="Rename Map"/>
                 <Separator/>
                 <MenuItem Header="File Properties"/>
-                <MenuItem Header="Map Properties"/>
+                <!--<MenuItem Header="Map Properties"/>-->
             </ContextMenu>
         </ResourceDictionary>
     </Application.Resources>
