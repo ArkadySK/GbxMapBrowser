@@ -508,6 +508,7 @@ namespace GbxMapBrowser
                     }              
             }
             await Task.Delay(100);
+            ((ContextMenu)sender).IsOpen = false;
         }
         #endregion
 
