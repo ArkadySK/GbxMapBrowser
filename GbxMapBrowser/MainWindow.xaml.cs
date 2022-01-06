@@ -324,8 +324,8 @@ namespace GbxMapBrowser
         {
             if (e.ChangedButton != MouseButton.Left) return;
             if (mapListBox.SelectedItem == null) return;
-            if (!(mapListBox.SelectedItem is MapInfo)) return; //DOROB NA VIAC MAP
-            if (!(e.MouseDevice.DirectlyOver is TextBlock)) return;
+            if (mapListBox.SelectedItem is not MapInfo) return; //DOROB NA VIAC MAP
+            if (e.MouseDevice.DirectlyOver is not TextBlock) return;
             string lastSelMapName = (e.MouseDevice.DirectlyOver as TextBlock).Text;
             List<string> mapNames = new List<string>();
             foreach (var m in mapListBox.SelectedItems)
@@ -399,7 +399,7 @@ namespace GbxMapBrowser
                 if (HistoryManager.CanRedo)
                     redoButton_Click(this, null);
 
-            if (!(mapListBox.SelectedItem is MapInfo)) return; //must be selected map
+            if (mapListBox.SelectedItem is not MapInfo) return; //must be selected map
             MapInfo selMap = (MapInfo)mapListBox.SelectedItem;
 
             if (e.Key == Key.Delete)
@@ -427,7 +427,7 @@ namespace GbxMapBrowser
         void ShowContextMenu()
         {
             if (mapListBox.SelectedItem == null) return;
-            if (!(mapListBox.SelectedItem is MapInfo)) return;
+            if (mapListBox.SelectedItem is not MapInfo) return;
 
             ContextMenu contextMenu = (ContextMenu)FindResource("MapContextMenu");
             contextMenu.PlacementTarget = mapListBox;
@@ -442,7 +442,7 @@ namespace GbxMapBrowser
 
         private async void ContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (!(mapListBox.SelectedItem is MapInfo)) return;
+            if (mapListBox.SelectedItem is not MapInfo) return;
             if (!(e.Source is MenuItem)) return;
             
             var selMap = (MapInfo)mapListBox.SelectedItem;

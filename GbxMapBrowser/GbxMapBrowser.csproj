@@ -9,6 +9,7 @@
     <Version>1.4.0</Version>
     <Authors>ArkadySK</Authors>
     <Company />
+	  <LangVersion>10</LangVersion>
     <Product>Gbx Map Browser</Product>
     <PackageId>Gbx Map Browser</PackageId>
     <Description>The program that helps you to browse and explore your '.gbx' map and replay files with ease!</Description>
