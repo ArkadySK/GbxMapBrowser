@@ -6,14 +6,14 @@ namespace GbxMapBrowser
 {
     internal class CustomGbxGame: GbxGame
     {
-        public CustomGbxGame(string name, string instalationfolder)
+        public CustomGbxGame(string name, GbxGame baseGbxGame)
         {
             Name = name;
             Icon = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\GameIcons\\Custom.png"));
             TargetExeName = "";
-            if (Directory.Exists(instalationfolder))
+            if (Directory.Exists(baseGbxGame.InstalationFolder))
             {
-                InstalationFolder = instalationfolder;
+                InstalationFolder = baseGbxGame.InstalationFolder;
                 IsEnabled = true;
                 IsVisibleInGameList = true;
             }

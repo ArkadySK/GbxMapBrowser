@@ -15,6 +15,7 @@ namespace GbxMapBrowser
         public string Name { get; internal set; }
         public string InstalationFolder { get; set; }
         public string TargetExeName { get; internal set; }
+        public string ExeLocation { get; internal set; }
         public string MapsFolder { get; set; }
         public bool IsVisibleInGameList { get; set; }
 
@@ -30,6 +31,7 @@ namespace GbxMapBrowser
             Name = name;
             Icon = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\GameIcons\\" + Name + ".png"));
             TargetExeName = targetexename;
+            ExeLocation = InstalationFolder + "\\" + ExeLocation;
             if (Directory.Exists(instalationfolder))
             {
                 InstalationFolder = instalationfolder;
@@ -130,6 +132,7 @@ namespace GbxMapBrowser
 
             if (dialogResult.Value)
             {
+                ExeLocation = openFileDialog.FileName;
                 var exeName = openFileDialog.FileName.Split("\\").Last();
                 if (exeName == TargetExeName || TargetExeName == "")
                 {

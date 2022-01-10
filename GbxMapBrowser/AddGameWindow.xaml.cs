@@ -29,7 +29,7 @@ namespace GbxMapBrowser
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CustomGbxGame game = new CustomGbxGame(nameTextBox.Text, baseGbxGame);
-
+            game.GetInstallationDialog();
         }
     }
 }
