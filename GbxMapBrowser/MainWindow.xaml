@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GbxMapBrowser"
         xmlns:System="clr-namespace:System;assembly=System.Runtime" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         mc:Ignorable="d"
-        Title="Gbx Map Browser" Height="800" Width="1100" MinHeight="400" MinWidth="600" Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Loaded="Window_LoadedAsync">
+        Title="Gbx Map Browser" Height="800" Width="1100" MinHeight="300" MinWidth="600" Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Loaded="Window_LoadedAsync">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
