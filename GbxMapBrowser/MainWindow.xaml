@@ -100,7 +100,7 @@
             <!--The Game list, left part of UI-->
             <mah:HamburgerMenu.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Visibility="{Binding Visibility}" Margin="5">
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding IsVisibleInGameList, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="5">
                         <Image Width="40" Source="{Binding Icon}"></Image>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="5 0 0 0" Content="{Binding Name}" />
@@ -131,7 +131,7 @@
             <ComboBox x:Name="openInComboBox" FontSize="15" Margin="0 5 0 10" Height="40">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <Label Visibility="{Binding Visibility}" Content="{Binding Name}" Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" Content="{Binding Name}" Style="{StaticResource DefaultUIStyle}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>

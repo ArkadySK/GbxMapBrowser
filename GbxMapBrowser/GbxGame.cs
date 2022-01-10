@@ -16,22 +16,10 @@ namespace GbxMapBrowser
         public string InstalationFolder { get; set; }
         public string TargetExeName { get; }
         public string MapsFolder { get; set; }
-        public bool VisibleInGameList { get; set; }
+        public bool IsVisibleInGameList { get; set; }
 
         public BitmapImage Icon { get; }
-        private bool isEnabled = false;
-        public bool IsEnabled { get { return isEnabled; }  set 
-            {
-                if (value == true)
-                {
-                    Visibility = Visibility.Visible;
-                }
-                else
-                    Visibility = Visibility.Collapsed;
-                isEnabled = value;
-            } 
-        }
-        public Visibility Visibility { get; set; }
+        public bool IsEnabled { get; set;}
 
         
 
