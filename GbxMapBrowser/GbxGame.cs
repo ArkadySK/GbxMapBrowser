@@ -16,6 +16,8 @@ namespace GbxMapBrowser
         public string InstalationFolder { get; set; }
         public string TargetExeName { get; }
         public string MapsFolder { get; set; }
+        public bool VisibleInGameList { get; set; }
+
         public BitmapImage Icon { get; }
         private bool isEnabled = false;
         public bool IsEnabled { get { return isEnabled; }  set 
