@@ -19,6 +19,7 @@ namespace GbxMapBrowser
         public void LoadGames()
         {
             GbxGames.Clear();
+            UpdateSettingsFromFile();
             AddGbxGame("TM Nations Forever", Properties.Settings.Default.TMNationsForeverFolder, "TmForever.exe");
             AddGbxGame("TM United Forever", Properties.Settings.Default.TMUnitedForeverFolder, "TmForever.exe");
             AddGbxGame("ManiaPlanet", Properties.Settings.Default.ManiaPlanetFolder, "ManiaPlanet.exe");
@@ -40,9 +41,18 @@ namespace GbxMapBrowser
             File.WriteAllLinesAsync(currentPath + "\\config\\settings.dat", settingsText);
         }
 
-        void GetSettingsFromFile()
+        void UpdateSettingsFromFile()
         {
             string currentPath = Directory.GetCurrentDirectory();
+            if (!Directory.Exists(currentPath + "\\config"))
+                Directory.CreateDirectory(currentPath + "\\config");
+            if (!File.Exists(currentPath + "\\config\\settings.dat"))
+            {
+                Properties.Settings.Default.Reset();
+                Properties.Settings.Default.IsFirstRun = true;
+                return;
+            }
+
             var settingsText = File.ReadAllLines(currentPath + "\\config\\settings.dat");
 
             foreach(var line in settingsText)
