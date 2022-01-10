@@ -12,13 +12,13 @@ namespace GbxMapBrowser
 {
     public class GbxGame
     {
-        public string Name { get;}
+        public string Name { get; internal set; }
         public string InstalationFolder { get; set; }
-        public string TargetExeName { get; }
+        public string TargetExeName { get; internal set; }
         public string MapsFolder { get; set; }
         public bool IsVisibleInGameList { get; set; }
 
-        public BitmapImage Icon { get; }
+        public BitmapImage Icon { get; internal set; }
         public bool IsEnabled { get; set;}
 
         
@@ -34,6 +34,7 @@ namespace GbxMapBrowser
             {
                 InstalationFolder = instalationfolder;
                 IsEnabled = true;
+                IsVisibleInGameList = true;
             }
             else
             {
@@ -48,7 +49,7 @@ namespace GbxMapBrowser
             GetMapsFolder(InstalationFolder);
         }
 
-        void GetMapsFolder(string instalationfolder)
+        internal void GetMapsFolder(string instalationfolder)
         {
             string nadeoiniPath = instalationfolder + "\\Nadeo.ini";
             if (!File.Exists(nadeoiniPath))
@@ -130,7 +131,7 @@ namespace GbxMapBrowser
             if (dialogResult.Value)
             {
                 var exeName = openFileDialog.FileName.Split("\\").Last();
-                if (exeName == TargetExeName)
+                if (exeName == TargetExeName || TargetExeName == "")
                 {
                     InstalationFolder = openFileDialog.FileName.Replace("\\" + exeName, "");
                     UpdateMapsFolder();
