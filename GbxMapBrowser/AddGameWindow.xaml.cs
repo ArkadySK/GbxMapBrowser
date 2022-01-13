@@ -22,6 +22,7 @@ namespace GbxMapBrowser
         public AddGameWindow(GbxGameController gbxGameController, GbxGame baseGame)
         {
             InitializeComponent();
+            baseGbxGame = baseGame;
             nameTextBox.Text = baseGbxGame.Name + " New";
             GameController = gbxGameController;
         }
@@ -29,7 +30,9 @@ namespace GbxMapBrowser
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CustomGbxGame game = new CustomGbxGame(nameTextBox.Text, baseGbxGame);
+            game.IsVisibleInGameList = false;
             game.GetInstallationDialog();
+            GameController.GbxGames.Add(game);
         }
     }
 }

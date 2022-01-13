@@ -65,8 +65,18 @@ namespace GbxMapBrowser
                     {
                         string mapPath = line.Replace(game.Name + ": ", "");
                         if(mapPath == "")
+                        {
                             emptyGamesCount++;
-                        game.MapsFolder = mapPath;
+                            game.IsVisibleInGameList = false;
+                            game.IsEnabled = true;
+
+                        }
+                        else
+                        {
+                            game.MapsFolder = mapPath;
+                            game.IsVisibleInGameList = true;
+                            game.IsEnabled = true;
+                        }
                     }
 
                 }
