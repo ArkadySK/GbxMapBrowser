@@ -103,7 +103,9 @@ namespace GbxMapBrowser
 
         private void addCustomGameButton_Click(object sender, RoutedEventArgs e)
         {
+
             var selGame = (GbxGame)(listView.SelectedItem);
+            if(selGame == null) return;
             var addWindow = new AddGameWindow(GbxGameController, selGame);
             addWindow.ShowDialog();
         }
