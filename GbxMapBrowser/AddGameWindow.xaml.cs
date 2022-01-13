@@ -18,21 +18,22 @@ namespace GbxMapBrowser
     public partial class AddGameWindow : Window
     {
         GbxGameController GameController;
-        GbxGame baseGbxGame;
+        CustomGbxGame game;
         public AddGameWindow(GbxGameController gbxGameController, GbxGame baseGame)
         {
             InitializeComponent();
-            baseGbxGame = baseGame;
-            nameTextBox.Text = baseGbxGame.Name + " New";
             GameController = gbxGameController;
+            game = new CustomGbxGame(nameTextBox.Text, baseGame);
+            game.Name = baseGame.Name + " New";
+            DataContext = game;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CustomGbxGame game = new CustomGbxGame(nameTextBox.Text, baseGbxGame);
             game.IsVisibleInGameList = false;
             game.GetInstallationDialog();
             GameController.GbxGames.Add(game);
+            this.Close();
         }
     }
 }
