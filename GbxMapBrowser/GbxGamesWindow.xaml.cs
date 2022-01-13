@@ -100,5 +100,12 @@ namespace GbxMapBrowser
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
         }
+
+        private void addCustomGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selGame = (GbxGame)(listView.SelectedItem);
+            var addWindow = new AddGameWindow(GbxGameController, selGame);
+            addWindow.ShowDialog();
+        }
     }
 }

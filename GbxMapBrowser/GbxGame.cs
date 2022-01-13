@@ -132,10 +132,10 @@ namespace GbxMapBrowser
 
             if (dialogResult.Value)
             {
-                ExeLocation = openFileDialog.FileName;
                 var exeName = openFileDialog.FileName.Split("\\").Last();
                 if (exeName == TargetExeName || TargetExeName == "")
                 {
+                    ExeLocation = openFileDialog.FileName;
                     InstalationFolder = openFileDialog.FileName.Replace("\\" + exeName, "");
                     UpdateMapsFolder();
                     IsEnabled = true;

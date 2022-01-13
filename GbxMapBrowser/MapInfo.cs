@@ -184,7 +184,7 @@ namespace GbxMapBrowser
 
         public void OpenMap(GbxGame selGame)
         {
-            string path = selGame.InstalationFolder + "\\" + selGame.TargetExeName;
+            string path = selGame.ExeLocation;
 
             ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(path, "/useexedir /singleinst /file=\"" + MapFullName + "\"");
             Process gameGbx = new Process();

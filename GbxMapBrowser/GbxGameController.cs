@@ -19,12 +19,12 @@ namespace GbxMapBrowser
         public void LoadGames()
         {
             GbxGames.Clear();
-            UpdateSettingsFromFile();
             AddGbxGame("TM Nations Forever", Properties.Settings.Default.TMNationsForeverFolder, "TmForever.exe");
             AddGbxGame("TM United Forever", Properties.Settings.Default.TMUnitedForeverFolder, "TmForever.exe");
             AddGbxGame("ManiaPlanet", Properties.Settings.Default.ManiaPlanetFolder, "ManiaPlanet.exe");
             AddGbxGame("TM Turbo", Properties.Settings.Default.TMTurboFolder, "TrackmaniaTurbo.exe");
             AddGbxGame("TM 2020", Properties.Settings.Default.TMNextFolder, "Trackmania.exe");
+            UpdateSettingsFromFile();
         }
 
         public void SaveSettings()
@@ -46,6 +46,7 @@ namespace GbxMapBrowser
             string currentPath = Directory.GetCurrentDirectory();
             if (!Directory.Exists(currentPath + "\\config"))
                 Directory.CreateDirectory(currentPath + "\\config");
+
             if (!File.Exists(currentPath + "\\config\\settings.dat"))
             {
                 Properties.Settings.Default.Reset();
@@ -55,21 +56,25 @@ namespace GbxMapBrowser
 
             var settingsText = File.ReadAllLines(currentPath + "\\config\\settings.dat");
 
+            int emptyGamesCount = 0;
             foreach(var line in settingsText)
             {
                 foreach(GbxGame game in GbxGames)
                 {
                     if (line.Contains(game.Name)) //game is found
                     {
-                        int curIndex = settingsText.ToList().IndexOf(line);
-                        if (curIndex >= settingsText.Length) continue;
-
-                        string mapPath = settingsText[curIndex + 1].Replace(game.Name + ": ", "");
+                        string mapPath = line.Replace(game.Name + ": ", "");
+                        if(mapPath == "")
+                            emptyGamesCount++;
                         game.MapsFolder = mapPath;
                     }
 
                 }
             }
+
+            if(emptyGamesCount == GbxGames.Count)
+                Properties.Settings.Default.IsFirstRun = true;
+
         }
     }
 }
