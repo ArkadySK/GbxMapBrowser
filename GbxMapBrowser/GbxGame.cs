@@ -12,7 +12,7 @@ namespace GbxMapBrowser
 {
     public class GbxGame
     {
-        public string Name { get; internal set; }
+        public string Name { get; set; }
         public string InstalationFolder { get; set; }
         public string TargetExeName { get; internal set; }
         public string ExeLocation { get; internal set; }
