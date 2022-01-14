@@ -13,7 +13,14 @@ namespace GbxMapBrowser
     public class GbxGame
     {
         public string Name { get; set; }
-        public string InstalationFolder { get; set; }
+        public string InstalationFolder
+        {
+            get {
+                if (string.IsNullOrWhiteSpace(ExeLocation))
+                    return null;
+                return ExeLocation.Replace(ExeLocation.Split("\\").Last() + "\\", "");
+            }
+        }
         public string TargetExeName { get; internal set; }
         public string ExeLocation { get; internal set; }
         public string MapsFolder { get; set; }
@@ -31,10 +38,8 @@ namespace GbxMapBrowser
             Name = name;
             Icon = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\GameIcons\\" + Name + ".png"));
             TargetExeName = targetexename;
-            ExeLocation = InstalationFolder + "\\" + ExeLocation;
             if (Directory.Exists(instalationfolder))
             {
-                InstalationFolder = instalationfolder;
                 IsEnabled = true;
                 IsVisibleInGameList = true;
             }
@@ -136,7 +141,6 @@ namespace GbxMapBrowser
                 if (exeName == TargetExeName || TargetExeName == "")
                 {
                     ExeLocation = openFileDialog.FileName;
-                    InstalationFolder = openFileDialog.FileName.Replace("\\" + exeName, "");
                     UpdateMapsFolder();
                     IsEnabled = true;
                 }

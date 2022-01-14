@@ -23,6 +23,7 @@ namespace GbxMapBrowser
             InitializeComponent();
             GbxGameController = gbxGameController;
             DataContext = GbxGameController;
+            GbxGameController.UpdateSettingsFromFile();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -33,11 +34,6 @@ namespace GbxMapBrowser
                 if (String.IsNullOrEmpty(game.InstalationFolder)) game.IsEnabled = false;
                 if (!Directory.Exists(game.InstalationFolder)) game.IsEnabled = false;
             }
-            Properties.Settings.Default.TMNationsForeverFolder = GbxGameController.GbxGames[0].InstalationFolder;
-            Properties.Settings.Default.TMUnitedForeverFolder = GbxGameController.GbxGames[1].InstalationFolder;
-            Properties.Settings.Default.ManiaPlanetFolder = GbxGameController.GbxGames[2].InstalationFolder;
-            Properties.Settings.Default.TMTurboFolder = GbxGameController.GbxGames[3].InstalationFolder;
-            Properties.Settings.Default.TMNextFolder = GbxGameController.GbxGames[4].InstalationFolder;
 
             foreach (var gbxGame in GbxGameController.GbxGames)
             {
@@ -79,7 +75,7 @@ namespace GbxMapBrowser
                 MessageBox.Show("Can't change game folder - please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            selGame.InstalationFolder = "";
+            selGame.ExeLocation = null;
             selGame.IsEnabled = false;
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;

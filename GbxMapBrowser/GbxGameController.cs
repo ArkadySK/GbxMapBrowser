@@ -41,7 +41,7 @@ namespace GbxMapBrowser
             File.WriteAllLinesAsync(currentPath + "\\config\\settings.dat", settingsText);
         }
 
-        void UpdateSettingsFromFile()
+        public void UpdateSettingsFromFile()
         {
             string currentPath = Directory.GetCurrentDirectory();
             if (!Directory.Exists(currentPath + "\\config"))
@@ -63,22 +63,41 @@ namespace GbxMapBrowser
                 {
                     if (line.Contains(game.Name)) //game is found
                     {
-                        string mapPath = line.Replace(game.Name + ": ", "");
-                        if(mapPath == "")
+                        string newline = line.Replace(game.Name + ": ", "");
+                        string[] props = newline.Split('|');
+                        string mapPath = props[0];
+                        string exePath = props[1];
+
+                        if (string.IsNullOrWhiteSpace(mapPath) || string.IsNullOrWhiteSpace(exePath))
                         {
                             emptyGamesCount++;
                             game.IsVisibleInGameList = false;
-                            game.IsEnabled = true;
-
+                            game.IsEnabled = false;
+                            continue;
                         }
-                        else
+
+                        game.MapsFolder = mapPath;
+                        game.ExeLocation = exePath;
+
+                        if(props.Length >=3)
                         {
-                            game.MapsFolder = mapPath;
-                            game.IsVisibleInGameList = true;
-                            game.IsEnabled = true;
+                            string enabledString = props[2];
+                            if (enabledString == "E")
+                                game.IsEnabled = true;
+                            else
+                                game.IsEnabled = false;
                         }
-                    }
 
+                        if (props.Length >= 4)
+                        {
+                            string visibleString = props[3];
+                            if (visibleString == "V")
+                                game.IsVisibleInGameList = true;
+                            else
+                                game.IsVisibleInGameList = false;
+                        }
+     
+                    }
                 }
             }
 

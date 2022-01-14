@@ -14,7 +14,6 @@ namespace GbxMapBrowser
             IsVisibleInGameList = false;
             IsEnabled = true;
             MapsFolder = baseGbxGame.MapsFolder;
-            InstalationFolder = baseGbxGame.InstalationFolder;
         }
     }
 }
