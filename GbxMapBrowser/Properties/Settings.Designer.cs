@@ -12,7 +12,7 @@ namespace GbxMapBrowser.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -20,42 +20,6 @@ namespace GbxMapBrowser.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TMUnitedForeverFolder {
-            get {
-                return ((string)(this["TMUnitedForeverFolder"]));
-            }
-            set {
-                this["TMUnitedForeverFolder"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ManiaPlanetFolder {
-            get {
-                return ((string)(this["ManiaPlanetFolder"]));
-            }
-            set {
-                this["ManiaPlanetFolder"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TMNextFolder {
-            get {
-                return ((string)(this["TMNextFolder"]));
-            }
-            set {
-                this["TMNextFolder"] = value;
             }
         }
         
@@ -80,30 +44,6 @@ namespace GbxMapBrowser.Properties {
             }
             set {
                 this["ShowMapPreviewColumn"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TMTurboFolder {
-            get {
-                return ((string)(this["TMTurboFolder"]));
-            }
-            set {
-                this["TMTurboFolder"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TMNationsForeverFolder {
-            get {
-                return ((string)(this["TMNationsForeverFolder"]));
-            }
-            set {
-                this["TMNationsForeverFolder"] = value;
             }
         }
     }
