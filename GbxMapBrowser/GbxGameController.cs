@@ -11,19 +11,19 @@ namespace GbxMapBrowser
         public ObservableCollection<GbxGame> GbxGames { get; private set; } = new ObservableCollection<GbxGame>();
         public GbxGame SelectedGbxGame { get; set; } = new GbxGame();
 
-        private void AddGbxGame(string name, string instalationfolder, string targetexename)
+        private void AddGbxGame(string name, string targetexename)
         {
-            GbxGames.Add(new GbxGame(name, instalationfolder, targetexename));
+            GbxGames.Add(new GbxGame(name, "", targetexename));
         }
 
         public void LoadGames()
         {
             GbxGames.Clear();
-            AddGbxGame("TM Nations Forever", Properties.Settings.Default.TMNationsForeverFolder, "TmForever.exe");
-            AddGbxGame("TM United Forever", Properties.Settings.Default.TMUnitedForeverFolder, "TmForever.exe");
-            AddGbxGame("ManiaPlanet", Properties.Settings.Default.ManiaPlanetFolder, "ManiaPlanet.exe");
-            AddGbxGame("TM Turbo", Properties.Settings.Default.TMTurboFolder, "TrackmaniaTurbo.exe");
-            AddGbxGame("TM 2020", Properties.Settings.Default.TMNextFolder, "Trackmania.exe");
+            AddGbxGame("TM Nations Forever", "TmForever.exe");
+            AddGbxGame("TM United Forever", "TmForever.exe");
+            AddGbxGame("ManiaPlanet", "ManiaPlanet.exe");
+            AddGbxGame("TM Turbo", "TrackmaniaTurbo.exe");
+            AddGbxGame("TM 2020", "Trackmania.exe");
             UpdateSettingsFromFile();
         }
 
