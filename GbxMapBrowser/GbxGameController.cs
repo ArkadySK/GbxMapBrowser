@@ -36,7 +36,14 @@ namespace GbxMapBrowser
             List<string> settingsText = new List<string>();
             foreach(GbxGame game in GbxGames)
             {
-                settingsText.Add(game.Name + ": " + game.MapsFolder);
+                string enabledString = "N";
+                if (game.IsEnabled)
+                    enabledString = "E";
+                string visibleInGameListString = "N";
+                if (game.IsVisibleInGameList)
+                    visibleInGameListString = "V";
+
+                settingsText.Add(game.Name + ": " + game.MapsFolder + "|" + game.ExeLocation  + "|" + enabledString + "|" + visibleInGameListString);
             }
             File.WriteAllLinesAsync(currentPath + "\\config\\settings.dat", settingsText);
         }
