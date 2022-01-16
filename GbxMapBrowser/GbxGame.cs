@@ -13,16 +13,18 @@ namespace GbxMapBrowser
     public class GbxGame
     {
         public string Name { get; set; }
+        public string ExeLocation { get; internal set; }
         public string InstalationFolder
         {
             get {
                 if (string.IsNullOrWhiteSpace(ExeLocation))
                     return null;
-                return ExeLocation.Replace(ExeLocation.Split("\\").Last() + "\\", "");
+                var curExeName = @"\" + ExeLocation.Split("\\").Last();
+                string parentFolder = ExeLocation.Replace(curExeName, "");
+                return parentFolder;
             }
         }
         public string TargetExeName { get; internal set; }
-        public string ExeLocation { get; internal set; }
         public string MapsFolder { get; set; }
         public bool IsVisibleInGameList { get; set; }
 
