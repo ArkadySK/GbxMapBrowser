@@ -55,7 +55,7 @@ namespace GbxMapBrowser
 
             foreach (var gbxGame in GbxGameController.GbxGames)
             {
-                if (gbxGame.IsEnabled) Properties.Settings.Default.IsFirstRun = false;
+                if (gbxGame.IsEnabled || gbxGame.IsVisibleInGameList) Properties.Settings.Default.IsFirstRun = false;
             }
 
             
@@ -65,8 +65,8 @@ namespace GbxMapBrowser
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel = CanCloseWindow();
             SaveSettings();
+            e.Cancel = CanCloseWindow();
         }
 
         private void ButtonChangeInstallLocation_Click(object sender, RoutedEventArgs e)
