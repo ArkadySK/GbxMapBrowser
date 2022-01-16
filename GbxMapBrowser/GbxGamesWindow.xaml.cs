@@ -26,31 +26,47 @@ namespace GbxMapBrowser
             GbxGameController.UpdateSettingsFromFile();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        bool CanCloseWindow()
+        {
+            if (Properties.Settings.Default.IsFirstRun)
+            {
+                MessageBoxResult result = MessageBox.Show("You have to find the location of atleast one game!" + Environment.NewLine + Environment.NewLine + "Close program?", "Can't continue to use the application.", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.No)
+                    return true;
+                else
+                {                   
+                    Application.Current.Shutdown();
+                }           
+            }
+            return false;
+        }
+
+        void SaveSettings()
         {
             Properties.Settings.Default.IsFirstRun = true;
             foreach (GbxGame game in GbxGameController.GbxGames)
             {
-                if (String.IsNullOrEmpty(game.InstalationFolder)) game.IsEnabled = false;
-                if (!Directory.Exists(game.InstalationFolder)) game.IsEnabled = false;
+                if (!Directory.Exists(game.InstalationFolder) || !File.Exists(game.ExeLocation))
+                {
+                    game.IsEnabled = false;
+                    game.IsVisibleInGameList = false;
+                }
             }
 
             foreach (var gbxGame in GbxGameController.GbxGames)
             {
-                if(gbxGame.IsEnabled) Properties.Settings.Default.IsFirstRun = false;
+                if (gbxGame.IsEnabled) Properties.Settings.Default.IsFirstRun = false;
             }
 
-            if (Properties.Settings.Default.IsFirstRun)
-            {
-                e.Cancel = true;
-                MessageBoxResult result = MessageBox.Show("You have to find the location of atleast one game!" + Environment.NewLine + Environment.NewLine + "Close program?", "Can't continue to use the application.", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                if(result == MessageBoxResult.Yes){
-                    e.Cancel = false;
-                    App.Current.Shutdown();
-                }
-            }
+            
             Properties.Settings.Default.Save();
             GbxGameController.SaveSettings();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = CanCloseWindow();
+            SaveSettings();
         }
 
         private void ButtonChangeInstallLocation_Click(object sender, RoutedEventArgs e)
@@ -85,7 +101,7 @@ namespace GbxMapBrowser
 
         private void ButtonSaveAllChanges_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            Close(); //not only close this window, but it will launch the closing event with save method
         }
 
         private void listView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -99,7 +115,6 @@ namespace GbxMapBrowser
 
         private void addCustomGameButton_Click(object sender, RoutedEventArgs e)
         {
-
             var selGame = (GbxGame)(listView.SelectedItem);
             if(selGame == null) return;
             var addWindow = new AddGameWindow(GbxGameController, selGame);

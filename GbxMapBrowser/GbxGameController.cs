@@ -36,6 +36,8 @@ namespace GbxMapBrowser
             List<string> settingsText = new List<string>();
             foreach(GbxGame game in GbxGames)
             {
+                if (game is CustomGbxGame)
+                    continue;
                 string enabledString = "N";
                 if (game.IsEnabled)
                     enabledString = "E";

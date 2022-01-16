@@ -145,6 +145,7 @@ namespace GbxMapBrowser
                     ExeLocation = openFileDialog.FileName;
                     UpdateMapsFolder();
                     IsEnabled = true;
+                    IsVisibleInGameList = true;
                 }
                 else
                     MessageBox.Show("Wrong exe file! '" + exeName + "' Executable names do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
