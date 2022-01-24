@@ -134,6 +134,9 @@ namespace GbxMapBrowser
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
                 Title = "Please locate the " + TargetExeName + " (game: " + Name + ")",
             };
+            if (ExeLocation != null)
+                openFileDialog.InitialDirectory = InstalationFolder;
+
             var dialogResult = openFileDialog.ShowDialog();
             if (!dialogResult.HasValue) return;
 
