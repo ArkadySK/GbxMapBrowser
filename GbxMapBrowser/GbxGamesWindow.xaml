@@ -45,23 +45,14 @@
         
         
              <!--Add custom game-->
-        <Button x:Name="addCustomGameButton" Style="{x:Null}" Grid.Row="1" Margin="5" Background="Black" Click="addCustomGameButton_Click" >
-            <Label Style="{StaticResource DefaultUIStyle}">Add More Options To The Selected Game</Label>
-        </Button>
-
-        <Button Margin="5" Grid.Column="1" Grid.Row="1" Style="{x:Null}" Background="{DynamicResource MahApps.Brushes.AccentBase}" Click="ButtonSaveAllChanges_Click">
-            <Label Style="{StaticResource DefaultUIStyle}">Save All Changes</Label>
-        </Button>
+        <Button x:Name="addCustomGameButton" Style="{StaticResource StandardButtonStyle}" Grid.Row="1" Margin="5" Click="addCustomGameButton_Click">Add More Options To The Selected Game</Button>
+        <Button Margin="5" Grid.Column="1" Grid.Row="1" Style="{StaticResource StandardButtonStyle}" Background="{DynamicResource MahApps.Brushes.AccentBase}" Click="ButtonSaveAllChanges_Click">Save All Changes</Button>
         
         <!--GbxGame Settings Panel-->
         <StackPanel Grid.Column="1">
             <Label Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Content="{Binding SelectedItem.Name, ElementName=listView, FallbackValue='Choose a game'}"/>
-            <Button Margin="5" Click="ButtonChangeInstallLocation_Click" Style="{x:Null}" Background="Black">
-                <Label Style="{StaticResource DefaultUIStyle}">Change Install Location</Label>
-            </Button>
-            <Button Margin="5" Style="{x:Null}" Background="Black" Click="ButtonResetInstallLocation_Click">
-                <Label Style="{StaticResource DefaultUIStyle}">Reset Install Location</Label>
-            </Button>
+            <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonChangeInstallLocation_Click">Change Install Location</Button>
+            <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonResetInstallLocation_Click">Reset Game's Settings </Button>
 
             <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsEnabled, ElementName=listView}">
                 <Label Style="{StaticResource DefaultUIStyle}" Content="Enable this game"/>

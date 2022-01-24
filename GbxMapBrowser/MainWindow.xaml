@@ -135,11 +135,8 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Button BorderThickness="1" Click="ButtonPlay_Click" Content="Play" Height="35" FontSize="20" Background="{DynamicResource MahApps.Brushes.AccentBase}" BorderBrush="{DynamicResource MahApps.Brushes.Button.Flat.Background}" Foreground="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Foreground.MouseOver}">
-                <Button.Resources>
-                    <ResourceDictionary Source="/PresentationFramework.Aero2;component/themes/Aero2.NormalColor.xaml"/>
-                </Button.Resources>
-            </Button>
+            <Button Click="ButtonPlay_Click" Content="Play" Height="35" Style="{StaticResource StandardButtonStyle}" FontSize="20" 
+                    Background="{DynamicResource MahApps.Brushes.AccentBase}"/>
         </StackPanel>
     </Grid>
 </Window>

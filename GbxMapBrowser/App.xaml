@@ -32,6 +32,8 @@
                 <Setter Property="Padding" Value="1"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="Background" Value="Black"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background}"/>
+                <Setter Property="Foreground" Value="White"/>
             </Style>
 
             <Style x:Key="AddressButtonStyle" TargetType="{x:Type Button}">
