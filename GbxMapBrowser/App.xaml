@@ -18,11 +18,22 @@
                 <Setter Property="FontWeight" Value="Thin"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
+            
+            <!--Style for labels-->
             <Style x:Key="DefaultUIStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="15"/>
                 <Setter Property="Padding" Value="1"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
+
+            <!--Standard UI button used everywhere possible-->
+            <Style x:Key="StandardButtonStyle" TargetType="Button">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Padding" Value="1"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Background" Value="Black"/>
+            </Style>
+
             <Style x:Key="AddressButtonStyle" TargetType="{x:Type Button}">
                 <Setter Property="FontSize" Value="28"/>
                 <Setter Property="Width" Value="48"/>
