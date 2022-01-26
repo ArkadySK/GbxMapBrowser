@@ -61,6 +61,7 @@ namespace GbxMapBrowser
             
             Properties.Settings.Default.Save();
             SettingsManager.SaveSettings(GbxGameController);
+            SettingsManager.SaveCustomGamesSettings(GbxGameController);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

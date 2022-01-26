@@ -15,5 +15,10 @@ namespace GbxMapBrowser
             IsVisibleInGameLaunchMenu = true;
             MapsFolder = baseGbxGame.MapsFolder;
         }
+
+        public CustomGbxGame()
+        {
+
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace GbxMapBrowser
             AddGbxGame("TM 2020", "Trackmania.exe");
 
             SettingsManager.LoadSettingsFromFile(this);
+            SettingsManager.LoadCustomGamesSettingsFromFile(this);
         }
     }
 }

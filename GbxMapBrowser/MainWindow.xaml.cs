@@ -58,6 +58,7 @@ namespace GbxMapBrowser
                 if(result == MessageBoxResult.Yes)
                 {
                     SettingsManager.SaveSettings(GbxGameController);
+                    SettingsManager.SaveCustomGamesSettings(GbxGameController);
                     updater.DownloadUpdate();
                 }
             }
