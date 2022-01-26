@@ -54,7 +54,7 @@
             <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonChangeInstallLocation_Click">Change Install Location</Button>
             <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonResetInstallLocation_Click">Reset Game's Settings </Button>
 
-            <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsEnabled, ElementName=listView}">
+            <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsVisibleInGameLaunchMenu, ElementName=listView}">
                 <Label Style="{StaticResource DefaultUIStyle}" Content=" Visible In Game Launch Menu"/>
             </CheckBox>
         </StackPanel>

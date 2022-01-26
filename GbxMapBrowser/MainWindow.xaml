@@ -131,9 +131,25 @@
             <ComboBox x:Name="openInComboBox" FontSize="15" Margin="0 5 0 10" Height="40">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <Label Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" Content="{Binding Name}" Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="{Binding Name}" Style="{StaticResource DefaultUIStyle}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
+                <ComboBox.Style>
+                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="ItemContainerStyle">
+                            <Setter.Value>
+                                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsVisibleInGameLaunchMenu}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.Style>
             </ComboBox>
             <Button Click="ButtonPlay_Click" Content="Play" Height="35" Style="{StaticResource StandardButtonStyle}" FontSize="20" 
                     Background="{DynamicResource MahApps.Brushes.AccentBase}"/>
