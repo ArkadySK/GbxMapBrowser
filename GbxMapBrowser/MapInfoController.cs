@@ -137,6 +137,7 @@ namespace GbxMapBrowser
             
             mapList.Clear();
             await Task.Run(() => mapList.AddRange(orderedFolderInfos));
+            await Task.Delay(2);
             await Task.Run(() => mapList.AddRange(orderedMapInfos));
         }
 
