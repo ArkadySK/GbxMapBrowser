@@ -32,8 +32,34 @@
                 <Setter Property="Padding" Value="1"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="Background" Value="Black"/>
-                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background}"/>
+                <Setter Property="BorderBrush" Value="{x:Null}"/>
                 <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
+                                <!-- Background Rectangle (bg of the control) -->
+                                <Rectangle x:Name="backgroundRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{TemplateBinding Background}"/>
+                                <!-- Present Content (text) of the button. -->
+                                <DockPanel Name="myContentPresenterDockPanel">
+                                    <ContentPresenter x:Name="myContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="{TemplateBinding Foreground}" />
+                                </DockPanel>
+                                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Rectangle.Fill" TargetName="backgroundRectangle" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                                    <Setter Property="Rectangle.Opacity" TargetName="backgroundRectangle" Value=".85"/>
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="Border.BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <Style x:Key="AddressButtonStyle" TargetType="{x:Type Button}">
