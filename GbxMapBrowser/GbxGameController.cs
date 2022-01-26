@@ -39,7 +39,7 @@ namespace GbxMapBrowser
                 if (game is CustomGbxGame)
                     continue;
                 string enabledString = "N";
-                if (game.IsEnabled)
+                if (game.IsVisibleInGameLaunchMenu)
                     enabledString = "E";
                 string visibleInGameListString = "N";
                 if (game.IsVisibleInGameList)
@@ -81,7 +81,7 @@ namespace GbxMapBrowser
                         {
                             emptyGamesCount++;
                             game.IsVisibleInGameList = false;
-                            game.IsEnabled = false;
+                            game.IsVisibleInGameLaunchMenu = false;
                             continue;
                         }
 
@@ -92,9 +92,9 @@ namespace GbxMapBrowser
                         {
                             string enabledString = props[2];
                             if (enabledString == "E")
-                                game.IsEnabled = true;
+                                game.IsVisibleInGameLaunchMenu = true;
                             else
-                                game.IsEnabled = false;
+                                game.IsVisibleInGameLaunchMenu = false;
                         }
 
                         if (props.Length >= 4)

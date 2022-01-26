@@ -48,14 +48,14 @@ namespace GbxMapBrowser
             {
                 if (!Directory.Exists(game.InstalationFolder) || !File.Exists(game.ExeLocation))
                 {
-                    game.IsEnabled = false;
+                    game.IsVisibleInGameLaunchMenu = false;
                     game.IsVisibleInGameList = false;
                 }
             }
 
             foreach (var gbxGame in GbxGameController.GbxGames)
             {
-                if (gbxGame.IsEnabled || gbxGame.IsVisibleInGameList) Properties.Settings.Default.IsFirstRun = false;
+                if (gbxGame.IsVisibleInGameLaunchMenu || gbxGame.IsVisibleInGameList) Properties.Settings.Default.IsFirstRun = false;
             }
 
             
@@ -92,7 +92,7 @@ namespace GbxMapBrowser
                 return;
             }
             selGame.ExeLocation = null;
-            selGame.IsEnabled = false;
+            selGame.IsVisibleInGameLaunchMenu = false;
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
 

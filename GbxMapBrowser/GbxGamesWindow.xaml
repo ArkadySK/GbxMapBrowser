@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GbxMapBrowser"
         mc:Ignorable="d"
-        Title="Configure Gbx Games" Height="500" Width="650" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+        Title="Configure Gbx Games" Height="550" Width="750" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -55,7 +55,7 @@
             <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonResetInstallLocation_Click">Reset Game's Settings </Button>
 
             <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsEnabled, ElementName=listView}">
-                <Label Style="{StaticResource DefaultUIStyle}" Content="Enable this game"/>
+                <Label Style="{StaticResource DefaultUIStyle}" Content=" Visible In Game Launch Menu"/>
             </CheckBox>
         </StackPanel>
     </Grid>

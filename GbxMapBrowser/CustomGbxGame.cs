@@ -12,7 +12,7 @@ namespace GbxMapBrowser
             Icon = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\GameIcons\\Custom.png"));
             TargetExeName = "";
             IsVisibleInGameList = false;
-            IsEnabled = true;
+            IsVisibleInGameLaunchMenu = true;
             MapsFolder = baseGbxGame.MapsFolder;
         }
     }

@@ -29,7 +29,7 @@ namespace GbxMapBrowser
         public bool IsVisibleInGameList { get; set; }
 
         public BitmapImage Icon { get; internal set; }
-        public bool IsEnabled { get; set;}
+        public bool IsVisibleInGameLaunchMenu { get; set;}
 
         
 
@@ -42,12 +42,12 @@ namespace GbxMapBrowser
             TargetExeName = targetexename;
             if (Directory.Exists(instalationfolder))
             {
-                IsEnabled = true;
+                IsVisibleInGameLaunchMenu = true;
                 IsVisibleInGameList = true;
             }
             else
             {
-                IsEnabled = false;
+                IsVisibleInGameLaunchMenu = false;
                 return;
             }
             GetMapsFolder(InstalationFolder);
@@ -147,7 +147,7 @@ namespace GbxMapBrowser
                 {
                     ExeLocation = openFileDialog.FileName;
                     UpdateMapsFolder();
-                    IsEnabled = true;
+                    IsVisibleInGameLaunchMenu = true;
                     IsVisibleInGameList = true;
                 }
                 else

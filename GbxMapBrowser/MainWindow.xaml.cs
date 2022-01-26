@@ -103,7 +103,7 @@ namespace GbxMapBrowser
         {
             if (gamesListMenu.SelectedItem == null) return;
             var selGame = (GbxGame)gamesListMenu.SelectedItem;
-            if (!selGame.IsEnabled) return;
+            if (!selGame.IsVisibleInGameLaunchMenu) return;
             openInComboBox.SelectedItem = selGame;
             curFolder = selGame.MapsFolder;
             await UpdateMapList(selGame.MapsFolder);
@@ -295,7 +295,7 @@ namespace GbxMapBrowser
         GbxGame GetSelectedGame()
         {
             var selGame = (GbxGame)openInComboBox.SelectedItem;
-            if (selGame == null || !selGame.IsEnabled)
+            if (selGame == null || !selGame.IsVisibleInGameLaunchMenu)
             {
                 MessageBox.Show("Choose a game to launch your map with!", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
                 return null;
