@@ -24,7 +24,7 @@ namespace GbxMapBrowser
         public static SettingState SettingsState = SettingsManager.SettingState.NotLoaded;
 
         #region Stock games settings
-        static public void LoadSettingsFromFile(GbxGameController controller)
+        private static void LoadSettingsFromFile(GbxGameController controller)
         {
             if (!File.Exists(settingsFilePath))
             {
@@ -94,7 +94,7 @@ namespace GbxMapBrowser
 
         }
 
-        public static void SaveSettings(GbxGameController controller)
+        private static void SaveSettings(GbxGameController controller)
         {
             if (!Directory.Exists(settingsFolderPath))
                 Directory.CreateDirectory(settingsFolderPath);
@@ -119,7 +119,7 @@ namespace GbxMapBrowser
         #endregion
 
         #region Custom games settings
-        static public void LoadCustomGamesSettingsFromFile(GbxGameController controller)
+        private static void LoadCustomGamesSettingsFromFile(GbxGameController controller)
         {
             if (!File.Exists(customGamesSettingsFilePath)) //no custom games, no big deal
                 return;
@@ -163,7 +163,7 @@ namespace GbxMapBrowser
             }
         }
 
-        public static void SaveCustomGamesSettings(GbxGameController controller)
+        private static void SaveCustomGamesSettings(GbxGameController controller)
         {
             if (!Directory.Exists(settingsFolderPath))
                 Directory.CreateDirectory(settingsFolderPath);
@@ -185,5 +185,18 @@ namespace GbxMapBrowser
             File.WriteAllLinesAsync(customGamesSettingsFilePath, settingsText);
         }
     #endregion
+
+        public static void SaveAllSettings(GbxGameController controller)
+        {
+            SaveSettings(controller);
+            SaveCustomGamesSettings(controller);
+        }
+
+        public static void LoadAllSettingsFromFile(GbxGameController controller)
+        {
+            LoadSettingsFromFile(controller);
+            LoadCustomGamesSettingsFromFile(controller);
+        }
+
     }
 }

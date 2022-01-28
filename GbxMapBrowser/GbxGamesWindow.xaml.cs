@@ -23,7 +23,7 @@ namespace GbxMapBrowser
             InitializeComponent();
             GbxGameController = gbxGameController;
             DataContext = GbxGameController;
-            SettingsManager.LoadSettingsFromFile(gbxGameController);
+            SettingsManager.LoadAllSettingsFromFile(gbxGameController);
         }
 
         bool CanCloseWindow()
@@ -60,8 +60,7 @@ namespace GbxMapBrowser
 
             
             Properties.Settings.Default.Save();
-            SettingsManager.SaveSettings(GbxGameController);
-            SettingsManager.SaveCustomGamesSettings(GbxGameController);
+            SettingsManager.SaveAllSettings(GbxGameController);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
