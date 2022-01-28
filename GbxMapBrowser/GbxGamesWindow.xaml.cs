@@ -118,6 +118,7 @@ namespace GbxMapBrowser
             var selGame = (GbxGame)(listView.SelectedItem);
             if(selGame == null) return;
             var addWindow = new AddGameWindow(GbxGameController, selGame);
+            addWindow.Owner = this;
             addWindow.ShowDialog();
         }
 
