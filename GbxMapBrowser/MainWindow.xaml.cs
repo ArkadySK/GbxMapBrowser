@@ -423,7 +423,7 @@ namespace GbxMapBrowser
 
         #endregion
 
-        #region ContextMenu
+        #region ContextMenus
 
         void ShowContextMenu()
         {
@@ -438,10 +438,10 @@ namespace GbxMapBrowser
 
         private void mapListBox_Item_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            ((Grid)sender).ContextMenu.PreviewMouseUp += ContextMenu_PreviewMouseUp;
+            ((Grid)sender).ContextMenu.PreviewMouseUp += MapContextMenu_PreviewMouseUp;
         }
 
-        private async void ContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private async void MapContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (mapListBox.SelectedItem is not MapInfo) return;
             if (!(e.Source is MenuItem)) return;
@@ -511,6 +511,28 @@ namespace GbxMapBrowser
             await Task.Delay(100);
             ((ContextMenu)sender).IsOpen = false;
         }
+
+        private void gameLibraryItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            ((StackPanel)sender).ContextMenu.PreviewMouseUp += GameLibraryItemContextMenu_PreviewMouseUp;
+        }
+
+        private void GameLibraryItemContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var selMenuItem = (MenuItem)e.Source;
+            if (selMenuItem == null)
+                return;
+            var selGame = gamesListMenu.SelectedItem;
+            if (selGame is GbxGame game)
+            {
+                if (selMenuItem.Header.ToString() == "Hide from the game library")
+                    game.IsVisibleInGameList = false;
+                /*else
+                    game.Launch();*/
+            }
+        }
+
+
         #endregion
 
         #region Search
