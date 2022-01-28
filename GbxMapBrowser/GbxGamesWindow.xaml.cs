@@ -120,5 +120,17 @@ namespace GbxMapBrowser
             var addWindow = new AddGameWindow(GbxGameController, selGame);
             addWindow.ShowDialog();
         }
+
+        private void RemoveGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selGame = (GbxGame)listView.SelectedItem;
+            if (selGame is not CustomGbxGame)
+            {
+                MessageBox.Show("Can't remove stock game - please select a custom game to remove.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            selGame = null;
+            GbxGameController.GbxGames.Remove(selGame);
+        }
     }
 }
