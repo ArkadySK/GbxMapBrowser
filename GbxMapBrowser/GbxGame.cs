@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -184,6 +185,13 @@ namespace GbxMapBrowser
                 else
                     MessageBox.Show("Wrong exe file! '" + exeName + "' Executable names do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        public void Launch()
+        {
+            var gameProcess = new Process();
+            gameProcess.StartInfo.FileName = ExeLocation;
+            gameProcess.Start();
         }
     }
 }

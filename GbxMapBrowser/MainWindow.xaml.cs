@@ -525,8 +525,8 @@ namespace GbxMapBrowser
                     game.IsVisibleInGameList = false;
                     SettingsManager.SaveAllSettings(GbxGameController);;
                 }
-                /*else
-                    game.Launch();*/
+                else
+                    game.Launch();
             }
         }
 
