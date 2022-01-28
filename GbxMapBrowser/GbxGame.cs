@@ -1,22 +1,45 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace GbxMapBrowser
 {
-    public class GbxGame
+    public class GbxGame : INotifyPropertyChanged
     {
+        private string _exeLocation;
+        private bool _isVisibleInGameList;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        internal void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+
         public string Name { get; set; }
-        public string ExeLocation { get; internal set; }
+        public string ExeLocation
+        {
+            get => _exeLocation;
+            internal set
+            {
+                _exeLocation = value;
+                NotifyPropertyChanged();
+            }
+        }
         public string InstalationFolder
         {
-            get {
+            get
+            {
                 if (string.IsNullOrWhiteSpace(ExeLocation))
                     return null;
                 var curExeName = @"\" + ExeLocation.Split("\\").Last();
@@ -26,12 +49,20 @@ namespace GbxMapBrowser
         }
         public string TargetExeName { get; internal set; }
         public string MapsFolder { get; set; }
-        public bool IsVisibleInGameList { get; set; }
+        public bool IsVisibleInGameList
+        {
+            get => _isVisibleInGameList;
+            set
+            {
+                _isVisibleInGameList = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public BitmapImage Icon { get; internal set; }
-        public bool IsVisibleInGameLaunchMenu { get; set;}
+        public bool IsVisibleInGameLaunchMenu { get; set; }
 
-        
+
 
         public GbxGame() { }
 
@@ -86,7 +117,7 @@ namespace GbxMapBrowser
                             MapsFolder = foldername + "\\Maps";
                         }
                         else if (foldername.Contains("{")) MessageBox.Show("Unknown mapdata folder");
-                        else 
+                        else
                         {
                             MapsFolder = foldername + "\\Maps";
                         }
@@ -95,7 +126,7 @@ namespace GbxMapBrowser
             }
             if (!Directory.Exists(MapsFolder))
             {
-                if(this.Name == "TM 2020")
+                if (this.Name == "TM 2020")
                 {
                     MapsFolder = MapsFolder.Replace("\\Maps", "2020\\Maps");
                 }
@@ -120,7 +151,7 @@ namespace GbxMapBrowser
                 }
 
                 if (!Directory.Exists(MapsFolder))
-                MessageBox.Show("Error Game: " + this.Name + Environment.NewLine + " Folder '" + MapsFolder + "' not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error Game: " + this.Name + Environment.NewLine + " Folder '" + MapsFolder + "' not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }

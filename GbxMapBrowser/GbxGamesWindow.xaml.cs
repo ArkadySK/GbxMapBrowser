@@ -23,7 +23,7 @@ namespace GbxMapBrowser
             InitializeComponent();
             GbxGameController = gbxGameController;
             DataContext = GbxGameController;
-            SettingsManager.LoadAllSettingsFromFile(gbxGameController);
+            //SettingsManager.LoadAllSettingsFromFile(gbxGameController);
         }
 
         bool CanCloseWindow()

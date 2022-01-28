@@ -77,8 +77,8 @@ namespace GbxMapBrowser
         #region GbxGameListInit
         void LoadGbxGameList()
         {
-            gamesListMenu.ItemsSource = GbxGameController.GbxGames;
-            openInComboBox.ItemsSource = GbxGameController.GbxGames;
+            gamesListMenu.DataContext = GbxGameController;
+            openInComboBox.DataContext = GbxGameController;
             GbxGameController.LoadGames();
         }
 
@@ -86,10 +86,6 @@ namespace GbxMapBrowser
         {
             GbxGamesWindow gbxGamesWindow = new GbxGamesWindow(GbxGameController);
             gbxGamesWindow.ShowDialog();
-            gamesListMenu.ItemsSource = null;
-            openInComboBox.ItemsSource = null;
-            gamesListMenu.ItemsSource = GbxGameController.GbxGames;
-            openInComboBox.ItemsSource = GbxGameController.GbxGames;
         }
         #endregion
 
@@ -527,8 +523,7 @@ namespace GbxMapBrowser
                 if (selMenuItem.Header.ToString() == "Hide from the game library")
                 {
                     game.IsVisibleInGameList = false;
-                    SettingsManager.SaveAllSettings(GbxGameController);
-                    LoadGbxGameList();
+                    SettingsManager.SaveAllSettings(GbxGameController);;
                 }
                 /*else
                     game.Launch();*/
