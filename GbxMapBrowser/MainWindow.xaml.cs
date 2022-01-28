@@ -525,7 +525,11 @@ namespace GbxMapBrowser
             if (selGame is GbxGame game)
             {
                 if (selMenuItem.Header.ToString() == "Hide from the game library")
+                {
                     game.IsVisibleInGameList = false;
+                    SettingsManager.SaveAllSettings(GbxGameController);
+                    LoadGbxGameList();
+                }
                 /*else
                     game.Launch();*/
             }
