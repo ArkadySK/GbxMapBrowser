@@ -118,6 +118,12 @@
                 <MenuItem Header="File Properties"/>
                 <!--<MenuItem Header="Map Properties"/>-->
             </ContextMenu>
+
+            <ContextMenu x:Key="GameLibraryContextMenu">
+                <MenuItem Header="Launch"/>
+                <Separator/>
+                <MenuItem Header="Hide from the game library"/>
+            </ContextMenu>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

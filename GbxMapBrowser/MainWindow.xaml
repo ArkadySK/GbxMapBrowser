@@ -100,14 +100,8 @@
             <!--The Game list, left part of UI-->
             <mah:HamburgerMenu.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Visibility="{Binding IsVisibleInGameList, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="5">
-                        <StackPanel.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Launch"/>
-                                <Separator/>
-                                <MenuItem Header="Hide from this list"/>
-                            </ContextMenu>
-                        </StackPanel.ContextMenu>
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding IsVisibleInGameList, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="5" 
+                                ContextMenu="{StaticResource GameLibraryContextMenu}" ContextMenuOpening="gameLibraryItem_ContextMenuOpening">
                         <Image Width="40" Source="{Binding Icon}"></Image>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="5 0 0 0" Content="{Binding Name}" />
