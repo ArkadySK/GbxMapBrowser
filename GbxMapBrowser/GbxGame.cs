@@ -157,7 +157,7 @@ namespace GbxMapBrowser
 
         }
 
-        public void GetInstallationDialog()
+        public void GetInstallationAndMapFolderDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {

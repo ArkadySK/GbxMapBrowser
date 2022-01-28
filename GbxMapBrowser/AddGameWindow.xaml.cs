@@ -25,15 +25,22 @@ namespace GbxMapBrowser
             GameController = gbxGameController;
             game = new CustomGbxGame(nameTextBox.Text, baseGame);
             game.Name = baseGame.Name + " New";
+            game.IsVisibleInGameList = false;
+            game.IsVisibleInGameLaunchMenu = true;
             DataContext = game;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            game.IsVisibleInGameList = false;
-            game.GetInstallationDialog();
+            game.GetInstallationAndMapFolderDialog();
             GameController.GbxGames.Add(game);
             this.Close();
+        }
+
+        private void changeMapFolder_Click(object sender, RoutedEventArgs e)
+        {
+            game.IsVisibleInGameList = false;
+            game.SetCustomMapsFolder();
         }
     }
 }

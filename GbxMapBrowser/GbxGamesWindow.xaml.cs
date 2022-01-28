@@ -77,7 +77,7 @@ namespace GbxMapBrowser
                 MessageBox.Show("Can't change game folder - please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            selGame.GetInstallationDialog();
+            selGame.GetInstallationAndMapFolderDialog();
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
 
@@ -108,7 +108,7 @@ namespace GbxMapBrowser
         {
             var selGame = (GbxGame)listView.SelectedItem;
             if (selGame == null) return;
-            selGame.GetInstallationDialog();
+            selGame.GetInstallationAndMapFolderDialog();
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
         }
