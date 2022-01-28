@@ -129,7 +129,6 @@ namespace GbxMapBrowser
                 MessageBox.Show("Can't remove stock game - please select a custom game to remove.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            selGame = null;
             GbxGameController.GbxGames.Remove(selGame);
         }
     }
