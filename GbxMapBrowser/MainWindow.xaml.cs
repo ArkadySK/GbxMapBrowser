@@ -513,9 +513,13 @@ namespace GbxMapBrowser
             ((StackPanel)sender).ContextMenu.PreviewMouseUp += GameLibraryItemContextMenu_PreviewMouseUp;
         }
 
-        private void GameLibraryItemContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private async void GameLibraryItemContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (e.Source is not MenuItem)
+                return;
+
             var selMenuItem = (MenuItem)e.Source;
+            e.Handled = true; //avoid running this multiple times
             if (selMenuItem == null)
                 return;
             var selGame = gamesListMenu.SelectedItem;
@@ -524,11 +528,16 @@ namespace GbxMapBrowser
                 if (selMenuItem.Header.ToString() == "Hide from the game library")
                 {
                     game.IsVisibleInGameList = false;
-                    SettingsManager.SaveAllSettings(GbxGameController);;
+                    await Task.Run(() => SettingsManager.SaveAllSettings(GbxGameController));
                 }
                 else
-                    game.Launch();
+                {
+                    await Task.Run(() => game.Launch());
+                }
+                ((ContextMenu)sender).IsOpen = false;
+                await Task.Delay(100);
             }
+
         }
 
 
