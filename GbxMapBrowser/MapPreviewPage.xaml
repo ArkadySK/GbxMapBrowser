@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GbxMapBrowser"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MapPreviewPage" Loaded="Page_Loaded">
+      Title="MapPreviewPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
     <!--  -->
     <Grid>
         <Grid.RowDefinitions>

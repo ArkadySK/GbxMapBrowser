@@ -39,6 +39,7 @@ namespace GbxMapBrowser
             mapList.Clear();
             folderInfosList.Clear();
             mapInfosList.Clear();
+            GC.Collect();
         }
 
         public async Task FindMaps(string mapName)

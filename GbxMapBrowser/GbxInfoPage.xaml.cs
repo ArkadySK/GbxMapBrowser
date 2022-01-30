@@ -30,9 +30,11 @@ namespace GbxMapBrowser
             if (!File.Exists(filePath)) return;
             InitializeComponent();
 
+            CMwNod gbx;
+
             try
             {
-                CMwNod gbx = GameBox.Parse(filePath);
+                gbx = GameBox.Parse(filePath);
 
                 //infoTextBlock.Text += "Chunks count: " + gbx.Chunks.Count;
                 
@@ -81,6 +83,17 @@ namespace GbxMapBrowser
             {
                 infoTextBlock.Text += Environment.NewLine + "An error happened while reading \"" + filePath + "\".";
             }
+            finally
+            {
+                gbx = null;
+                GC.Collect();
+            }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            infoTextBlock.Text = "";
+            GC.Collect();
         }
     }
 }

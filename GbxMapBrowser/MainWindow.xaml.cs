@@ -281,6 +281,14 @@ namespace GbxMapBrowser
             if (data == null) return;
             mapPreviewFrame.Content = new MapPreviewPage(data);
         }
+        void MapPreview_SetPage(object data)
+        {
+            if (mapPreviewFrame.CanGoBack)
+                mapPreviewFrame.RemoveBackEntry();
+            mapPreviewFrame.Content = null;
+            if (data == null) return;
+            mapPreviewFrame.Content = (GbxInfoPage)data;
+        }
 
         private void mapListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -500,7 +508,7 @@ namespace GbxMapBrowser
                 case "Map Properties (GBX Preview)":
                     {
                         var gbxInfoPage = new GbxInfoPage(path);
-                        mapPreviewFrame.Navigate(gbxInfoPage);
+                        MapPreview_SetPage(gbxInfoPage);
                         break;
                     }              
             }
