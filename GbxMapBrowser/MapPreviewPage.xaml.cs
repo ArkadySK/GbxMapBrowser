@@ -38,9 +38,9 @@ namespace GbxMapBrowser
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            await Task.Delay(new TimeSpan(50000));
             if (Map != null) 
             {
-                await Task.Delay(new TimeSpan(50000));
                 Map = await Task.Run(() => new MapInfo(Map.MapFullName, false));
                 DataContext = Map;
                 if (!Map.IsWorking) HideAllExceptHeader();
@@ -57,6 +57,12 @@ namespace GbxMapBrowser
         void HideAllExceptHeader()
         {
             infoStackPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Map = null;
+            GC.Collect();
         }
     }
 }
