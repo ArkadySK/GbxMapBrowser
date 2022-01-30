@@ -191,6 +191,7 @@ namespace GbxMapBrowser
         {
             var gameProcess = new Process();
             gameProcess.StartInfo.FileName = ExeLocation;
+            gameProcess.StartInfo.WorkingDirectory = InstalationFolder; //to avoid exe not found message
             gameProcess.Start();
         }
     }

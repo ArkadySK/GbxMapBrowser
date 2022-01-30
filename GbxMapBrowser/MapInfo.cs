@@ -190,6 +190,7 @@ namespace GbxMapBrowser
 
             ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(path, "/useexedir /singleinst /file=\"" + MapFullName + "\"");
             Process gameGbx = new Process();
+            gameGbxStartInfo.WorkingDirectory = selGame.InstalationFolder; //to avoid exe not found message
             gameGbx.StartInfo = gameGbxStartInfo;
             gameGbx.Start();
         }
