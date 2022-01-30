@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using GBX.NET.Engines.MwFoundations;
 using TmEssentials;
+using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
@@ -186,18 +187,43 @@ namespace GbxMapBrowser
 
         public void OpenMap(GbxGame selGame)
         {
-            string path = selGame.ExeLocation;
-
             if (selGame is CustomGbxGame cgg)
                 if (cgg.IsUnlimiter)
-                    path = selGame.InstalationFolder + "\\tmforever.exe";
-            
+                {
+                    Task.Run(() => OpenMapUnlimiter(selGame));
+                    return;
+                }
 
-            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(path, "/useexedir /singleinst /file=\"" + MapFullName + "\"");
+
+            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(selGame.ExeLocation, "/useexedir /singleinst /file=\"" + MapFullName + "\"");
+            Process gameGbx = new Process();
+            gameGbx.StartInfo = gameGbxStartInfo;
+            gameGbx.Start();
+        }
+
+        async Task OpenMapUnlimiter(GbxGame selGame)
+        {
+            string exeName = "TmForever.exe";
+            bool isRunning = ProcessManager.IsRunning(exeName);
+
+            if (!isRunning) { 
+                //start the unlimiter first
+                await Task.Run(() => selGame.Launch());
+                string unlimiterExeName = selGame.ExeLocation.Replace(selGame.InstalationFolder + "\\", "");
+                while (ProcessManager.IsRunning(unlimiterExeName) == true)
+                {
+                    await Task.Delay(50);
+                }
+            }
+            else //show msg about running game
+                Console.WriteLine("An instance of TMUF is running already");
+
+            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo((selGame.InstalationFolder + "\\"+ exeName), "/useexedir /singleinst /file=\"" + MapFullName + "\"");
             Process gameGbx = new Process();
             gameGbxStartInfo.WorkingDirectory = selGame.InstalationFolder; //to avoid exe not found message
             gameGbx.StartInfo = gameGbxStartInfo;
             gameGbx.Start();
         }
+
     }
 }
