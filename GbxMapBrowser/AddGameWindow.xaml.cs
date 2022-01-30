@@ -31,8 +31,8 @@ namespace GbxMapBrowser
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            game.GetInstallationAndMapFolderDialog();
+        {       
+            
             GameController.GbxGames.Add(game);
             this.Close();
         }
@@ -41,6 +41,16 @@ namespace GbxMapBrowser
         {
             game.IsVisibleInGameList = false;
             game.SetCustomMapsFolder();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void changeExeButton_Click(object sender, RoutedEventArgs e)
+        {
+            game.GetInstallationAndMapFolderDialog();
         }
     }
 }
