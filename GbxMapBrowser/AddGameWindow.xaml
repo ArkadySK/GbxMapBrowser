@@ -26,10 +26,10 @@
         
         <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Margin="5 20 5 50">
             <CheckBox IsChecked="{Binding IsVisibleInGameList}">
-                <Label Style="{StaticResource DefaultUIStyle}">Visible in games panel</Label>
+                <Label Style="{StaticResource DefaultUIStyle}">Visible in game library</Label>
             </CheckBox>
             <CheckBox IsChecked="{Binding IsEnabled}">
-                <Label Style="{StaticResource DefaultUIStyle}">Visible launch games menu</Label>
+                <Label Style="{StaticResource DefaultUIStyle}">Visible game launch menu</Label>
             </CheckBox>
             <CheckBox IsChecked="{Binding IsUnlimiter}">
                 <Label FontWeight="ExtraBold" Style="{StaticResource DefaultUIStyle}">This game is TM Unlimiter / TM Infinity</Label>
