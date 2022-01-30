@@ -40,7 +40,7 @@ namespace GbxMapBrowser
                 {
                     
                     
-                    //infoTextBlock.Text += Environment.NewLine + ch.ToString();
+                    infoTextBlock.Text += Environment.NewLine + ch.ToString();
                     int i = 0;
 
                     if(ch.Node is CGameCtnChallenge challenge)
@@ -52,7 +52,7 @@ namespace GbxMapBrowser
 
                             try
                             {
-                                //infoTextBlock.Text += string.Format("{0}: ({1})", p.Name, p.GetValue(challenge)) + Environment.NewLine + Environment.NewLine;
+                                infoTextBlock.Text += string.Format("{0}: ({1})", p.Name, p.GetValue(challenge)) + Environment.NewLine + Environment.NewLine;
                             }
                             catch
                             {

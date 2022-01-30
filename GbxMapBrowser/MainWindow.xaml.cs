@@ -497,7 +497,7 @@ namespace GbxMapBrowser
                         FileOperations.ShowFileProperties(path);
                         break;
                     }
-                case "Map Properties":
+                case "Map Properties (GBX Preview)":
                     {
                         var gbxInfoPage = new GbxInfoPage(path);
                         mapPreviewFrame.Navigate(gbxInfoPage);

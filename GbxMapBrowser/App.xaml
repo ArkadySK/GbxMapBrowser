@@ -116,7 +116,7 @@
                 <MenuItem Header="Rename Map"/>
                 <Separator/>
                 <MenuItem Header="File Properties"/>
-                <!--<MenuItem Header="Map Properties"/>-->
+                <MenuItem Header="Map Properties (GBX Preview)"/>
             </ContextMenu>
 
             <ContextMenu x:Key="GameLibraryContextMenu">
