@@ -8,6 +8,16 @@ namespace GbxMapBrowser
 {
     internal class CustomGbxGame: GbxGame
     {
+        private bool _isUnlimiter;
+        public bool IsUnlimiter
+        {
+            get
+                => _isUnlimiter;
+            set {
+                base.NotifyPropertyChanged();
+                _isUnlimiter = value;
+            }
+        }
         public CustomGbxGame(string name, GbxGame baseGbxGame)
         {
             Name = name;

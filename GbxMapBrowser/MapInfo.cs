@@ -188,6 +188,11 @@ namespace GbxMapBrowser
         {
             string path = selGame.ExeLocation;
 
+            if (selGame is CustomGbxGame cgg)
+                if (cgg.IsUnlimiter)
+                    path = selGame.InstalationFolder + "\\tmforever.exe";
+            
+
             ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(path, "/useexedir /singleinst /file=\"" + MapFullName + "\"");
             Process gameGbx = new Process();
             gameGbxStartInfo.WorkingDirectory = selGame.InstalationFolder; //to avoid exe not found message

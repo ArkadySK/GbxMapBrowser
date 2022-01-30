@@ -29,6 +29,7 @@
         <StackPanel Grid.ColumnSpan="2" Grid.Row="1">
             <CheckBox Content="Visible in games panel" IsChecked="{Binding IsVisibleInGameList}"/>
             <CheckBox Content="Visible launch games menu" IsChecked="{Binding IsEnabled}"/>
+            <CheckBox Content="This game is TM Unlimiter / TM Infinity" IsChecked="{Binding IsUnlimiter}"/>
         </StackPanel>
 
         <Label Grid.Row="2" Grid.ColumnSpan="2" Content="{Binding MapsFolder, Mode=OneWay}"/>

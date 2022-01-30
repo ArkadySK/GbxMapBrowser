@@ -151,8 +151,14 @@ namespace GbxMapBrowser
                     else
                         game.IsVisibleInGameList = false;
 
+                    string unlimiterString = props[5];
+                    if (unlimiterString == "U")
+                        game.IsUnlimiter = true;
+                    else
+                        game.IsUnlimiter = false;
+
                     controller.GbxGames.Add(game);
-                    //game.Icon = props[5]; //to do
+                    //game.Icon = props[6]; //to do
                     game.Icon = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\GameIcons\\Custom.png"));
          
                 }
@@ -179,8 +185,11 @@ namespace GbxMapBrowser
                 string visibleInGameListString = "N";
                 if (game.IsVisibleInGameList)
                     visibleInGameListString = "V";
+                string unlimiterString = "N";
+                if((game as CustomGbxGame).IsUnlimiter)
+                    unlimiterString = "U";
 
-                settingsText.Add(game.Name + "|" + game.MapsFolder + "|" + game.ExeLocation + "|" + enabledString + "|" + visibleInGameListString + "|" + game.Icon.ToString());
+                settingsText.Add(game.Name + "|" + game.MapsFolder + "|" + game.ExeLocation + "|" + enabledString + "|" + visibleInGameListString + "|" + unlimiterString  + "|" + game.Icon.ToString());
             }
             File.WriteAllLinesAsync(customGamesSettingsFilePath, settingsText);
         }
