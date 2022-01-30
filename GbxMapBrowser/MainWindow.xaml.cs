@@ -188,7 +188,7 @@ namespace GbxMapBrowser
 
         private async void sortMapsButton_Click(object sender, RoutedEventArgs e)
         {
-            var sortMapsButtonTexts = new string[] { "Name ⬆️", "Name ⬇️", "Date ⬆️", "Date ⬇️", "Size ⬆️", "Size ⬇️", "Lendth ⬆️", "Lendth ⬇️"};
+            var sortMapsButtonTexts = new string[] { "Name ⬆️", "Name ⬇️", "Date ⬆️", "Date ⬇️", "Size ⬆️", "Size ⬇️", "Length ⬆️", "Length ⬇️" };
             if (sortKind < (SortKind.Kind)7)
                 sortKind += 1;
             else sortKind = 0;
