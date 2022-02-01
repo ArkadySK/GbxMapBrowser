@@ -46,9 +46,11 @@ namespace GbxMapBrowser
                         string newline = line.Replace(game.Name + ": ", "");
                         string[] props = newline.Split('|');
 
-                        if (props.Length == 0) // this part of code is used for old type of setting file
+                        if (props.Length == 1) // this part of code is used for old type of setting file
                         {
-                            game.MapsFolder = line;
+                            game.MapsFolder = newline;
+                            game.IsVisibleInGameLaunchMenu = true;
+                            game.IsVisibleInGameList = true;
                             continue;
                         }
 
