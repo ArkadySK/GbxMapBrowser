@@ -83,12 +83,19 @@ namespace GbxMapBrowser
 
         }
 
-        private void ButtonResetInstallLocation_Click(object sender, RoutedEventArgs e)
+        private void ButtonRemoveGame_Click(object sender, RoutedEventArgs e)
         {
             var selGame = (GbxGame)listView.SelectedItem;
             if (selGame == null)
             {
                 MessageBox.Show("Can't change game folder - please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (selGame is CustomGbxGame)
+            {
+                GbxGameController.GbxGames.Remove(selGame);
+                selGame = null;
                 return;
             }
             selGame.ExeLocation = null;
@@ -120,17 +127,6 @@ namespace GbxMapBrowser
             var addWindow = new AddGameWindow(GbxGameController, selGame);
             addWindow.Owner = this;
             addWindow.ShowDialog();
-        }
-
-        private void RemoveGameButton_Click(object sender, RoutedEventArgs e)
-        {
-            var selGame = (GbxGame)listView.SelectedItem;
-            if (selGame is not CustomGbxGame)
-            {
-                MessageBox.Show("Can't remove stock game - please select a custom game to remove.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            GbxGameController.GbxGames.Remove(selGame);
         }
     }
 }

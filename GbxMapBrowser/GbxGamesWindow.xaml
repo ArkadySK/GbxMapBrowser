@@ -35,7 +35,6 @@
                         </StackPanel>
                         <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource DefaultUIStyle}" FontWeight="Light" Content="{Binding InstalationFolder}"/>
                         <Image Grid.RowSpan="2" Source="{Binding Icon}"/>
-                        <Button x:Name="RemoveGameButton" Margin="5" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource StandardButtonStyle}" Click="RemoveGameButton_Click" Background="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Background.MouseOver}">Remove</Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -44,14 +43,14 @@
         
         
              <!--Add custom game-->
-        <Button x:Name="addCustomGameButton" Style="{StaticResource StandardButtonStyle}" Grid.Row="1" Margin="5" Click="addCustomGameButton_Click">Add more options to the selected game</Button>
+        <Button x:Name="addCustomGameButton" Style="{StaticResource StandardButtonStyle}" Grid.Row="1" Margin="5" Click="addCustomGameButton_Click">Create a new game with settings based on the selected one</Button>
         <Button Margin="5" Grid.Column="1" Grid.Row="1" Style="{StaticResource StandardButtonStyle}" Background="{DynamicResource MahApps.Brushes.AccentBase}" Click="ButtonSaveAllChanges_Click">Save all changes</Button>
         
         <!--GbxGame Settings Panel-->
         <StackPanel Grid.Column="1">
             <Label Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Content="{Binding SelectedItem.Name, ElementName=listView, FallbackValue='Choose a game'}"/>
             <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonChangeInstallLocation_Click">Change install location</Button>
-            <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonResetInstallLocation_Click">Reset game settings </Button>
+            <Button x:Name="buttonRemoveGame" Margin="5" Style="{StaticResource StandardButtonStyle}" Background="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Background.MouseOver}" Click="ButtonRemoveGame_Click">Remove game</Button>
             <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsVisibleInGameLaunchMenu, ElementName=listView}">
                 <Label Style="{StaticResource DefaultUIStyle}" Content="Visible in game launch menu"/>
             </CheckBox>
