@@ -17,11 +17,11 @@
             <RowDefinition Height="Auto" MinHeight="50" />
         </Grid.RowDefinitions>
 
-        <ListView Margin="5" x:Name="listView" ItemsSource="{Binding GbxGames}" MouseDoubleClick="listView_MouseDoubleClick" SelectedIndex="0">
+        <ListView Margin="5" x:Name="listView" ItemsSource="{Binding GbxGames}" MouseDoubleClick="listView_MouseDoubleClick" SelectedIndex="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <!--GbxGame Item Template-->
             <ListView.ItemTemplate>
                 <DataTemplate >
-                    <Grid Height="80" ToolTip="{Binding InstalationFolder}">
+                    <Grid Height="80">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
@@ -29,12 +29,20 @@
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" Grid.Column="1">
-                            <Label Style="{StaticResource DefaultUIStyle}" FontSize="20" FontWeight="Bold" Content="{Binding Name}"/>
+                            <Label Style="{StaticResource DefaultUIStyle}" FontSize="20" FontWeight="Bold" Content="{Binding Name}" ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"/>
                         </StackPanel>
-                        <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource DefaultUIStyle}" FontWeight="Light" Content="{Binding InstalationFolder}"/>
-                        <Image Grid.RowSpan="2" Source="{Binding Icon}"/>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                            <Label Margin="2" Style="{StaticResource DefaultUIStyle}">Maps: </Label>
+                            <Label Style="{StaticResource DefaultUIStyle}" FontSize="12" FontWeight="Light" Content="{Binding MapsFolder}" ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+                            <Label Margin="2" Style="{StaticResource DefaultUIStyle}">Exe: </Label>
+                            <Label Style="{StaticResource DefaultUIStyle}" FontSize="12" FontWeight="Light" Content="{Binding ExeLocation}" ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+                        </StackPanel>
+                        <Image Grid.RowSpan="3" Source="{Binding Icon}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
