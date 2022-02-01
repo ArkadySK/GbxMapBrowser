@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:GbxMapBrowser"
         mc:Ignorable="d"
         Title="Configure Gbx Games" Height="550" Width="750" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
-    <Grid>
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
-            <ColumnDefinition MinWidth="200"/>
+            <ColumnDefinition MinWidth="200" MaxWidth="300"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto" MinHeight="50"/>
+            <RowDefinition Height="Auto" MinHeight="50" />
         </Grid.RowDefinitions>
 
-        <ListView x:Name="listView" ItemsSource="{Binding GbxGames}" MouseDoubleClick="listView_MouseDoubleClick" SelectedIndex="0">
+        <ListView Margin="5" x:Name="listView" ItemsSource="{Binding GbxGames}" MouseDoubleClick="listView_MouseDoubleClick" SelectedIndex="0">
             <!--GbxGame Item Template-->
             <ListView.ItemTemplate>
                 <DataTemplate >
@@ -43,12 +43,15 @@
         
         
              <!--Add custom game-->
-        <Button x:Name="addCustomGameButton" Style="{StaticResource StandardButtonStyle}" Grid.Row="1" Margin="5" Click="addCustomGameButton_Click">Create a new game with settings based on the selected one</Button>
-        <Button Margin="5" Grid.Column="1" Grid.Row="1" Style="{StaticResource StandardButtonStyle}" Background="{DynamicResource MahApps.Brushes.AccentBase}" Click="ButtonSaveAllChanges_Click">Save all changes</Button>
+        <Button x:Name="addCustomGameButton" Style="{StaticResource StandardButtonStyle}" Background="{DynamicResource MahApps.Brushes.AccentBase}" Grid.Row="1" Margin="5" Click="addCustomGameButton_Click">Create a new game with settings based on the selected one</Button>
+        
+        <!--Save all-->
+        <Label Grid.Column="1" MaxHeight="30" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" Foreground="{DynamicResource MahApps.Brushes.AccentBase}">Changes are saved automatically.</Label>
+        <Button Margin="5" Grid.Column="1" Grid.Row="1" Style="{StaticResource StandardButtonStyle}" Click="ButtonSaveAllChanges_Click">Close</Button>
         
         <!--GbxGame Settings Panel-->
         <StackPanel Grid.Column="1">
-            <Label Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Content="{Binding SelectedItem.Name, ElementName=listView, FallbackValue='Choose a game'}"/>
+            <Label Style="{StaticResource DefaultUIStyle}"  HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Content="{Binding SelectedItem.Name, ElementName=listView, FallbackValue='Choose a game'}"/>
             <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonChangeInstallLocation_Click">Change install location</Button>
             <Button x:Name="buttonRemoveGame" Margin="5" Style="{StaticResource StandardButtonStyle}" Background="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Background.MouseOver}" Click="ButtonRemoveGame_Click">Remove game</Button>
             <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsVisibleInGameLaunchMenu, ElementName=listView}">
