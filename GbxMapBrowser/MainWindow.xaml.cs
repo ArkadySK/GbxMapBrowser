@@ -85,7 +85,8 @@ namespace GbxMapBrowser
         void ShowGbxGamesWindow()
         {
             GbxGamesWindow gbxGamesWindow = new GbxGamesWindow(GbxGameController);
-            gbxGamesWindow.Owner = this;
+            if(this.IsVisible && this is not null)
+                gbxGamesWindow.Owner = this;
             gbxGamesWindow.ShowDialog();
         }
         #endregion
