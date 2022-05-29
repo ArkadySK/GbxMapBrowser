@@ -26,5 +26,7 @@ namespace GbxMapBrowser
         }
 
         public static string[] Kinds = new string[] { "Name ⬆️", "Name ⬇️", "Date ⬆️", "Date ⬇️", "Titlepack ⬆️", "Titlepack ⬇️", "Size ⬆️", "Size ⬇️", "Length ⬆️", "Length ⬇️" };
-}
+        public static string[] KindsShort = new string[] { "NA", "ND", "DMA", "DMD", "TPA", "TPD", "SA", "SD", "LA", "LD" };
+        
+    }
 }
