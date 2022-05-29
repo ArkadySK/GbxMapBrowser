@@ -188,8 +188,9 @@ namespace GbxMapBrowser
 
         private async void sortMapsButton_Click(object sender, RoutedEventArgs e)
         {
+
             var sortMapsButtonTexts = new string[] { "Name ⬆️", "Name ⬇️", "Date ⬆️", "Date ⬇️", "Size ⬆️", "Size ⬇️", "Length ⬆️", "Length ⬇️" };
-            if (MapInfoController.SortKind < (SortKind.Kind)7)
+            if (MapInfoController.SortKind < (Sorting.Kind)7)
                 MapInfoController.SortKind += 1;
             else MapInfoController.SortKind = 0;
 

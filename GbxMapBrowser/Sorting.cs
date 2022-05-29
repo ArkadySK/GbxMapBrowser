@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GbxMapBrowser
 {
-    public static class SortKind
+    public static class Sorting
     {
         public enum Kind
         {
