@@ -103,6 +103,7 @@ namespace GbxMapBrowser
             var selGame = (GbxGame)gamesListMenu.SelectedItem;
             if (!selGame.IsVisibleInGameLaunchMenu) return;
             openInComboBox.SelectedItem = selGame;
+            MapInfoController.SortKind = selGame.DefaultSortKind;
             curFolder = selGame.MapsFolder;
             await UpdateMapList(selGame.MapsFolder);
             HistoryManager.AddToHistory(curFolder);
@@ -573,6 +574,8 @@ namespace GbxMapBrowser
         private async void sortMapsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MapInfoController.SortKind = (Sorting.Kind)sortMapsComboBox.SelectedIndex;
+            GbxGameController.SelectedGbxGame.DefaultSortKind = MapInfoController.SortKind;
+            SettingsManager.SaveAllSettings(GbxGameController);
             await UpdateMapList(curFolder);
         }
         private void LoadSorting()
