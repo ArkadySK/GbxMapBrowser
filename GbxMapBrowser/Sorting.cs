@@ -21,8 +21,8 @@ namespace GbxMapBrowser
             BySizeAscending,
             BySizeDescending,
 
-            ByLendthAscending,
-            ByLendthDescending
+            ByLengthAscending,
+            ByLengthDescending
         }
 
         public static string[] Kinds = new string[] { "Name ⬆️", "Name ⬇️", "Date ⬆️", "Date ⬇️", "Titlepack ⬆️", "Titlepack ⬇️", "Size ⬆️", "Size ⬇️", "Length ⬆️", "Length ⬇️" };

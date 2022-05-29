@@ -113,12 +113,12 @@ namespace GbxMapBrowser
                                                             orderby map.Titlepack descending
                                                             select map));
                     break;
-                case Sorting.Kind.ByLendthAscending:
+                case Sorting.Kind.ByLengthAscending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
                                                             orderby map.ObjectiveGold ascending
                                                             select map));
                     break;
-                case Sorting.Kind.ByLendthDescending:
+                case Sorting.Kind.ByLengthDescending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
                                                             orderby map.ObjectiveGold descending
                                                             select map));
