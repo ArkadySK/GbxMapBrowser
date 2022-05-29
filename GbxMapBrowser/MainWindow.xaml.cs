@@ -28,7 +28,6 @@ namespace GbxMapBrowser
         MapInfoController MapInfoController = new MapInfoController();
         GbxGameController GbxGameController = new GbxGameController();
         SearchOption searchOption;
-        SortKind.Kind sortKind = SortKind.Kind.ByNameAscending;
 
         public MainWindow()
         {
@@ -175,7 +174,7 @@ namespace GbxMapBrowser
                 i++;
             }
 
-            await MapInfoController.SortMapList(sortKind);
+            await MapInfoController.SortMapList();
 
             mapListBox.ItemsSource = MapInfoController.MapList;
 
@@ -190,12 +189,12 @@ namespace GbxMapBrowser
         private async void sortMapsButton_Click(object sender, RoutedEventArgs e)
         {
             var sortMapsButtonTexts = new string[] { "Name ⬆️", "Name ⬇️", "Date ⬆️", "Date ⬇️", "Size ⬆️", "Size ⬇️", "Length ⬆️", "Length ⬇️" };
-            if (sortKind < (SortKind.Kind)7)
-                sortKind += 1;
-            else sortKind = 0;
+            if (MapInfoController.SortKind < (SortKind.Kind)7)
+                MapInfoController.SortKind += 1;
+            else MapInfoController.SortKind = 0;
 
             await UpdateMapList(curFolder);
-            sortMapsButton.Content = "Sort by: " + sortMapsButtonTexts[(int)sortKind];
+            sortMapsButton.Content = "Sort by: " + sortMapsButtonTexts[(int)MapInfoController.SortKind];
         }
 
         private async void refreshMapsButton_Click(object sender, RoutedEventArgs e)
@@ -580,5 +579,10 @@ namespace GbxMapBrowser
             await UpdateMapList(curFolder);
         }
         #endregion
+
+        private void sortMapsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

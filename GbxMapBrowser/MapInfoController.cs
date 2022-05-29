@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static GbxMapBrowser.SortKind;
 
 namespace GbxMapBrowser
 {
@@ -17,6 +18,9 @@ namespace GbxMapBrowser
         private List<FolderInfo> folderInfosList = new List<FolderInfo>();
         private List<MapInfo> mapInfosList = new List<MapInfo>();
         private List<object> mapList = new List<object>();
+        
+        public SortKind.Kind SortKind = Kind.ByNameAscending;
+
 
         public async Task AddFolder(string fullnamepath)
         {
@@ -53,13 +57,13 @@ namespace GbxMapBrowser
             await Task.Run(() => mapList.AddRange(foundMapInfos));
         }
 
-        public async Task SortMapList(SortKind.Kind sortkind)
+        public async Task SortMapList()
         {
             IOrderedEnumerable<MapInfo> orderedMapInfos = null;
             IOrderedEnumerable<FolderInfo> orderedFolderInfos = null;
-            switch (sortkind)
+            switch (SortKind)
             {
-                case SortKind.Kind.ByNameAscending:
+                case Kind.ByNameAscending:
                 {
                         orderedMapInfos = await Task.Run(() => from map in mapInfosList
                                                 orderby map.MapName ascending
@@ -69,7 +73,7 @@ namespace GbxMapBrowser
                                             select folder);
                         break;
                 }
-                case SortKind.Kind.ByNameDescending:
+                case Kind.ByNameDescending:
                 {
                         orderedMapInfos = await Task.Run(() => from map in mapInfosList
                                             orderby map.MapName descending
@@ -79,7 +83,7 @@ namespace GbxMapBrowser
                                              select folder);
                         break;
                 }
-                case SortKind.Kind.ByDateModifiedAscending:
+                case Kind.ByDateModifiedAscending:
                 {
                         orderedMapInfos = await Task.Run(() => from map in mapInfosList
                                                 orderby map.DateModified ascending
@@ -89,7 +93,7 @@ namespace GbxMapBrowser
                                              select folder);
                         break;
                 }
-                case SortKind.Kind.ByDateModifiedDescending:
+                case Kind.ByDateModifiedDescending:
                 {
                         orderedMapInfos = await Task.Run(() => from map in mapInfosList
                                                 orderby map.DateModified descending
@@ -99,28 +103,28 @@ namespace GbxMapBrowser
                                              select folder);
                         break;
                 }
-                case SortKind.Kind.BySizeAscending:
+                case Kind.BySizeAscending:
                 {
                         orderedMapInfos = await Task.Run(() => from map in mapInfosList
                                                 orderby map.FileSize ascending
                                                 select map);
                         break;
                 }
-                case SortKind.Kind.BySizeDescending:
+                case Kind.BySizeDescending:
                 {
                         orderedMapInfos = await Task.Run(() => from map in mapInfosList
                                                 orderby map.FileSize descending
                                                 select map);
                         break;
                 }
-                case SortKind.Kind.ByLendthAscending:
+                case Kind.ByLendthAscending:
                 {
                         orderedMapInfos = await Task.Run(() => from map in mapInfosList
                                                 orderby map.ObjectiveGold ascending
                                                 select map);
                         break;
                 }
-                case SortKind.Kind.ByLendthDescending:
+                case Kind.ByLendthDescending:
                 {
                         orderedMapInfos = await Task.Run(() => from map in mapInfosList
                                                 orderby map.ObjectiveGold descending
