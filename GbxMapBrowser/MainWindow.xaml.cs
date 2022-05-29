@@ -100,14 +100,21 @@ namespace GbxMapBrowser
         private async void gamesListMenu_ItemClick(object sender, MahApps.Metro.Controls.ItemClickEventArgs args)
         {
             if (gamesListMenu.SelectedItem == null) return;
+
             var selGame = (GbxGame)gamesListMenu.SelectedItem;
             if (!selGame.IsVisibleInGameLaunchMenu) return;
+
+            // Assign selection of the game
+            GbxGameController.SelectedGbxGame = selGame;
             openInComboBox.SelectedItem = selGame;
+
+            // Assign sorting
             MapInfoController.SortKind = selGame.DefaultSortKind;
+
+            // Load the folder, add it to history
             curFolder = selGame.MapsFolder;
             await UpdateMapList(selGame.MapsFolder);
             HistoryManager.AddToHistory(curFolder);
-            GbxGameController.SelectedGbxGame = selGame;
         }
         #endregion
 
@@ -179,8 +186,8 @@ namespace GbxMapBrowser
             await MapInfoController.SortMapList();
 
             mapListBox.ItemsSource = MapInfoController.MapList;
+            sortMapsComboBox.Text = Sorting.Kinds[(int)MapInfoController.SortKind];
 
-            Debug.WriteLine($"Items: {MapInfoController.MapList.Count}");
             mapListBox.Items.Refresh();
 
         }
