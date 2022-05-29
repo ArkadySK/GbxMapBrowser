@@ -36,6 +36,7 @@ namespace GbxMapBrowser
             InitializeComponent();
             LoadGbxGameList();
             UpdateMapPreviewVisibility(Properties.Settings.Default.ShowMapPreviewColumn);
+            LoadSorting();
             //Properties.Settings.Default.IsFirstRun = true;
             if (Properties.Settings.Default.IsFirstRun)
             {
@@ -185,19 +186,6 @@ namespace GbxMapBrowser
         #endregion
 
         #region AdressBarButtonsEvents
-
-        private async void sortMapsButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            var sortMapsButtonTexts = new string[] { "Name ⬆️", "Name ⬇️", "Date ⬆️", "Date ⬇️", "Size ⬆️", "Size ⬇️", "Length ⬆️", "Length ⬇️" };
-            if (MapInfoController.SortKind < (Sorting.Kind)7)
-                MapInfoController.SortKind += 1;
-            else MapInfoController.SortKind = 0;
-
-            await UpdateMapList(curFolder);
-            sortMapsButton.Content = "Sort by: " + sortMapsButtonTexts[(int)MapInfoController.SortKind];
-        }
-
         private async void refreshMapsButton_Click(object sender, RoutedEventArgs e)
         {
             await UpdateMapList(curFolder);
@@ -581,9 +569,17 @@ namespace GbxMapBrowser
         }
         #endregion
 
-        private void sortMapsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        #region Sorting
+        private async void sortMapsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            MapInfoController.SortKind = (Sorting.Kind)sortMapsComboBox.SelectedIndex;
+            await UpdateMapList(curFolder);
         }
+        private void LoadSorting()
+        {
+            sortMapsComboBox.DataContext = MapInfoController;
+            sortMapsComboBox.ItemsSource = Sorting.Kinds;
+        }
+        #endregion
     }
 }

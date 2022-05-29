@@ -92,7 +92,13 @@
                         <Rectangle Fill="{DynamicResource MahApps.Brushes.Badged.Background.Disabled}" Grid.Row="1" Height="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Panel.ZIndex="10"/>
                         <Label Grid.Column="0" Content="🔎" BorderThickness="0" VerticalContentAlignment="Center" FontSize="15"/>
                         <TextBox x:Name="searchMapsTextBox" Grid.Column="1" Text="search for a map..." Opacity=".5" BorderThickness="0" VerticalContentAlignment="Center" FontSize="15" TextChanged="searchMapsTextBox_TextChanged" GotFocus="searchMapsTextBox_GotFocus" LostFocus="searchMapsTextBox_LostFocus"/>
-                        <Button Style="{StaticResource AddressButtonStyle}" x:Name="sortMapsButton" Grid.Column="2" Content="Sort by: Name ⬆️" Height="Auto" Width="130" Click="sortMapsButton_Click" FontSize="15"/>
+                        <ComboBox x:Name="sortMapsComboBox" Grid.Column="2" SelectionChanged="sortMapsComboBox_SelectionChanged" Width="150">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Style="{StaticResource DefaultUIStyle}"  Content="{Binding .}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
                 </Grid>
             </mah:HamburgerMenu.Content>
