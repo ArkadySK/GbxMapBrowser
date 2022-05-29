@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
 
@@ -89,42 +90,9 @@ namespace GbxMapBrowser
                         if(props.Length >= 5)
                         {
                             string sortString = props[4];
-                            switch(sortString)
+                            if (Sorting.KindsShort.Contains(sortString))
                             {
-                                case "NA":
-                                    game.DefaultSortKind = Sorting.Kind.ByNameAscending;
-                                    break;
-                                case "ND":
-                                    game.DefaultSortKind = Sorting.Kind.ByNameDescending;
-                                    break;
-
-                                case "DA":
-                                    game.DefaultSortKind = Sorting.Kind.ByDateModifiedAscending;
-                                    break;
-                                case "DD":
-                                    game.DefaultSortKind = Sorting.Kind.ByDateModifiedDescending;
-                                    break;
-
-                                case "TA":
-                                    game.DefaultSortKind = Sorting.Kind.ByTitlepackAscending;
-                                    break;
-                                case "TD":
-                                    game.DefaultSortKind = Sorting.Kind.ByTitlepackDescending;
-                                    break;
-
-                                case "SA":
-                                    game.DefaultSortKind = Sorting.Kind.BySizeAscending;
-                                    break;
-                                case "SD":
-                                    game.DefaultSortKind = Sorting.Kind.BySizeDescending;
-                                    break;
-
-                                case "LA":
-                                    game.DefaultSortKind = Sorting.Kind.ByLengthAscending;
-                                    break;
-                                case "LD":
-                                    game.DefaultSortKind = Sorting.Kind.ByLengthDescending;
-                                    break;
+                                game.DefaultSortKind = (Sorting.Kind)Array.IndexOf(Sorting.KindsShort, sortString);
                             }
                         }
 
@@ -155,8 +123,13 @@ namespace GbxMapBrowser
                 if (game.IsVisibleInGameList)
                     visibleInGameListString = "V";
 
-                settingsText.Add(game.Name + ": " + game.MapsFolder + "|" + game.ExeLocation + "|" + enabledString + "|" + visibleInGameListString);
-
+                settingsText.Add(game.Name + ": " + 
+                    game.MapsFolder + "|" + 
+                    game.ExeLocation + "|" + 
+                    enabledString + "|" + 
+                    visibleInGameListString + "|" +
+                    Sorting.KindsShort[(int)game.DefaultSortKind]
+                    );            
             }
             File.WriteAllLinesAsync(settingsFilePath, settingsText);
             SettingsState = SettingState.Saved;
