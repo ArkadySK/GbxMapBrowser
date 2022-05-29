@@ -24,7 +24,7 @@ namespace GbxMapBrowser
         public static SettingState SettingsState = SettingsManager.SettingState.NotLoaded;
 
         #region Stock games settings
-        private static void LoadSettingsFromFile(GbxGameViewModel controller)
+        private static void LoadSettingsFromFile(GbxGameViewModel viewModel)
         {
             if (!File.Exists(settingsFilePath))
             {
@@ -39,7 +39,7 @@ namespace GbxMapBrowser
             int emptyGamesCount = 0;
             foreach (var line in settingsText)
             {
-                foreach (GbxGame game in controller.GbxGames)
+                foreach (GbxGame game in viewModel.GbxGames)
                 {
                     if (line.Contains(game.Name)) //game is found
                     {
@@ -132,19 +132,19 @@ namespace GbxMapBrowser
                 }
             }
 
-            if (emptyGamesCount == controller.GbxGames.Count)
+            if (emptyGamesCount == viewModel.GbxGames.Count)
                 Properties.Settings.Default.IsFirstRun = true;
 
 
         }
 
-        private static void SaveSettings(GbxGameViewModel controller)
+        private static void SaveSettings(GbxGameViewModel viewModel)
         {
             if (!Directory.Exists(settingsFolderPath))
                 Directory.CreateDirectory(settingsFolderPath);
 
             List<string> settingsText = new List<string>();
-            foreach (GbxGame game in controller.GbxGames)
+            foreach (GbxGame game in viewModel.GbxGames)
             {
                 if (game is CustomGbxGame)
                     continue;
@@ -156,6 +156,7 @@ namespace GbxMapBrowser
                     visibleInGameListString = "V";
 
                 settingsText.Add(game.Name + ": " + game.MapsFolder + "|" + game.ExeLocation + "|" + enabledString + "|" + visibleInGameListString);
+
             }
             File.WriteAllLinesAsync(settingsFilePath, settingsText);
             SettingsState = SettingState.Saved;
