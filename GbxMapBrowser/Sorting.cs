@@ -9,36 +9,22 @@ namespace GbxMapBrowser
     {
         public enum Kind
         {
-            [Description("Name ⬆️")]
             ByNameAscending,
-
-            [Description("Name ⬇️")]             
             ByNameDescending,
 
-            [Description("Date ⬆️")] 
             ByDateModifiedAscending,
-
-            [Description("Date ⬇️")]
             ByDateModifiedDescending,
 
-            /*
-            [Description("Titlepack ⬆️")]          
             ByTitlepackAscending,
+            ByTitlepackDescending,
 
-            [Description("Titlepack ⬇️")]
-            ByTitlepackDescending,*/
-
-            [Description("Size ⬆️")]
             BySizeAscending,
-
-            [Description("Size ⬇️")]
             BySizeDescending,
 
-            [Description("Length ⬆️")]
             ByLendthAscending,
-
-            [Description("Length ⬇️")]
             ByLendthDescending
         }
-    }
+
+        public static string[] Kinds = new string[] { "Name ⬆️", "Name ⬇️", "Date ⬆️", "Date ⬇️", "Titlepack ⬆️", "Titlepack ⬇️", "Size ⬆️", "Size ⬇️", "Length ⬆️", "Length ⬇️" };
+}
 }
