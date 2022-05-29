@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace GbxMapBrowser
 {
-    public class GbxGameController: INotifyPropertyChanged
+    public class GbxGameViewModel: INotifyPropertyChanged
     {
         internal void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

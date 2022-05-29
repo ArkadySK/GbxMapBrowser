@@ -15,9 +15,9 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class GbxGamesWindow : Window
     {
-        GbxGameController GbxGameController;
+        GbxGameViewModel GbxGameController;
 
-        public GbxGamesWindow(GbxGameController gbxGameController)
+        public GbxGamesWindow(GbxGameViewModel gbxGameController)
         {
             if (Properties.Settings.Default.IsFirstRun) Title = "Configure your games";
             InitializeComponent();

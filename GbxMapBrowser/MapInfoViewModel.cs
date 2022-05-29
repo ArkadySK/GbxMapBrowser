@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
-    class MapInfoController
+    class MapInfoViewModel
     {
         public IReadOnlyList<object> MapList {
             get

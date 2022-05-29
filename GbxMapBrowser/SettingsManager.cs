@@ -24,7 +24,7 @@ namespace GbxMapBrowser
         public static SettingState SettingsState = SettingsManager.SettingState.NotLoaded;
 
         #region Stock games settings
-        private static void LoadSettingsFromFile(GbxGameController controller)
+        private static void LoadSettingsFromFile(GbxGameViewModel controller)
         {
             if (!File.Exists(settingsFilePath))
             {
@@ -96,7 +96,7 @@ namespace GbxMapBrowser
 
         }
 
-        private static void SaveSettings(GbxGameController controller)
+        private static void SaveSettings(GbxGameViewModel controller)
         {
             if (!Directory.Exists(settingsFolderPath))
                 Directory.CreateDirectory(settingsFolderPath);
@@ -121,7 +121,7 @@ namespace GbxMapBrowser
         #endregion
 
         #region Custom games settings
-        private static void LoadCustomGamesSettingsFromFile(GbxGameController controller)
+        private static void LoadCustomGamesSettingsFromFile(GbxGameViewModel controller)
         {
             if (!File.Exists(customGamesSettingsFilePath)) //no custom games, no big deal
                 return;
@@ -171,7 +171,7 @@ namespace GbxMapBrowser
             }
         }
 
-        private static void SaveCustomGamesSettings(GbxGameController controller)
+        private static void SaveCustomGamesSettings(GbxGameViewModel controller)
         {
             if (!Directory.Exists(settingsFolderPath))
                 Directory.CreateDirectory(settingsFolderPath);
@@ -197,13 +197,13 @@ namespace GbxMapBrowser
         }
     #endregion
 
-        public static void SaveAllSettings(GbxGameController controller)
+        public static void SaveAllSettings(GbxGameViewModel controller)
         {
             SaveSettings(controller);
             SaveCustomGamesSettings(controller);
         }
 
-        public static void LoadAllSettingsFromFile(GbxGameController controller)
+        public static void LoadAllSettingsFromFile(GbxGameViewModel controller)
         {
             LoadSettingsFromFile(controller);
             LoadCustomGamesSettingsFromFile(controller);

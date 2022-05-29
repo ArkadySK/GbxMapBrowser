@@ -17,9 +17,9 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class AddGameWindow : Window
     {
-        GbxGameController GameController;
+        GbxGameViewModel GameController;
         CustomGbxGame game;
-        public AddGameWindow(GbxGameController gbxGameController, GbxGame baseGame)
+        public AddGameWindow(GbxGameViewModel gbxGameController, GbxGame baseGame)
         {
             InitializeComponent();
             GameController = gbxGameController;

@@ -25,8 +25,8 @@ namespace GbxMapBrowser
     public partial class MainWindow : Window
     {
         string curFolder = "";
-        MapInfoController MapInfoController = new MapInfoController();
-        GbxGameController GbxGameController = new GbxGameController();
+        MapInfoViewModel MapInfoController = new MapInfoViewModel();
+        GbxGameViewModel GbxGameController = new GbxGameViewModel();
         SearchOption searchOption;
 
         public MainWindow()
