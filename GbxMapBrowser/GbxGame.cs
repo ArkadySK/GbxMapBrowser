@@ -48,6 +48,9 @@ namespace GbxMapBrowser
                 return parentFolder;
             }
         }
+
+        public Sorting.Kind DefaultSortKind = Sorting.Kind.ByNameAscending;
+
         public string TargetExeName { get; internal set; }
         public string MapsFolder { get; set; }
         public bool IsVisibleInGameList
