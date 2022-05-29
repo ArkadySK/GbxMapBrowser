@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace GbxMapBrowser
@@ -8,15 +9,35 @@ namespace GbxMapBrowser
     {
         public enum Kind
         {
+            [Description("Name ⬆️")]
             ByNameAscending,
+
+            [Description("Name ⬇️")]             
             ByNameDescending,
+
+            [Description("Date ⬆️")] 
             ByDateModifiedAscending,
+
+            [Description("Date ⬇️")]
             ByDateModifiedDescending,
-            /*ByTitlepackAscending,
+
+            /*
+            [Description("Titlepack ⬆️")]          
+            ByTitlepackAscending,
+
+            [Description("Titlepack ⬇️")]
             ByTitlepackDescending,*/
+
+            [Description("Size ⬆️")]
             BySizeAscending,
+
+            [Description("Size ⬇️")]
             BySizeDescending,
+
+            [Description("Length ⬆️")]
             ByLendthAscending,
+
+            [Description("Length ⬇️")]
             ByLendthDescending
         }
     }
