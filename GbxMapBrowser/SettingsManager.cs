@@ -178,7 +178,16 @@ namespace GbxMapBrowser
                     controller.GbxGames.Add(game);
                     //game.Icon = props[6]; //to do
                     game.Icon = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\GameIcons\\Custom.png"));
-         
+
+                    if (props.Length >= 8)
+                    {
+                        string sortString = props[7];
+                        if (Sorting.KindsShort.Contains(sortString))
+                        {
+                            game.DefaultSortKind = (Sorting.Kind)Array.IndexOf(Sorting.KindsShort, sortString);
+                        }
+                    }
+
                 }
                 catch (Exception ex) {
                     Console.WriteLine(ex.Message);
@@ -207,11 +216,18 @@ namespace GbxMapBrowser
                 if((game as CustomGbxGame).IsUnlimiter)
                     unlimiterString = "U";
 
-                settingsText.Add(game.Name + "|" + game.MapsFolder + "|" + game.ExeLocation + "|" + enabledString + "|" + visibleInGameListString + "|" + unlimiterString  + "|" + game.Icon.ToString());
+                settingsText.Add(game.Name + "|" + 
+                    game.MapsFolder + "|" + 
+                    game.ExeLocation + "|" + 
+                    enabledString + "|" + 
+                    visibleInGameListString + "|" + 
+                    unlimiterString  + "|" + 
+                    game.Icon.ToString() + "|" +
+                    Sorting.KindsShort[(int)game.DefaultSortKind]);
             }
             File.WriteAllLinesAsync(customGamesSettingsFilePath, settingsText);
         }
-    #endregion
+        #endregion
 
         public static void SaveAllSettings(GbxGameViewModel controller)
         {
