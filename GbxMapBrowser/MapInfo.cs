@@ -48,7 +48,7 @@ namespace GbxMapBrowser
 
         public MapInfo(string fullnamepath, bool basicInfoOnly)
         {
-            CMwNod gbx;
+            Node gbx;
             shortName = fullnamepath.Split("\\").Last();
             MapFullName = fullnamepath;
             FileInfo mapfileInfo = new FileInfo(fullnamepath);
@@ -94,7 +94,7 @@ namespace GbxMapBrowser
 
                 if (!string.IsNullOrEmpty(challenge.Comments))
                     Description = ToReadableText(challenge.Comments);
-                MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.Value.ToString());
+                MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.ToString());
 
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))
                     Author = challenge.AuthorLogin;
@@ -182,8 +182,8 @@ namespace GbxMapBrowser
         {
             if (defaultname is null)
                 return null;
-            string formattedName = defaultname;      
-            formattedName = TmEssentials.Formatter.Deformat(formattedName);
+            string formattedName = defaultname;
+            formattedName = TmEssentials.TextFormatter.Deformat(formattedName);
             return formattedName;
         }
 

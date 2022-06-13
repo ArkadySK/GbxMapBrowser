@@ -30,22 +30,23 @@ namespace GbxMapBrowser
             if (!File.Exists(filePath)) return;
             InitializeComponent();
 
-            CMwNod gbx;
+            Node gbx;
 
             try
             {
                 gbx = GameBox.Parse(filePath);
+                if (gbx is not CGameCtnChallenge challenge)
+                    return;
 
-                //infoTextBlock.Text += "Chunks count: " + gbx.Chunks.Count;
-                
-                foreach (var ch in gbx.Chunks)
+                    //infoTextBlock.Text += "Chunks count: " + gbx.Chunks.Count;
+
+                    foreach (var ch in gbx.Chunks)
                 {
                     
                     
                     infoTextBlock.Text += Environment.NewLine + ch.ToString();
                     int i = 0;
 
-                    if(ch.Node is CGameCtnChallenge challenge)
                     {
                         foreach (var p in challenge.GetType().GetProperties())
                         {
@@ -66,7 +67,6 @@ namespace GbxMapBrowser
                             }
                         }
                     }
-                    //if(ch.Node is )
                 }
 
 
