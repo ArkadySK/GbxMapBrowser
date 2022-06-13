@@ -81,7 +81,10 @@ namespace GbxMapBrowser
                 Titlepack = challenge.TitleID;
 
                 Uri enviImagePath = EnviManager.GetEnvironmentImagePath(challenge.Collection, Titlepack);
-                EnviImage = enviImagePath;
+                if (File.Exists(enviImagePath.AbsolutePath))
+                    EnviImage = enviImagePath;
+                else
+                    EnviImage = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
 
                 ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
                 if (basicInfoOnly) return;

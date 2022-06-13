@@ -31,7 +31,7 @@ namespace GbxMapBrowser
             {
                 return new Uri(Environment.CurrentDirectory + "\\Data\\MoodIcons\\" + foundMoodTuple.Item2 + ".png");
             }
-            return new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
+            return new Uri(Environment.CurrentDirectory + "\\Data\\Moods\\Unknown.png");
 
         }
     }
