@@ -323,7 +323,7 @@ namespace GbxMapBrowser
         void DragOutMaps(MapInfo[] mapInfos)
         {
             List<string> files = new List<string>();
-            Array.ForEach(mapInfos, mfo => files.Add(mfo.MapFullName));
+            Array.ForEach(mapInfos, mfo => files.Add(mfo.FullPath));
 
             var mapFile = new DataObject(DataFormats.FileDrop, files.ToArray());
             DragDrop.DoDragDrop((DependencyObject)mapListBox, mapFile, DragDropEffects.Copy);
@@ -426,7 +426,7 @@ namespace GbxMapBrowser
 
             }
             if (Keyboard.IsKeyDown(Key.Enter) && Keyboard.Modifiers == ModifierKeys.Alt) //ALT + ENTER
-                FileOperations.ShowFileProperties(selMap.MapFullName);
+                FileOperations.ShowFileProperties(selMap.FullPath);
         }
 
         #endregion
@@ -456,7 +456,7 @@ namespace GbxMapBrowser
             
             var selMap = (MapInfo)mapListBox.SelectedItem;
             var selMenuItem = (MenuItem)e.Source;
-            string path = selMap.MapFullName;
+            string path = selMap.FullPath;
             e.Handled = true; //avoid running this code more than once
 
             switch (selMenuItem.Header)
@@ -493,7 +493,7 @@ namespace GbxMapBrowser
                     }
                 case "Rename File":
                     {
-                        var oldMapName = selMap.MapFullName;
+                        var oldMapName = selMap.FullPath;
                         FileOperations.RenameFile(oldMapName);
                         await UpdateMapList(curFolder);
                         break;

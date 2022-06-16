@@ -41,7 +41,7 @@ namespace GbxMapBrowser
             await Task.Delay(new TimeSpan(50000));
             if (Map != null) 
             {
-                Map = await Task.Run(() => new MapInfo(Map.MapFullName, false));
+                Map = await Task.Run(() => new MapInfo(Map.FullPath, false));
                 DataContext = Map;
                 if (!Map.IsWorking) HideAllExceptHeader();
             }

@@ -9,7 +9,6 @@ namespace GbxMapBrowser
     class FolderInfo: FolderAndFileInfo
     {
         
-        public string FullPath { get; }
         
 
         public FolderInfo(string fullnamepath)

@@ -15,8 +15,7 @@ namespace GbxMapBrowser
 {
     public class MapInfo: FolderAndFileInfo
     {
-        public string ExactMapName { get; }        
-        public string MapFullName { get; }
+        public string ExactMapName { get; } 
         private string shortName;
         public string Author { get; }
         public string CopperPrice { get; }
@@ -36,7 +35,7 @@ namespace GbxMapBrowser
         {
             Node gbx;
             shortName = fullnamepath.Split("\\").Last();
-            MapFullName = fullnamepath;
+            FullPath = fullnamepath;
             FileInfo mapfileInfo = new FileInfo(fullnamepath);
             DateModified = mapfileInfo.LastWriteTime;
             Size = mapfileInfo.Length;
@@ -134,7 +133,7 @@ namespace GbxMapBrowser
 
             try
             {
-                gbx = GameBox.Parse(MapFullName);
+                gbx = GameBox.Parse(FullPath);
             }
             catch (Exception e)
             {
@@ -145,7 +144,7 @@ namespace GbxMapBrowser
             {
                 CGameCtnChallenge challenge = gbxMap.Node;
                 challenge.MapName = newName;
-                gbxMap.Save(MapFullName);
+                gbxMap.Save(FullPath);
             }
             else
                 throw new NotImplementedException("Only Maps could be renamed.");
@@ -184,7 +183,7 @@ namespace GbxMapBrowser
                 }
 
 
-            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(selGame.ExeLocation, "/useexedir /singleinst /file=\"" + MapFullName + "\"");
+            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(selGame.ExeLocation, "/useexedir /singleinst /file=\"" + FullPath + "\"");
             Process gameGbx = new Process();
             gameGbx.StartInfo = gameGbxStartInfo;
             gameGbx.Start();
@@ -207,7 +206,7 @@ namespace GbxMapBrowser
             else //show msg about running game
                 Console.WriteLine("An instance of TMUF is running already");
 
-            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo((selGame.InstalationFolder + "\\"+ exeName), "/useexedir /singleinst /file=\"" + MapFullName + "\"");
+            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo((selGame.InstalationFolder + "\\"+ exeName), "/useexedir /singleinst /file=\"" + FullPath + "\"");
             Process gameGbx = new Process();
             gameGbxStartInfo.WorkingDirectory = selGame.InstalationFolder; //to avoid exe not found message
             gameGbx.StartInfo = gameGbxStartInfo;
