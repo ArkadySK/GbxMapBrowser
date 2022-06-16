@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
-    public class MapInfo
+    public class MapInfo: FolderAndFileInfo
     {
         public string MapName { get; }
         public string ExactMapName { get; }

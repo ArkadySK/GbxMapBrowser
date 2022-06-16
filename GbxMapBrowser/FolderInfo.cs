@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace GbxMapBrowser
 {
-    class FolderInfo
+    class FolderInfo: FolderAndFileInfo
     {
         public string FolderName { get; }
         public double FolderSize { get; }

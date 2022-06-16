@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GbxMapBrowser
 {
-    internal class FolderAndFileInfo
+    public class FolderAndFileInfo
     {
     }
 }
