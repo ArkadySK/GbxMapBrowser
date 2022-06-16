@@ -50,9 +50,17 @@ namespace GbxMapBrowser
         }
 
         public Sorting.Kind DefaultSortKind = Sorting.Kind.ByNameAscending;
+        private string _mapsFolder;
 
         public string TargetExeName { get; internal set; }
-        public string MapsFolder { get; set; }
+        public string MapsFolder { 
+            get => _mapsFolder; 
+            set
+            {
+                _mapsFolder = value;
+                NotifyPropertyChanged();
+            } 
+        }
         public bool IsVisibleInGameList
         {
             get => _isVisibleInGameList;
