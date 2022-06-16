@@ -20,7 +20,7 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Label x:Name="mapNameLabel" Content="{Binding MapName, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="12" Background="{x:Null}"/>
+        <Label x:Name="mapNameLabel" Content="{Binding Name, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="12" Background="{x:Null}"/>
         <Label  HorizontalAlignment="Stretch" Panel.ZIndex="10" Background="#7F000000" Height="32" VerticalAlignment="Top"/>
         <Image Source="{Binding MoodIcon}" Height="50" Margin="5 0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
