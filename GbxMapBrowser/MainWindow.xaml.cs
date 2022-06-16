@@ -50,7 +50,13 @@ namespace GbxMapBrowser
             await UpdateMapList(curFolder);
 
             Updater updater = new Updater();
-            bool isUpToDate = await updater.IsUpToDate();
+            bool isUpToDate = true;
+
+            try
+            {
+                isUpToDate = await updater.IsUpToDate();
+            }
+            catch { }
 
             if (!isUpToDate)
             {
