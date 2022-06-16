@@ -25,5 +25,14 @@ namespace GbxMapBrowser
                 return DateModified.ToString();
             }
         }
+        public DateTime DateCreated { get; internal set; }
+        public string DateCreatedString
+        {
+            get
+            {
+                if (DateCreated == null) return "NO DATE";
+                return DateCreated.ToString();
+            }
+        }
     }
 }

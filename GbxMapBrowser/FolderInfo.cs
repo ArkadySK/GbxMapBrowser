@@ -17,6 +17,8 @@ namespace GbxMapBrowser
             FullPath = fullnamepath;
             DirectoryInfo directoryInfo = new DirectoryInfo(fullnamepath);
             DateModified = directoryInfo.LastWriteTime;
-        } 
+            DateCreated = directoryInfo.CreationTime;
+
+        }
     }
 }

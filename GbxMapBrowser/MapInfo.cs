@@ -38,6 +38,7 @@ namespace GbxMapBrowser
             FullPath = fullnamepath;
             FileInfo mapfileInfo = new FileInfo(fullnamepath);
             DateModified = mapfileInfo.LastWriteTime;
+            DateCreated = mapfileInfo.CreationTime;
             Size = mapfileInfo.Length;
 
             try
