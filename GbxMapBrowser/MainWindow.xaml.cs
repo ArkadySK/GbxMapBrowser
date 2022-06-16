@@ -109,7 +109,7 @@ namespace GbxMapBrowser
             if (gamesListMenu.SelectedItem == null) return;
 
             var selGame = (GbxGame)gamesListMenu.SelectedItem;
-            if (!selGame.IsVisibleInGameLaunchMenu) return;
+            if (!selGame.IsVisibleInGameList) return;
 
             // Assign selection of the game
             GbxGameController.SelectedGbxGame = selGame;
