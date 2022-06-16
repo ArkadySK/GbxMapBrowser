@@ -49,7 +49,7 @@
                         <Label Content="{Binding SizeString}" Style="{StaticResource DefaultUIStyle}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                            <Label Content="File name: " Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="File name: " Style="{StaticResource DefaultUIStyle}"/>
                         <Label Content="{Binding ExactMapName}" Style="{StaticResource DefaultUIStyle}">
                             <Label.ToolTip>
                                 <ToolTip Content="{Binding ExactMapName}"/>
@@ -58,7 +58,11 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Date created: " Style="{StaticResource DefaultUIStyle}"/>
-                        <Label Content="{Binding SizeString}" Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="{Binding DateCreatedString}" Style="{StaticResource DefaultUIStyle}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Date modified: " Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="{Binding DateModifiedString}" Style="{StaticResource DefaultUIStyle}"/>
                     </StackPanel>
                 </StackPanel>
             </Expander>
