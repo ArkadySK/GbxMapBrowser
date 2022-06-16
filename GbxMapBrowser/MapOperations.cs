@@ -9,7 +9,7 @@ namespace GbxMapBrowser
     {
         public static void DeleteMap(MapInfo mapInfo)
         {
-            var messageBoxResult = MessageBox.Show($"Are you sure to delete {mapInfo.MapName} \nPath: {mapInfo.MapFullName}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            var messageBoxResult = MessageBox.Show($"Are you sure to delete {mapInfo.Name} \nPath: {mapInfo.MapFullName}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 FileOperations.DeleteFile(mapInfo.MapFullName);

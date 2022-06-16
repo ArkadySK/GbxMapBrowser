@@ -48,8 +48,8 @@ namespace GbxMapBrowser
         {
             IOrderedEnumerable<MapInfo> foundMapInfos = null;
             foundMapInfos = from map in mapInfosList
-                            where map.MapName.Contains(mapName, StringComparison.OrdinalIgnoreCase) 
-                            orderby map.MapName ascending
+                            where map.Name.Contains(mapName, StringComparison.OrdinalIgnoreCase) 
+                            orderby map.Name ascending
                             select map;
             mapList.Clear();
             await Task.Run(() => mapList.AddRange(foundMapInfos));
@@ -63,18 +63,18 @@ namespace GbxMapBrowser
             {
                 case Sorting.Kind.ByNameAscending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
-                                                            orderby map.MapName ascending
+                                                            orderby map.Name ascending
                                             select map));
                     orderedFolderInfos = await Task.Run(() => (from folder in folderInfosList
-                                                                orderby folder.FolderName ascending
+                                                                orderby folder.Name ascending
                                         select folder));
                     break;
                 case Sorting.Kind.ByNameDescending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
-                                                            orderby map.MapName descending
+                                                            orderby map.Name descending
                                         select map));
                     orderedFolderInfos = await Task.Run(() => (from folder in folderInfosList
-                                                                orderby folder.FolderName descending
+                                                                orderby folder.Name descending
                                             select folder));
                     break;
                 case Sorting.Kind.ByDateModifiedAscending:
@@ -95,12 +95,12 @@ namespace GbxMapBrowser
                     break;
                 case Sorting.Kind.BySizeAscending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
-                                                            orderby map.FileSize ascending
+                                                            orderby map.Size ascending
                                                             select map));
                     break;
                 case Sorting.Kind.BySizeDescending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
-                                                            orderby map.FileSize descending
+                                                            orderby map.Size descending
                                                             select map));
                     break;
                 case Sorting.Kind.ByTitlepackAscending:
@@ -128,7 +128,7 @@ namespace GbxMapBrowser
             if(orderedFolderInfos == null) //fix when null
             {
                 orderedFolderInfos = await Task.Run(() => from folder in folderInfosList
-                                                          orderby folder.FolderName ascending
+                                                          orderby folder.Name ascending
                                                           select folder);
             }
             
@@ -144,7 +144,7 @@ namespace GbxMapBrowser
             foreach (var mi in MapList)
             {
                 if (!(mi is MapInfo)) continue;
-                var mapName = (mi as MapInfo).MapName;
+                var mapName = (mi as MapInfo).Name;
                 if (mapNames.ToList().Contains(mapName)) maps.Add((MapInfo)mi);
             }
             return maps.ToArray();

@@ -28,6 +28,7 @@ namespace GbxMapBrowser
         MapInfoViewModel MapInfoController = new MapInfoViewModel();
         GbxGameViewModel GbxGameController = new GbxGameViewModel();
         SearchOption searchOption;
+        List<FolderAndFileInfo> selectedItems = new List<FolderAndFileInfo> ();
 
         public MainWindow()
         {
@@ -246,7 +247,7 @@ namespace GbxMapBrowser
         {
             if (selItem is FolderInfo selFolder)
             {
-                curFolder = selFolder.FolderFullPath;
+                curFolder = selFolder.FullPath;
                 HistoryManager.AddToHistory(curFolder);
                 await UpdateMapList(curFolder);  
                 UpdateMapPreview(null);
@@ -338,7 +339,7 @@ namespace GbxMapBrowser
             List<string> mapNames = new List<string>();
             foreach (var m in mapListBox.SelectedItems)
             {
-                mapNames.Add((m as MapInfo).MapName);
+                mapNames.Add((m as MapInfo).Name);
             }
             if (!mapNames.Contains(lastSelMapName)) return;
             var selMaps = MapInfoController.GetMapsByName(mapNames.ToArray());

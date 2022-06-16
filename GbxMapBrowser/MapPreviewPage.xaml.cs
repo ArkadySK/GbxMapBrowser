@@ -31,7 +31,7 @@ namespace GbxMapBrowser
             }
             else if (data is FolderInfo)
             {
-                mapNameLabel.Content = (data as FolderInfo).FolderName;
+                mapNameLabel.Content = (data as FolderInfo).Name;
                 HideAllExceptHeader();
             }
         }
