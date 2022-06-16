@@ -41,7 +41,27 @@
                 <Label Content="Titlepack: " Style="{StaticResource DefaultUIStyle}"/>
                 <Label Content="{Binding Titlepack}" Style="{StaticResource DefaultUIStyle}" />
             </StackPanel>
-
+            
+            <Expander Header="File information" Margin="0 5">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Size: " Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="{Binding SizeString}" Style="{StaticResource DefaultUIStyle}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                            <Label Content="File name: " Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="{Binding ExactMapName}" Style="{StaticResource DefaultUIStyle}">
+                            <Label.ToolTip>
+                                <ToolTip Content="{Binding ExactMapName}"/>
+                            </Label.ToolTip>
+                        </Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Date created: " Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="{Binding SizeString}" Style="{StaticResource DefaultUIStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
             <Viewbox Margin="0 10" ScrollViewer.PanningMode="HorizontalOnly"  StretchDirection="DownOnly">
                 <!--Medals grid-->
                 <Grid Grid.Row="5"  HorizontalAlignment="Stretch">
@@ -69,8 +89,8 @@
                     </StackPanel>
                 </Grid>
             </Viewbox>
-
-            <TextBlock TextWrapping="Wrap"  Text="{Binding Description, FallbackValue=''}" FontSize="15" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom" FontStyle="Italic"/>
+            
+                <TextBlock TextWrapping="Wrap"  Text="{Binding Description, FallbackValue=''}" FontSize="15" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom" FontStyle="Italic"/>
         </StackPanel>
     </Grid>
 </Page>
