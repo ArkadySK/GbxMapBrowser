@@ -243,28 +243,47 @@ namespace GbxMapBrowser
         }
         #endregion
 
-        private async Task MapListBoxLaunchItemAsync(object selItem)
+        private async Task MapListBoxLaunchItemAsync(FolderAndFileInfo item)
         {
-            if (selItem is FolderInfo selFolder)
+            if (item is FolderInfo selFolder)
             {
                 curFolder = selFolder.FullPath;
                 HistoryManager.AddToHistory(curFolder);
-                await UpdateMapList(curFolder);  
+                await UpdateMapList(curFolder);
                 UpdateMapPreview(null);
             }
-            else if (selItem is MapInfo mapInfo)
+            else if (item is MapInfo mapInfo)
             {
                 var selGame = GetSelectedGame();
                 if (selGame == null) return;
                 mapInfo.OpenMap(selGame);
             }
-            else if (selItem is null)
+            else if (item is null)
                 MessageBox.Show("Select a map to launch", "Impossible to load map", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
+        private async Task MapListBoxLaunchItemsAsync(List<FolderAndFileInfo> items)
+        {
+            if (items.Count == 0) return; 
+            if (items.Count == 1)
+            {
+                await MapListBoxLaunchItemAsync(items[0]);
+                return;
+            }
+
+            MessageBoxResult result = MessageBox.Show("Launch all maps?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.No) return;
+                
+            foreach (FolderAndFileInfo item in items)
+            {
+                if (item is MapInfo)
+                    await MapListBoxLaunchItemAsync(item);
+            }
+        }
+            
         private async void mapListBox_MouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
         {
-            await MapListBoxLaunchItemAsync(mapListBox.SelectedItem);
+            await MapListBoxLaunchItemsAsync(selectedItems);
         }
 
         #region MapPreviewPane
@@ -297,8 +316,12 @@ namespace GbxMapBrowser
         private void mapListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (mapListBox.SelectedItem == null) return;
-            var selMap = (object)mapListBox.SelectedItem;
-            UpdateMapPreview(selMap);
+            selectedItems.Clear();
+            foreach(FolderAndFileInfo selItem in mapListBox.SelectedItems)
+            {
+                selectedItems.Add(selItem);
+            }
+            UpdateMapPreview(selectedItems);
         }
 
         GbxGame GetSelectedGame()
@@ -314,7 +337,7 @@ namespace GbxMapBrowser
 
         private async void ButtonPlay_Click(object sender, RoutedEventArgs e)
         {
-            await MapListBoxLaunchItemAsync(mapListBox.SelectedItem);
+            await MapListBoxLaunchItemsAsync(selectedItems);
         }
         #endregion
 
@@ -382,7 +405,7 @@ namespace GbxMapBrowser
         {
             if (e.Key == Key.Enter)
             {
-                await MapListBoxLaunchItemAsync(mapListBox.SelectedItem);
+                await MapListBoxLaunchItemsAsync(selectedItems);
             }
 
             if(e.Key == Key.Back)
