@@ -64,7 +64,9 @@ namespace GbxMapBrowser
         {
             HideAllExceptHeader();
             if (folderInfo == null) return;
-            mapImage.Source = new Uri();
+            ImageSource src = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Folder.png"));
+            mapImage.Source = src;
+            mapNameLabel.Content = folderInfo.Name;
         }
 
         void FadeInAnimation()
