@@ -8,7 +8,7 @@ namespace GbxMapBrowser
 {
     class FolderInfo: FolderAndFileInfo
     {
-        
+        public int FilesInsideCount { get; private set; }
         
 
         public FolderInfo(string fullnamepath)
@@ -19,7 +19,17 @@ namespace GbxMapBrowser
             DateModified = directoryInfo.LastWriteTime;
             DateCreated = directoryInfo.CreationTime;
             ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Folder.png");
+            FilesInsideCount = GetFilesCount();
+        }
 
+        int GetFilesCount()
+        {
+            if(!Directory.Exists(FullPath)) return 0;
+            try
+            {
+                return Directory.GetFiles(FullPath).Length;
+            }
+            catch { return 0; }
         }
     }
 }
