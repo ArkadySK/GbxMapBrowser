@@ -7,12 +7,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MapPreviewPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
-    <!--  -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
+        <!-- Thumbnail and title -->
         <Image x:Name="mapImage" Source="{Binding MapThumbnail}" MinHeight="50" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5"/>
         <Label x:Name="mapNameLabel" Content="{Binding Name, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="12" Background="{x:Null}"/>
         <Label  HorizontalAlignment="Stretch" Panel.ZIndex="10" Background="#7F000000" Height="32" VerticalAlignment="Top"/>
@@ -22,21 +23,27 @@
             <Label Style="{StaticResource DefaultUIStyle}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content=" C"/>
         </StackPanel>
 
+        <!--Map information-->
         <StackPanel Margin="10"  Grid.Row="1" x:Name="infoStackPanel">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Label Content="Author: " Style="{StaticResource DefaultUIStyle}"/>
-                <Label Content="{Binding Author, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Label Content="Gamemode: " Style="{StaticResource DefaultUIStyle}"/>
-                <Label Panel.ZIndex="10" Content="{Binding MapType}" Style="{StaticResource DefaultUIStyle}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Label Content="Titlepack: " Style="{StaticResource DefaultUIStyle}"/>
-                <Label Content="{Binding Titlepack}" Style="{StaticResource DefaultUIStyle}" />
-            </StackPanel>
+            <Expander x:Name="mapInfoExpander" Header="Map information" IsExpanded="True">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                        <Label Content="Author: " Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="{Binding Author, FallbackValue=''}" Style="{StaticResource DefaultUIStyle}" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Label Content="Gamemode: " Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Panel.ZIndex="10" Content="{Binding MapType}" Style="{StaticResource DefaultUIStyle}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Label Content="Titlepack: " Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="{Binding Titlepack}" Style="{StaticResource DefaultUIStyle}" />
+                    </StackPanel>
+                </StackPanel>
+            </Expander>
             
-            <Expander Header="File information" Margin="0 5">
+            <!--File / Folder information-->
+            <Expander x:Name="fileInfoExpander" Header="File / folder information" Margin="0 5">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Size: " Style="{StaticResource DefaultUIStyle}"/>
@@ -60,8 +67,9 @@
                     </StackPanel>
                 </StackPanel>
             </Expander>
-            <Viewbox Margin="0 10" ScrollViewer.PanningMode="HorizontalOnly"  StretchDirection="DownOnly">
-                <!--Medals grid-->
+            
+            <!--Medals grid-->
+            <Viewbox x:Name="medalsViewBox" Margin="0 10" ScrollViewer.PanningMode="HorizontalOnly"  StretchDirection="DownOnly">
                 <Grid Grid.Row="5"  HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -88,7 +96,7 @@
                 </Grid>
             </Viewbox>
             
-                <TextBlock TextWrapping="Wrap"  Text="{Binding Description, FallbackValue=''}" FontSize="15" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom" FontStyle="Italic"/>
+                <TextBlock x:Name="descriptionTextBlock" TextWrapping="Wrap"  Text="{Binding Description, FallbackValue=''}" FontSize="15" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom" FontStyle="Italic"/>
         </StackPanel>
     </Grid>
 </Page>
