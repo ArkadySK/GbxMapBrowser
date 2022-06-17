@@ -296,7 +296,7 @@ namespace GbxMapBrowser
                 mapPreviewColumn.Width = new GridLength(0, GridUnitType.Star);
         }
 
-        void UpdateMapPreview(object data)
+        void UpdateMapPreview(List<FolderAndFileInfo> data)
         {
             if (mapPreviewFrame.CanGoBack)
                 mapPreviewFrame.RemoveBackEntry();
@@ -304,13 +304,13 @@ namespace GbxMapBrowser
             if (data == null) return;
             mapPreviewFrame.Content = new MapPreviewPage(data);
         }
-        void MapPreview_SetPage(object data)
+        void MapPreview_SetPage(object page)
         {
             if (mapPreviewFrame.CanGoBack)
                 mapPreviewFrame.RemoveBackEntry();
             mapPreviewFrame.Content = null;
-            if (data == null) return;
-            mapPreviewFrame.Content = (GbxInfoPage)data;
+            if (page == null) return;
+            mapPreviewFrame.Content = (GbxInfoPage)page;
         }
 
         private void mapListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
