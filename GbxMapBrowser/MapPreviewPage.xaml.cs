@@ -38,26 +38,33 @@ namespace GbxMapBrowser
             }
 
             var item = data[0];    
-            if (item is MapInfo)
+            if (item is MapInfo map)
             {
-                Map = (MapInfo)item;   
+                Map = map;   
             }
-            else if (item is FolderInfo)
+            else if (item is FolderInfo folder)
             {
-                HideAllExceptHeader();
+                PreviewFolder(folder);
             }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await Task.Delay(new TimeSpan(50000));
-            if (Map != null) 
+            if (Map is not null) 
             {
                 Map = await Task.Run(() => new MapInfo(Map.FullPath, false));
                 DataContext = Map;
                 if (!Map.IsWorking) HideAllExceptHeader();
             }
             FadeInAnimation();
+        }
+
+        void PreviewFolder(FolderInfo folderInfo)
+        {
+            HideAllExceptHeader();
+            if (folderInfo == null) return;
+            mapImage.Source = new Uri();
         }
 
         void FadeInAnimation()
