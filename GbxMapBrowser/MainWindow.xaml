@@ -61,7 +61,7 @@
                                     <ColumnDefinition Width="90"/>
                                     <ColumnDefinition Width="158"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Source="/Data/UIIcons/Folder.png" Width="50"></Image>
+                                    <Image Source="{Binding ImageSmall}" Width="50"></Image>
                                 <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="1" Content="{Binding Name}" Margin="5"/>
                                 <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding SizeString}" Margin="5"/>
                                 <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="4" Content="{Binding DateModifiedString}" Margin="5"/>
@@ -76,7 +76,7 @@
                                     <ColumnDefinition Width="90"/>
                                     <ColumnDefinition Width="158"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Source="{Binding EnviImage}" Grid.Column="0" Margin="5"/>
+                                    <Image Source="{Binding ImageSmall}" Grid.Column="0" Margin="5"/>
                                 <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding Name}" Grid.Column="1" Margin="5"/>
                                 <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding SizeString}" Margin="5"/>
                                 <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="3" Margin="5"/>

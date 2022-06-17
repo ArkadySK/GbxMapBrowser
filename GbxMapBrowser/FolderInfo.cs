@@ -18,6 +18,7 @@ namespace GbxMapBrowser
             DirectoryInfo directoryInfo = new DirectoryInfo(fullnamepath);
             DateModified = directoryInfo.LastWriteTime;
             DateCreated = directoryInfo.CreationTime;
+            ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Folder.png");
 
         }
     }

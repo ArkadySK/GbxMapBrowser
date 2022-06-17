@@ -8,6 +8,8 @@ namespace GbxMapBrowser
     {
         public string Name { get; internal set; }
         public string FullPath { get; internal set; }
+        public Uri ImageSmall { get; internal set; }
+
         public double Size { get; internal set; }
         public string SizeString
         {

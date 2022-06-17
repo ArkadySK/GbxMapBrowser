@@ -27,7 +27,6 @@ namespace GbxMapBrowser
         public string ObjectiveSilver { get; }
         public string ObjectiveGold { get; }
         public string ObjectiveAuthor { get; }
-        public Uri EnviImage { get; }
         public ImageSource MapThumbnail { get; }
         public bool IsWorking { get; }
 
@@ -52,7 +51,7 @@ namespace GbxMapBrowser
             catch (Exception e)
             {
                 Name = "ERROR (" + shortName + ")";
-                EnviImage = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
+                ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
                 Debug.WriteLine("Error: Map '" + fullnamepath + "' - impossible to load" + Environment.NewLine + e.Message);
                 IsWorking = false;
                 return;
@@ -68,9 +67,9 @@ namespace GbxMapBrowser
 
                 Uri enviImagePath = EnviManager.GetEnvironmentImagePath(challenge.Collection, Titlepack);
                 if (File.Exists(enviImagePath.AbsolutePath))
-                    EnviImage = enviImagePath;
+                    ImageSmall = enviImagePath;
                 else
-                    EnviImage = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
+                    ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
 
                 ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
                 if (basicInfoOnly) return;
@@ -111,7 +110,7 @@ namespace GbxMapBrowser
             else if (gbx is CGameCtnReplayRecord gbxReplay)
             {
                 CGameCtnReplayRecord replay = gbxReplay;
-                EnviImage = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png");
+                ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png");
                 Name = shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
                 ObjectiveGold = TimeSpanToString(replay.Time);
                 if (basicInfoOnly) return;
