@@ -27,13 +27,14 @@ namespace GbxMapBrowser
             Opacity = 0;
             if(data.Count == 0)
             {
-                HideAllExceptHeader();
+                HideMapPreviewUI();
                 return;
             }
             if (data.Count > 1)
             {
                 mapNameLabel.Content = "Selected " + data.Count + " items";
-                HideAllExceptHeader();
+                descriptionTextBlock.Text = "Number of maps: " + data.FindAll(x => x is MapInfo).Count.ToString();
+                HideMapPreviewUI();
                 return;
             }
 
@@ -55,13 +56,14 @@ namespace GbxMapBrowser
             {
                 Map = await Task.Run(() => new MapInfo(Map.FullPath, false));
                 DataContext = Map;
-                if (!Map.IsWorking) HideAllExceptHeader();
+                if (!Map.IsWorking) HideMapPreviewUI();
             }
             FadeInAnimation();
         }
 
         void PreviewFolder(FolderInfo folderInfo)
         {
+            HideMapPreviewUI();
             if (folderInfo == null) return;
             mapImage.Source = new BitmapImage(folderInfo.ImageSmall);
             mapNameLabel.Content = folderInfo.Name;
@@ -69,7 +71,6 @@ namespace GbxMapBrowser
                 descriptionTextBlock.Text = "This folder contains " + folderInfo.FilesInsideCount + " files";
             else
                 descriptionTextBlock.Text = "This folder contains 1 file"; 
-            mapInfoExpander.Visibility = Visibility.Collapsed;
         }
 
         void FadeInAnimation()
@@ -78,9 +79,10 @@ namespace GbxMapBrowser
             BeginAnimation(OpacityProperty, animation);
         }
 
-        void HideAllExceptHeader()
+        void HideMapPreviewUI()
         {
-            infoStackPanel.Visibility = Visibility.Collapsed;
+            mapInfoExpander.Visibility = Visibility.Collapsed;
+            medalsViewBox.Visibility = Visibility.Collapsed;
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
