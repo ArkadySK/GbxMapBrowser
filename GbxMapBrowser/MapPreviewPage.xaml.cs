@@ -62,11 +62,14 @@ namespace GbxMapBrowser
 
         void PreviewFolder(FolderInfo folderInfo)
         {
-            HideAllExceptHeader();
             if (folderInfo == null) return;
-            ImageSource src = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Folder.png"));
-            mapImage.Source = src;
+            mapImage.Source = new BitmapImage(folderInfo.ImageSmall);
             mapNameLabel.Content = folderInfo.Name;
+            if(folderInfo.FilesInsideCount != 1)
+                descriptionTextBlock.Text = "This folder contains " + folderInfo.FilesInsideCount + " files";
+            else
+                descriptionTextBlock.Text = "This folder contains 1 file"; 
+            mapInfoExpander.Visibility = Visibility.Collapsed;
         }
 
         void FadeInAnimation()
