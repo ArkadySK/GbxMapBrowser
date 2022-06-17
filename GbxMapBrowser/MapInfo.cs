@@ -103,6 +103,7 @@ namespace GbxMapBrowser
                 if (thumbnailMemoryStream == null) throw new Exception("buffer is empty");
                 
                 Bitmap mapThumbnail = new Bitmap(new StreamReader(thumbnailMemoryStream).BaseStream);
+                mapThumbnail.RotateFlip(RotateFlipType.Rotate180FlipX);
                 MapThumbnail = ConvertToImageSource(mapThumbnail);
                 MapThumbnail.Freeze();
 
