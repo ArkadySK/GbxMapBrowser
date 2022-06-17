@@ -23,7 +23,6 @@
     <None Remove="Data\Medals\NadeoMedal.png" />
     <None Remove="Data\Medals\PersonalRecord.png" />
     <None Remove="Data\Medals\SilverMedal.png" />
-    <None Remove="Data\UIIcons\Folder.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,9 +50,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Data\Medals\SilverMedal.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Data\UIIcons\Folder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -215,6 +211,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\UIIcons\Error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\UIIcons\Folder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\UIIcons\Replay.png">
