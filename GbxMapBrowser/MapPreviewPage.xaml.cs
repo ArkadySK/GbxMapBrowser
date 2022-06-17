@@ -21,17 +21,29 @@ namespace GbxMapBrowser
     {
         MapInfo Map;
 
-        public MapPreviewPage(object data)
+        public MapPreviewPage(List<FolderAndFileInfo> data)
         {       
             InitializeComponent();
             Opacity = 0;
-            if (data is MapInfo)
+            if(data.Count == 0)
             {
-                Map = (MapInfo)data;   
+                HideAllExceptHeader();
+                return;
             }
-            else if (data is FolderInfo)
+            if (data.Count > 1)
             {
-                mapNameLabel.Content = (data as FolderInfo).Name;
+                mapNameLabel.Content = "Selected " + data.Count + " items";
+                HideAllExceptHeader();
+                return;
+            }
+
+            var item = data[0];    
+            if (item is MapInfo)
+            {
+                Map = (MapInfo)item;   
+            }
+            else if (item is FolderInfo)
+            {
                 HideAllExceptHeader();
             }
         }
