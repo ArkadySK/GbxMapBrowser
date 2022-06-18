@@ -96,7 +96,9 @@
                 </Grid>
             </Viewbox>
             
-                <TextBlock x:Name="descriptionTextBlock" TextWrapping="Wrap"  Text="{Binding Description, FallbackValue=''}" FontSize="15" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom" FontStyle="Italic"/>
+            <TextBlock x:Name="descriptionTextBlock" TextWrapping="Wrap"  Text="{Binding Description, FallbackValue=''}" FontSize="15" Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" VerticalAlignment="Bottom" FontStyle="Italic"/>
+            <!--add some empty space for better croll space-->
+            <Rectangle Height="30"/>
         </StackPanel>
     </Grid>
 </Page>
