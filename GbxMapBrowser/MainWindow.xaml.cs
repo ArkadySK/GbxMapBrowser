@@ -492,36 +492,40 @@ namespace GbxMapBrowser
 
         #region ContextMenus
 
-        void ShowContextMenu()
+        void UpdateContextMenu()
         {
-            if (selectedItems.Count == 0) return;
-            ContextMenu contextMenu = null;
+            if (selectedItems.Count == 0)
+            {
+                // add context menu for 0 items?
+                return;
+            }
+
             if (selectedItems.Count == 1)
             {
-                if(selectedItems[0] is MapInfo)
-                    contextMenu = (ContextMenu)FindResource("MapContextMenu");
+                if (selectedItems[0] is MapInfo)
+                    mapListBox.ContextMenu = (ContextMenu)FindResource("MapContextMenu");
                 else if (selectedItems[0] is FolderInfo)
-                    contextMenu = (ContextMenu)FindResource("FolderContextMenu");
+                    mapListBox.ContextMenu = (ContextMenu)FindResource("FolderContextMenu");
+                return;
             }
-            else
-                contextMenu = (ContextMenu)FindResource("MultiselectionContextMenu");
 
-            contextMenu.PlacementTarget = mapListBox;
-            contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
-            contextMenu.IsOpen = true;
+            mapListBox.ContextMenu = (ContextMenu)FindResource("MultiselectionContextMenu");
         }
 
-        private void mapListBox_Item_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        void ShowContextMenu()
         {
-            ((Grid)sender).ContextMenu.PreviewMouseUp += MapContextMenu_PreviewMouseUp;
+            UpdateContextMenu();
+            mapListBox.ContextMenu.PlacementTarget = mapListBox;
+            mapListBox.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
+            mapListBox.ContextMenu.IsOpen = true;
         }
 
-        private async void MapContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private async void ItemContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (mapListBox.SelectedItem is not MapInfo) return;
+            if (selectedItems.Count == 0) return;
             if (!(e.Source is MenuItem)) return;
-            
-            var selMap = (MapInfo)mapListBox.SelectedItem;
+
+            var selMap = selectedItems[0] as MapInfo;
             var selMenuItem = (MenuItem)e.Source;
             string path = selMap.FullPath;
             e.Handled = true; //avoid running this code more than once
@@ -654,5 +658,12 @@ namespace GbxMapBrowser
             sortMapsComboBox.ItemsSource = Sorting.Kinds;
         }
         #endregion
+
+        private void mapListBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            UpdateContextMenu();
+            //((Grid)sender).ContextMenu.PreviewMouseUp += MapContextMenu_PreviewMouseUp;
+            ((ListBox)sender).ContextMenu.PreviewMouseUp += ItemContextMenu_PreviewMouseUp;
+        }
     }
 }
