@@ -150,7 +150,7 @@ namespace GbxMapBrowser
             return maps.ToArray();
         }
 
-        public bool AtleastOneExists(MapInfo[] mapInfos) 
+        public bool AtleastOneExists(FolderAndFileInfo[] mapInfos) 
         {
             foreach (var mi in mapInfos)
             {

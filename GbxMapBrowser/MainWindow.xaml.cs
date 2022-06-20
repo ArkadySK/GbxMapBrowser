@@ -349,7 +349,7 @@ namespace GbxMapBrowser
 
         #region DragOutMaps
 
-        void DragOutMaps(MapInfo[] mapInfos)
+        void DragOutMaps(FolderAndFileInfo[] mapInfos)
         {
             List<string> files = new List<string>();
             Array.ForEach(mapInfos, mfo => files.Add(mfo.FullPath));
@@ -361,20 +361,19 @@ namespace GbxMapBrowser
         private void mapListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left) return;
-            if (mapListBox.SelectedItem == null) return;
-            if (mapListBox.SelectedItem is not MapInfo) return; //DOROB NA VIAC MAP
+            if (mapListBox.SelectedItems.Count == 0) return;
             if (e.MouseDevice.DirectlyOver is not TextBlock) return;
+
             string lastSelMapName = (e.MouseDevice.DirectlyOver as TextBlock).Text;
             List<string> mapNames = new List<string>();
-            foreach (var m in mapListBox.SelectedItems)
+            foreach (FolderAndFileInfo m in mapListBox.SelectedItems)
             {
-                mapNames.Add((m as MapInfo).Name);
+                mapNames.Add(m.Name);
             }
             if (!mapNames.Contains(lastSelMapName)) return;
-            var selMaps = MapInfoController.GetMapsByName(mapNames.ToArray());
 
-            if (MapInfoController.AtleastOneExists(selMaps))
-                DragOutMaps(selMaps);
+            if (MapInfoController.AtleastOneExists(selectedItems.ToArray()))
+                DragOutMaps(selectedItems.ToArray());
         }
 
         #endregion
