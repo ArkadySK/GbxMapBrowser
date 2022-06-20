@@ -494,10 +494,18 @@ namespace GbxMapBrowser
 
         void ShowContextMenu()
         {
-            if (mapListBox.SelectedItem == null) return;
-            if (mapListBox.SelectedItem is not MapInfo) return;
+            if (selectedItems.Count == 0) return;
+            ContextMenu contextMenu = null;
+            if (selectedItems.Count == 1)
+            {
+                if(selectedItems[0] is MapInfo)
+                    contextMenu = (ContextMenu)FindResource("MapContextMenu");
+                else if (selectedItems[0] is FolderInfo)
+                    contextMenu = (ContextMenu)FindResource("FolderContextMenu");
+            }
+            else
+                contextMenu = (ContextMenu)FindResource("MultiselectionContextMenu");
 
-            ContextMenu contextMenu = (ContextMenu)FindResource("MapContextMenu");
             contextMenu.PlacementTarget = mapListBox;
             contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
             contextMenu.IsOpen = true;
@@ -544,7 +552,7 @@ namespace GbxMapBrowser
                     }
                 break;
                 case "Delete":
-                    DeleteSelectedItems();
+                    await DeleteSelectedItems();
                     await UpdateMapList(curFolder);
                     break;
                 case "Rename File":
