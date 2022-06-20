@@ -58,15 +58,23 @@ namespace GbxMapBrowser
             int i = 0;
             foreach (var path in filesLocation)
             {
-                FileInfo fileInfo = new FileInfo(path);
                 try
                 {
                     string newName;
                     if (newfileNames == null)
-                        newName = fileInfo.Name;
+                        newName = GetShortNameFromFilePath(path);
                     else
                         newName = newfileNames[i];
-                    fileInfo.CopyTo(folderToCopyFiles + "\\" + newName);
+
+                    if (Directory.Exists(path))
+                    {
+                        CopyDirectory(path, folderToCopyFiles + "\\" + newName, true);
+                        continue;
+                    }
+
+                    FileInfo fileInfo = new FileInfo(path);
+                    fileInfo.CopyTo(folderToCopyFiles + "\\" + newName, true);
+                                  
                 }
                 catch (Exception e)
                 {
@@ -74,6 +82,34 @@ namespace GbxMapBrowser
                     else throw e;
                 }
                 i++;
+            }
+        }
+
+        static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+        {
+           var dir = new DirectoryInfo(sourceDir);
+
+            // Check if the source directory exists
+            if (!dir.Exists)
+                throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            Directory.CreateDirectory(destinationDir);
+
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                string targetFilePath = Path.Combine(destinationDir, file.Name);
+                file.CopyTo(targetFilePath);
+            }
+
+            // If recursive and copying subdirectories, recursively call this method
+            if (recursive)
+            {
+                foreach (DirectoryInfo subDir in dirs)
+                {
+                    string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
+                    CopyDirectory(subDir.FullName, newDestinationDir, true);
+                }
             }
         }
 
