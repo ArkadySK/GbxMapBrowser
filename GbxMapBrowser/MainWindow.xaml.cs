@@ -30,6 +30,7 @@ namespace GbxMapBrowser
         SearchOption searchOption;
         List<FolderAndFileInfo> selectedItems = new List<FolderAndFileInfo> ();
 
+        #region Initialization
         public MainWindow()
         {
             curFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -71,7 +72,9 @@ namespace GbxMapBrowser
 
             HistoryManager.UpdateListUI += HistoryManager_UpdateListUI;
         }
+        #endregion
 
+        #region HistoryManager
         private void HistoryManager_UpdateListUI(object sender, EventArgs e)
         {
             string tooltip = "";
@@ -80,6 +83,7 @@ namespace GbxMapBrowser
             undoButton.ToolTip = tooltip;
             redoButton.ToolTip = tooltip;
         }
+        #endregion
 
         #region GbxGameListInit
         void LoadGbxGameList()
@@ -243,6 +247,7 @@ namespace GbxMapBrowser
         }
         #endregion
 
+        #region LaunchingItem
         private async Task MapListBoxLaunchItemAsync(FolderAndFileInfo item)
         {
             if (item is FolderInfo selFolder)
@@ -285,6 +290,7 @@ namespace GbxMapBrowser
         {
             await MapListBoxLaunchItemsAsync(selectedItems);
         }
+        #endregion
 
         #region MapPreviewPane
 
