@@ -382,13 +382,15 @@ namespace GbxMapBrowser
         private async void mapListBox_Drop(object sender, DragEventArgs e)
         {
             string[] paths = (string[])(e.Data).GetData(DataFormats.FileDrop, false);
-            var mapsPathsQuery = from mappath in paths
-                                 where mappath.EndsWith("Map.Gbx") || mappath.EndsWith("Challenge.Gbx") || mappath.EndsWith("Replay.Gbx")
-                                 select mappath;
-            var MapPathsArray = mapsPathsQuery.ToArray();
-            if (MapPathsArray.Length == 0) return;
-
-            FileOperations.CopyFilesToFolder(MapPathsArray, curFolder);
+            if (paths.Length == 0) return;
+            try
+            {
+                FileOperations.CopyFilesToFolder(paths, curFolder);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             await UpdateMapList(curFolder);
 
         }
@@ -486,63 +488,52 @@ namespace GbxMapBrowser
             var selMenuItem = (MenuItem)e.Source;
             string path = selMap.FullPath;
             e.Handled = true; //avoid running this code more than once
+            var curFolder = FileOperations.GetFolderFromFilePath(path);
 
             switch (selMenuItem.Header)
             {
                 case "Copy":
-                    {
-                        var fileDropList = new StringCollection();
-                        fileDropList.Add(path);
-                        Clipboard.SetFileDropList(fileDropList);
-                        break;
-                    }
+                    var fileDropList = new StringCollection();
+                    fileDropList.Add(path);
+                    Clipboard.SetFileDropList(fileDropList);
+                    break;
                 case "Paste":
+                    try
                     {
-                        var curFolder = FileOperations.GetFolderFromFilePath(path);
-                        try
-                        {
-                            string[] clipboardText = null;
-                            await Task.Run(() =>
-                            Dispatcher.Invoke(() =>
-                            clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop)
-                            )
-                            );
-                            FileOperations.CopyFilesToFolder(clipboardText, curFolder);
-                            await UpdateMapList(curFolder);
-                        }
-                        catch { }
-                        break;
+                        string[] clipboardText = null;
+                        await Task.Run(() =>
+                        Dispatcher.Invoke(() =>
+                        clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop)
+                        )
+                        );
+                        FileOperations.CopyFilesToFolder(clipboardText, curFolder);
+                        await UpdateMapList(curFolder);
                     }
+                    catch (Exception ex)
+                    {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                break;
                 case "Delete":
-                    {
-                        MapOperations.DeleteMap(selMap);
-                        await UpdateMapList(curFolder);
-                        break;
-                    }
+                    MapOperations.DeleteMap(selMap);
+                    await UpdateMapList(curFolder);
+                    break;
                 case "Rename File":
-                    {
-                        var oldMapName = selMap.FullPath;
-                        FileOperations.RenameFile(oldMapName);
-                        await UpdateMapList(curFolder);
-                        break;
-                    }
+                    var oldMapName = selMap.FullPath;
+                    FileOperations.RenameFile(oldMapName);
+                    await UpdateMapList(curFolder);
+                    break;
                 case "Rename Map":
-                    {
-                        MapOperations.RenameMap(selMap);
-                        await UpdateMapList(curFolder);
-                        break;
-                    }
+                    MapOperations.RenameMap(selMap);
+                    await UpdateMapList(curFolder);
+                    break;
                 case "File Properties":
-                    {
-                        FileOperations.ShowFileProperties(path);
-                        break;
-                    }
+                    FileOperations.ShowFileProperties(path);
+                    break;
                 case "Map Properties (GBX Preview)":
-                    {
-                        var gbxInfoPage = new GbxInfoPage(path);
-                        MapPreview_SetPage(gbxInfoPage);
-                        break;
-                    }              
+                    var gbxInfoPage = new GbxInfoPage(path);
+                    MapPreview_SetPage(gbxInfoPage);
+                    break;   
             }
             await Task.Delay(100);
             ((ContextMenu)sender).IsOpen = false;
