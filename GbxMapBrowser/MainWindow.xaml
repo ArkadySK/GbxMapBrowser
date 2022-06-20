@@ -50,10 +50,10 @@
                     </Grid.RowDefinitions>
                     <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" ScrollViewer.CanContentScroll="False"  
                              MouseDoubleClick="mapListBox_MouseDoubleClickAsync" AllowDrop="True" Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" 
-                             PreviewMouseDown="mapListBox_PreviewMouseDown" KeyDown="mapListBox_KeyDown" SelectionMode="Extended" >
+                             PreviewMouseDown="mapListBox_PreviewMouseDown" KeyDown="mapListBox_KeyDown" SelectionMode="Extended" ContextMenuOpening="mapListBox_ContextMenuOpening">
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type local:FolderInfo}">
-                            <Grid>
+                                <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition />
@@ -68,7 +68,7 @@
                             </Grid>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type local:MapInfo}">
-                                <Grid x:Name="mapListBox_Item" ContextMenu="{StaticResource MapContextMenu}" ContextMenuOpening="mapListBox_Item_ContextMenuOpening">
+                                <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition />
