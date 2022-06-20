@@ -267,7 +267,7 @@ namespace GbxMapBrowser
                 MessageBox.Show("Select a map to launch", "Impossible to load map", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
-        private async Task MapListBoxLaunchItemsAsync(List<FolderAndFileInfo> items)
+        private async Task LaunchItemsAsync(List<FolderAndFileInfo> items)
         {
             if (items.Count == 0) return; 
             if (items.Count == 1)
@@ -288,7 +288,7 @@ namespace GbxMapBrowser
             
         private async void mapListBox_MouseDoubleClickAsync(object sender, MouseButtonEventArgs e)
         {
-            await MapListBoxLaunchItemsAsync(selectedItems);
+            await LaunchItemsAsync(selectedItems);
         }
         #endregion
 
@@ -343,7 +343,7 @@ namespace GbxMapBrowser
 
         private async void ButtonPlay_Click(object sender, RoutedEventArgs e)
         {
-            await MapListBoxLaunchItemsAsync(selectedItems);
+            await LaunchItemsAsync(selectedItems);
         }
         #endregion
 
@@ -396,6 +396,32 @@ namespace GbxMapBrowser
         }
         #endregion
 
+        async Task DeleteSelectedItems()
+        {
+            // Delete all?
+            if (selectedItems.Count > 0)
+            {
+                var result = MessageBox.Show("Are you sure to delete " + selectedItems.Count + " items?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                    foreach (FolderAndFileInfo item in selectedItems)
+                    {
+                        await Task.Run(() => FileOperations.DeleteFile(item.FullPath));
+                    }
+                return;
+            }
+
+            //Delete One
+            if (selectedItems[0] is FolderAndFileInfo itemInfo)
+            {
+                var messageBoxResult = MessageBox.Show($"Are you sure to delete {itemInfo.Name} \nPath: {itemInfo.FullPath}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    await Task.Run(() => FileOperations.DeleteFile(itemInfo.FullPath));
+
+                }
+            }
+        }
+
         #region KeyPresses
 
         private async void currentFolderTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -412,7 +438,7 @@ namespace GbxMapBrowser
         {
             if (e.Key == Key.Enter)
             {
-                await MapListBoxLaunchItemsAsync(selectedItems);
+                await LaunchItemsAsync(selectedItems);
             }
 
             if(e.Key == Key.Back)
@@ -438,25 +464,28 @@ namespace GbxMapBrowser
                 if (HistoryManager.CanRedo)
                     redoButton_Click(this, null);
 
-            if (mapListBox.SelectedItem is not MapInfo) return; //must be selected map
-            MapInfo selMap = (MapInfo)mapListBox.SelectedItem;
-
+            
             if (e.Key == Key.Delete)
             {
-                MapOperations.DeleteMap(selMap);
+                await DeleteSelectedItems();
                 await UpdateMapList(curFolder);
-
             }
             if (Keyboard.Modifiers == ModifierKeys.Shift && Keyboard.IsKeyDown(Key.F10))   //SHIFT + F10        
                 ShowContextMenu(); //context menu
             if (e.SystemKey == Key.F2)
             {
-                MapOperations.RenameMap(selMap);
+                if(selectedItems.Count > 0)
+                {
+                    MessageBox.Show("Cannot rename multiple maps", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                MapOperations.RenameMap(selectedItems[0] as MapInfo);
                 await UpdateMapList(curFolder);
 
             }
             if (Keyboard.IsKeyDown(Key.Enter) && Keyboard.Modifiers == ModifierKeys.Alt) //ALT + ENTER
-                FileOperations.ShowFileProperties(selMap.FullPath);
+                if(selectedItems.Count == 1)
+                FileOperations.ShowFileProperties(selectedItems[0].FullPath);
         }
 
         #endregion
@@ -515,7 +544,7 @@ namespace GbxMapBrowser
                     }
                 break;
                 case "Delete":
-                    MapOperations.DeleteMap(selMap);
+                    DeleteSelectedItems();
                     await UpdateMapList(curFolder);
                     break;
                 case "Rename File":
