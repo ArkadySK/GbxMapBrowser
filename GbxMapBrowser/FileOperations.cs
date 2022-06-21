@@ -128,16 +128,29 @@ namespace GbxMapBrowser
             string shortFileName = GetShortNameFromFilePath(oldpath);
             string curFolder = GetFolderFromFilePath(oldpath);
 
-            RenameWindow renameDialog = new RenameWindow(shortFileName, true);
-            
-           renameDialog.ShowDialog();
+            RenameWindow renameDialog = new RenameWindow(shortFileName, true);           
+            renameDialog.ShowDialog();
 
             if (string.IsNullOrEmpty(renameDialog.newName)) return;
-            string newMapName = renameDialog.newName;
             var mapInfoPaths = new string[] { oldpath }; 
-            var newMapInfoPaths = new string[] { newMapName };
+            var newMapInfoPaths = new string[] { renameDialog.newName };
             CopyFilesToFolder(mapInfoPaths, curFolder, newMapInfoPaths);
             DeleteFile(oldpath);
+        }
+
+        public static void RenameFolder(string oldpath)
+        {
+            string shortFolderName = GetShortNameFromFilePath(oldpath);
+            string curFolder = GetFolderFromFilePath(oldpath);
+
+            RenameWindow renameDialog = new RenameWindow(shortFolderName, false);
+            renameDialog.ShowDialog();
+            
+            if (string.IsNullOrEmpty(renameDialog.newName)) return;
+            var folderInfoPaths = new string[] { oldpath };
+            var newFolderInfoPaths = new string[] { renameDialog.newName };
+            CopyFilesToFolder(folderInfoPaths, curFolder, newFolderInfoPaths);
+            Directory.Delete(oldpath);
         }
 
         private static string GetShortNameFromFilePath(string path)
