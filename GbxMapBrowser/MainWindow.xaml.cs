@@ -599,6 +599,10 @@ namespace GbxMapBrowser
                 case "Folder properties":
                     FileOperations.ShowFileProperties(path);
                     break;
+                case "Properties (all items)":
+                    string[] paths = (from item in selectedItems select item.FullPath).ToArray();
+                    FileOperations.ShowFilesProperties(paths);
+                    break;
                 case "Map properties (GBX Preview)":
                     var gbxInfoPage = new GbxInfoPage(path);
                     MapPreview_SetPage(gbxInfoPage);

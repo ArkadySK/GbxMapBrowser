@@ -53,6 +53,12 @@ namespace GbxMapBrowser
             return ShellExecuteEx(ref info);
         }
 
+        public static bool ShowFilesProperties(string[] Filenames)
+        {
+            //TO DO
+            throw new NotImplementedException();
+        }
+
         public static void CopyFilesToFolder(string[] filesLocation, string folderToCopyFiles, string[] newfileNames)
         {
             int i = 0;
