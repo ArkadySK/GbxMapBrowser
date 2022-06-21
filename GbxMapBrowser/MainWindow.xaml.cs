@@ -574,7 +574,7 @@ namespace GbxMapBrowser
                         MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 break;
-                case "New Folder":
+                case "New folder":
                     NewFolderWindow newFolderWindow = new NewFolderWindow(); 
                     newFolderWindow.ShowDialog();
 
