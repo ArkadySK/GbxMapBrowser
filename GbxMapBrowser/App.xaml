@@ -109,36 +109,42 @@
 
             <!-- Map context menu -->
             <ContextMenu x:Key="MapContextMenu">
+                <MenuItem Header="Launch"/>
+                <Separator/>
                 <MenuItem Header="Copy"/>
                 <MenuItem Header="Paste"/>
                 <Separator/>
                 <MenuItem Header="Delete"/>
-                <MenuItem Header="Rename File"/>
-                <MenuItem Header="Rename Map"/>
+                <MenuItem Header="Rename file"/>
+                <MenuItem Header="Rename map"/>
                 <Separator/>
-                <MenuItem Header="File Properties"/>
-                <MenuItem Header="Map Properties (GBX Preview)"/>
+                <MenuItem Header="File properties"/>
+                <MenuItem Header="Map properties (GBX Preview)"/>
             </ContextMenu>
 
             <!-- Folder context menu -->
             <ContextMenu x:Key="FolderContextMenu">
+                <MenuItem Header="Open"/>
+                <Separator/>
                 <MenuItem Header="Copy"/>
                 <MenuItem Header="Paste"/>
                 <Separator/>
                 <MenuItem Header="Delete"/>
-                <MenuItem Header="Rename Folder"/>
+                <MenuItem Header="Rename folder"/>
                 <Separator/>
-                <MenuItem Header="Folder Properties"/>
+                <MenuItem Header="Folder properties"/>
             </ContextMenu>
 
             <!-- Multiselection context menu -->
             <ContextMenu x:Key="MultiselectionContextMenu">
+                <MenuItem Header="Launch or open (all items)"/>
+                <Separator/>
                 <MenuItem Header="Copy"/>
                 <MenuItem Header="Paste"/>
                 <Separator/>
                 <MenuItem Header="Delete"/>
                 <Separator/>
-                <MenuItem Header="Properties"/>
+                <MenuItem Header="Properties (all items)"/>
             </ContextMenu>
 
             <!-- Game context menu -->

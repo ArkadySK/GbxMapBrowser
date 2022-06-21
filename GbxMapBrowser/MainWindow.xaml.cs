@@ -530,6 +530,12 @@ namespace GbxMapBrowser
             mapListBox.ContextMenu.IsOpen = true;
         }
 
+        private void mapListBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            UpdateContextMenu();
+            ((ListBox)sender).ContextMenu.PreviewMouseUp += ItemContextMenu_PreviewMouseUp;
+        }
+
         private async void ItemContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (selectedItems.Count == 0) return;
@@ -544,6 +550,11 @@ namespace GbxMapBrowser
 
             switch (selMenuItem.Header)
             {
+                case "Launch or open (all items)": 
+                case "Launch": 
+                case "Open": 
+                    await LaunchItemsAsync(selectedItems);
+                    break;
                 case "Copy":
                     var fileDropList = new StringCollection();
                     fileDropList.Add(path);
@@ -570,27 +581,25 @@ namespace GbxMapBrowser
                     await DeleteSelectedItems();
                     await UpdateMapList(curFolder);
                     break;
-                case "Rename File":
+                case "Rename file":
                     var oldMapName = selItem.FullPath;
-                    FileOperations.RenameFile(oldMapName);
+                    await Task.Run(() => FileOperations.RenameFile(oldMapName));
                     await UpdateMapList(curFolder);
                     break;
-                case "Rename Folder":
+                case "Rename folder":
                     var oldName = selItem.FullPath;
-                    FileOperations.RenameFolder(oldName);
+                    await Task.Run(() => FileOperations.RenameFolder(oldName));
                     await UpdateMapList(curFolder);
                     break;
-                case "Rename Map":
+                case "Rename map":
                     MapOperations.RenameMap(selItem as MapInfo);
                     await UpdateMapList(curFolder);
                     break;
-                case "File Properties":
+                case "File properties":
+                case "Folder properties":
                     FileOperations.ShowFileProperties(path);
                     break;
-                case "Folder Properties":
-                    FileOperations.ShowFileProperties(path);
-                    break;
-                case "Map Properties (GBX Preview)":
+                case "Map properties (GBX Preview)":
                     var gbxInfoPage = new GbxInfoPage(path);
                     MapPreview_SetPage(gbxInfoPage);
                     break;   
@@ -677,12 +686,5 @@ namespace GbxMapBrowser
             sortMapsComboBox.ItemsSource = Sorting.Kinds;
         }
         #endregion
-
-        private void mapListBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            UpdateContextMenu();
-            //((Grid)sender).ContextMenu.PreviewMouseUp += MapContextMenu_PreviewMouseUp;
-            ((ListBox)sender).ContextMenu.PreviewMouseUp += ItemContextMenu_PreviewMouseUp;
-        }
     }
 }
