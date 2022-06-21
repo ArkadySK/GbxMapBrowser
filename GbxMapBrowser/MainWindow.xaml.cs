@@ -574,6 +574,13 @@ namespace GbxMapBrowser
                         MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 break;
+                case "New Folder":
+                    NewFolderWindow newFolderWindow = new NewFolderWindow(); 
+                    newFolderWindow.ShowDialog();
+
+                    if (string.IsNullOrEmpty(newFolderWindow.newName)) return;
+                    Directory.CreateDirectory(curFolder + "\\" + newFolderWindow.newName);
+                    break;
             }
 
             if (selectedItems.Count == 0)
