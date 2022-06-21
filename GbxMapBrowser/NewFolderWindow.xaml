@@ -1,0 +1,30 @@
+﻿<Window x:Class="GbxMapBrowser.NewFolderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GbxMapBrowser"
+        mc:Ignorable="d"
+        mc:Ignorable="d" 
+      Width="420"
+      Height="140"
+      Title="New Folder" WindowStyle="ToolWindow">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Label Padding="0" FontSize="15" Content="Name"/>
+            <TextBox FontSize="15" x:Name="nameTextBox" KeyDown="nameTextBox_KeyDown"/>
+        </StackPanel>
+        <Button BorderThickness="1" Grid.Row="1" Content="Ok" Height="30" Width="120" Margin="5" FontSize="15" Background="{DynamicResource MahApps.Brushes.AccentBase}" 
+                BorderBrush="{DynamicResource MahApps.Brushes.Button.Flat.Background}" Foreground="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Foreground.MouseOver}" 
+                Click="Button_Click">
+            <Button.Resources>
+                <ResourceDictionary Source="/PresentationFramework.Aero2;component/themes/Aero2.NormalColor.xaml"/>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Window>
