@@ -107,6 +107,16 @@
                 </Setter>
             </Style>
 
+            <!-- No selection context menu -->
+            <ContextMenu x:Key="NoSelectionContextMenu">
+                <MenuItem Header="Refresh"/>
+                <MenuItem Header="Open in windows file explorer"/>
+                <Separator/>
+                <MenuItem Header="Paste"/>
+                <Separator/>
+                <MenuItem Header="New folder"/>
+            </ContextMenu>
+            
             <!-- Map context menu -->
             <ContextMenu x:Key="MapContextMenu">
                 <MenuItem Header="Launch"/>
@@ -143,8 +153,10 @@
                 <MenuItem Header="Paste"/>
                 <Separator/>
                 <MenuItem Header="Delete"/>
+                <!--
                 <Separator/>
                 <MenuItem Header="Properties (all items)"/>
+                -->
             </ContextMenu>
 
             <!-- Game context menu -->

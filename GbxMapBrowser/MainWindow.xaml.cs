@@ -399,7 +399,7 @@ namespace GbxMapBrowser
         async Task DeleteSelectedItems()
         {
             // Delete all?
-            if (selectedItems.Count > 0)
+            if (selectedItems.Count > 1)
             {
                 var result = MessageBox.Show("Are you sure to delete " + selectedItems.Count + " items?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
@@ -506,7 +506,7 @@ namespace GbxMapBrowser
         {
             if (selectedItems.Count == 0)
             {
-                // add context menu for 0 items?
+                mapListBox.ContextMenu = (ContextMenu)FindResource("NoSelectionContextMenu");
                 return;
             }
 
