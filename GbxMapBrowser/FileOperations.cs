@@ -134,8 +134,12 @@ namespace GbxMapBrowser
             if (string.IsNullOrEmpty(renameDialog.newName)) return;
             var mapInfoPaths = new string[] { oldpath }; 
             var newMapInfoPaths = new string[] { renameDialog.newName };
-            CopyFilesToFolder(mapInfoPaths, curFolder, newMapInfoPaths);
-            DeleteFile(oldpath);
+            try
+            {
+                CopyFilesToFolder(mapInfoPaths, curFolder, newMapInfoPaths);         
+                DeleteFile(oldpath);
+            }
+            catch { }
         }
 
         public static void RenameFolder(string oldpath)
@@ -149,8 +153,12 @@ namespace GbxMapBrowser
             if (string.IsNullOrEmpty(renameDialog.newName)) return;
             var folderInfoPaths = new string[] { oldpath };
             var newFolderInfoPaths = new string[] { renameDialog.newName };
-            CopyFilesToFolder(folderInfoPaths, curFolder, newFolderInfoPaths);
-            Directory.Delete(oldpath);
+            try
+            {
+                CopyFilesToFolder(folderInfoPaths, curFolder, newFolderInfoPaths);        
+                Directory.Delete(oldpath, true);
+            }
+            catch { }
         }
 
         private static string GetShortNameFromFilePath(string path)

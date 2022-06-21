@@ -405,10 +405,17 @@ namespace GbxMapBrowser
                 if (result == MessageBoxResult.Yes)
                     foreach (FolderAndFileInfo item in selectedItems)
                     {
-                        if(item is MapInfo)
-                            await Task.Run(() => FileOperations.DeleteFile(item.FullPath));
-                        else if (item is FolderInfo)
-                            await Task.Run(() => Directory.Delete(item.FullPath));
+                        try
+                        {
+                            if (item is MapInfo)
+                                await Task.Run(() => FileOperations.DeleteFile(item.FullPath));
+                            else if (item is FolderInfo)
+                                await Task.Run(() => Directory.Delete(item.FullPath, true));
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                 return;
             }
