@@ -245,7 +245,7 @@ namespace GbxMapBrowser
         }
         #endregion
 
-        #region LaunchingItem
+        #region LaunchingItemAndMapListSelection
         private async Task MapListBoxLaunchItemAsync(FolderAndFileInfo item)
         {
             if (item is FolderInfo selFolder)
@@ -288,6 +288,16 @@ namespace GbxMapBrowser
         {
             await LaunchItemsAsync(selectedItems);
         }
+        private void mapListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedItems.Clear();
+            if (mapListBox.SelectedItem == null) return;
+            foreach (FolderAndFileInfo selItem in mapListBox.SelectedItems)
+            {
+                selectedItems.Add(selItem);
+            }
+            UpdateMapPreview(selectedItems);
+        }
         #endregion
 
         #region MapPreviewPane
@@ -315,18 +325,7 @@ namespace GbxMapBrowser
             mapPreviewFrame.Content = null;
             if (page == null) return;
             mapPreviewFrame.Content = (GbxInfoPage)page;
-        }
-
-        private void mapListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (mapListBox.SelectedItem == null) return;
-            selectedItems.Clear();
-            foreach(FolderAndFileInfo selItem in mapListBox.SelectedItems)
-            {
-                selectedItems.Add(selItem);
-            }
-            UpdateMapPreview(selectedItems);
-        }
+        }        
 
         GbxGame GetSelectedGame()
         {
@@ -394,6 +393,22 @@ namespace GbxMapBrowser
         }
         #endregion
 
+        #region ItemOperations
+        async Task DeleteItem(FolderAndFileInfo item)
+        {
+            try
+            {
+                if (item is MapInfo)
+                    await Task.Run(() => FileOperations.DeleteFile(item.FullPath));
+                else if (item is FolderInfo)
+                    await Task.Run(() => Directory.Delete(item.FullPath, true));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        } 
+
         async Task DeleteSelectedItems()
         {
             // Delete all?
@@ -403,17 +418,7 @@ namespace GbxMapBrowser
                 if (result == MessageBoxResult.Yes)
                     foreach (FolderAndFileInfo item in selectedItems)
                     {
-                        try
-                        {
-                            if (item is MapInfo)
-                                await Task.Run(() => FileOperations.DeleteFile(item.FullPath));
-                            else if (item is FolderInfo)
-                                await Task.Run(() => Directory.Delete(item.FullPath, true));
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        await DeleteItem(item);
                     }
                 return;
             }
@@ -424,11 +429,11 @@ namespace GbxMapBrowser
                 var messageBoxResult = MessageBox.Show($"Are you sure to delete {itemInfo.Name} \nPath: {itemInfo.FullPath}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    await Task.Run(() => FileOperations.DeleteFile(itemInfo.FullPath));
-
+                    await DeleteItem(itemInfo);
                 }
             }
         }
+        #endregion
 
         #region KeyPresses
 
@@ -580,6 +585,7 @@ namespace GbxMapBrowser
 
                     if (string.IsNullOrEmpty(newFolderWindow.newName)) return;
                     Directory.CreateDirectory(curFolder + "\\" + newFolderWindow.newName);
+                    await UpdateMapList(curFolder);
                     break;
             }
 
