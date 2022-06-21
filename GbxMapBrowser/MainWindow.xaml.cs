@@ -212,9 +212,7 @@ namespace GbxMapBrowser
 
         private void OpenInExplorerButton_Click(object sender, RoutedEventArgs e)
         {
-            Process explorerProcess = new Process();
-            explorerProcess.StartInfo = new ProcessStartInfo("explorer", curFolder);
-            explorerProcess.Start();
+            FileOperations.OpenInExplorer(curFolder);
         }
 
         private async void undoButton_Click(object sender, RoutedEventArgs e)
@@ -550,6 +548,9 @@ namespace GbxMapBrowser
 
             switch (selMenuItem.Header)
             {
+                case "Open this folder in file explorer":
+                    FileOperations.OpenInExplorer(curFolder);
+                    break;
                 case "Launch or open (all items)": 
                 case "Launch": 
                 case "Open": 

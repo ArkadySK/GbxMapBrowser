@@ -110,7 +110,7 @@
             <!-- No selection context menu -->
             <ContextMenu x:Key="NoSelectionContextMenu">
                 <MenuItem Header="Refresh"/>
-                <MenuItem Header="Open in windows file explorer"/>
+                <MenuItem Header="Open this folder in file explorer"/>
                 <Separator/>
                 <MenuItem Header="Paste"/>
                 <Separator/>

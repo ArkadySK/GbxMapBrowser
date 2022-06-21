@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Windows;
 using System.Linq;
+using System.Diagnostics;
 
 namespace GbxMapBrowser
 {
@@ -57,6 +58,13 @@ namespace GbxMapBrowser
         {
             //TO DO
             throw new NotImplementedException();
+        }
+
+        public static void OpenInExplorer(string folder)
+        {
+            Process explorerProcess = new Process();
+            explorerProcess.StartInfo = new ProcessStartInfo("explorer", folder);
+            explorerProcess.Start();
         }
 
         public static void CopyFilesToFolder(string[] filesLocation, string folderToCopyFiles, string[] newfileNames)
