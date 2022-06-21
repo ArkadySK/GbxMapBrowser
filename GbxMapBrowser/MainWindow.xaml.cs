@@ -405,7 +405,10 @@ namespace GbxMapBrowser
                 if (result == MessageBoxResult.Yes)
                     foreach (FolderAndFileInfo item in selectedItems)
                     {
-                        await Task.Run(() => FileOperations.DeleteFile(item.FullPath));
+                        if(item is MapInfo)
+                            await Task.Run(() => FileOperations.DeleteFile(item.FullPath));
+                        else if (item is FolderInfo)
+                            await Task.Run(() => Directory.Delete(item.FullPath));
                     }
                 return;
             }
@@ -525,9 +528,10 @@ namespace GbxMapBrowser
             if (selectedItems.Count == 0) return;
             if (!(e.Source is MenuItem)) return;
 
-            var selMap = selectedItems[0] as MapInfo;
+
+            var selItem = selectedItems[0] as FolderAndFileInfo;
             var selMenuItem = (MenuItem)e.Source;
-            string path = selMap.FullPath;
+            string path = selItem.FullPath;
             e.Handled = true; //avoid running this code more than once
             var curFolder = FileOperations.GetFolderFromFilePath(path);
 
@@ -560,15 +564,23 @@ namespace GbxMapBrowser
                     await UpdateMapList(curFolder);
                     break;
                 case "Rename File":
-                    var oldMapName = selMap.FullPath;
+                    var oldMapName = selItem.FullPath;
                     FileOperations.RenameFile(oldMapName);
                     await UpdateMapList(curFolder);
                     break;
+                case "Rename Folder":
+                    var oldName = selItem.FullPath;
+                    FileOperations.RenameFolder(oldName);
+                    await UpdateMapList(curFolder);
+                    break;
                 case "Rename Map":
-                    MapOperations.RenameMap(selMap);
+                    MapOperations.RenameMap(selItem as MapInfo);
                     await UpdateMapList(curFolder);
                     break;
                 case "File Properties":
+                    FileOperations.ShowFileProperties(path);
+                    break;
+                case "Folder Properties":
                     FileOperations.ShowFileProperties(path);
                     break;
                 case "Map Properties (GBX Preview)":
