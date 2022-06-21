@@ -536,30 +536,18 @@ namespace GbxMapBrowser
 
         private async void ItemContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (selectedItems.Count == 0) return;
             if (!(e.Source is MenuItem)) return;
-
-
-            var selItem = selectedItems[0] as FolderAndFileInfo;
             var selMenuItem = (MenuItem)e.Source;
-            string path = selItem.FullPath;
-            e.Handled = true; //avoid running this code more than once
-            var curFolder = FileOperations.GetFolderFromFilePath(path);
 
+
+            e.Handled = true; //avoid running this code more than once
             switch (selMenuItem.Header)
             {
                 case "Open this folder in file explorer":
                     FileOperations.OpenInExplorer(curFolder);
                     break;
-                case "Launch or open (all items)": 
-                case "Launch": 
-                case "Open": 
-                    await LaunchItemsAsync(selectedItems);
-                    break;
-                case "Copy":
-                    var fileDropList = new StringCollection();
-                    fileDropList.Add(path);
-                    Clipboard.SetFileDropList(fileDropList);
+                case "Refresh":
+                    await UpdateMapList(curFolder);
                     break;
                 case "Paste":
                     try
@@ -570,14 +558,46 @@ namespace GbxMapBrowser
                         clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop)
                         )
                         );
-                        FileOperations.CopyFilesToFolder(clipboardText, curFolder);
-                        await UpdateMapList(curFolder);
+
+                        if (clipboardText is null)
+                        {
+                            throw new Exception("The clipboard is empty.");
+                        }
+                        else
+                        {
+                            FileOperations.CopyFilesToFolder(clipboardText, curFolder);
+                            await UpdateMapList(curFolder);
+                        }
                     }
                     catch (Exception ex)
                     {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 break;
+            }
+
+            if (selectedItems.Count == 0)
+            {
+                await Task.Delay(100);
+                ((ContextMenu)sender).IsOpen = false;
+                return;
+            }
+            var selItem = selectedItems[0] as FolderAndFileInfo;
+            string path = selItem.FullPath;
+
+            switch (selMenuItem.Header)
+            {
+               
+                case "Launch or open (all items)": 
+                case "Launch": 
+                case "Open": 
+                    await LaunchItemsAsync(selectedItems);
+                    break;
+                case "Copy":
+                    var fileDropList = new StringCollection();
+                    fileDropList.Add(path);
+                    Clipboard.SetFileDropList(fileDropList);
+                    break;
                 case "Delete":
                     await DeleteSelectedItems();
                     await UpdateMapList(curFolder);
