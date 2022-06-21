@@ -36,11 +36,13 @@ namespace GbxMapBrowser
             newNameTextBox.Focus();
         }
 
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Rename item and close window if successfull
+        /// </summary>
+        private void SaveChanges()
         {
             string newNametemp = newNameTextBox.Text;
-            if(!isFile)
+            if (!isFile)
             {
                 newName = newNametemp;
                 this.Close();
@@ -54,6 +56,19 @@ namespace GbxMapBrowser
             }
             else
                 MessageBox.Show("Map file must end with '.Map.Gbx'!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SaveChanges();
+        }
+
+        private void newNameTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                SaveChanges();
+            }
         }
     }
 }
