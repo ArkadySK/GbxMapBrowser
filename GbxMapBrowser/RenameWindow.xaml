@@ -18,9 +18,11 @@
             <Label Padding="0" FontSize="15" Content="Old Name"/>
             <TextBox IsEnabled="False" FontSize="15" x:Name="oldNameTextBox"/>
             <Label Padding="0" FontSize="15" Content="New Name"/>
-            <TextBox FontSize="15" x:Name="newNameTextBox"/>
+            <TextBox FontSize="15" x:Name="newNameTextBox" KeyDown="newNameTextBox_KeyDown"/>
         </StackPanel>
-        <Button BorderThickness="1" Grid.Row="1" Content="Ok" Height="30" Width="120" Margin="5" FontSize="15" Background="{DynamicResource MahApps.Brushes.AccentBase}" BorderBrush="{DynamicResource MahApps.Brushes.Button.Flat.Background}" Foreground="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Foreground.MouseOver}" Click="Button_Click">
+        <Button BorderThickness="1" Grid.Row="1" Content="Ok" Height="30" Width="120" Margin="5" FontSize="15" Background="{DynamicResource MahApps.Brushes.AccentBase}" 
+                BorderBrush="{DynamicResource MahApps.Brushes.Button.Flat.Background}" Foreground="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Foreground.MouseOver}" 
+                Click="Button_Click">
             <Button.Resources>
                 <ResourceDictionary Source="/PresentationFramework.Aero2;component/themes/Aero2.NormalColor.xaml"/>
             </Button.Resources>
