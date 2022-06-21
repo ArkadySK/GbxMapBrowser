@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GbxMapBrowser"
         mc:Ignorable="d"
-        mc:Ignorable="d" 
       Width="420"
       Height="140"
       Title="New Folder" WindowStyle="ToolWindow">
