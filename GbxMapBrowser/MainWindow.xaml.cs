@@ -619,12 +619,12 @@ namespace GbxMapBrowser
                     break;
                 case "Rename file":
                     var oldMapName = selItem.FullPath;
-                    await Task.Run(() => FileOperations.RenameFile(oldMapName));
+                    FileOperations.RenameFile(oldMapName);
                     await UpdateMapList(curFolder);
                     break;
                 case "Rename folder":
                     var oldName = selItem.FullPath;
-                    await Task.Run(() => FileOperations.RenameFolder(oldName));
+                    FileOperations.RenameFolder(oldName);
                     await UpdateMapList(curFolder);
                     break;
                 case "Rename map":
