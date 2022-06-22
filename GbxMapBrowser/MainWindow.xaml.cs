@@ -535,7 +535,9 @@ namespace GbxMapBrowser
 
         private void mapListBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            UpdateContextMenu();
+            if (e.OriginalSource is ScrollViewer)
+                mapListBox.SelectedItem = null;
+            UpdateContextMenu();    
             ((ListBox)sender).ContextMenu.PreviewMouseUp += ItemContextMenu_PreviewMouseUp;
         }
 
