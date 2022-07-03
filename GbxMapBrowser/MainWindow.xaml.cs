@@ -355,12 +355,13 @@ namespace GbxMapBrowser
             DragDrop.DoDragDrop((DependencyObject)mapListBox, mapFile, DragDropEffects.Copy);
         }
 
-        private void mapListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void mapListBox_PreviewMouseleftButonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton != MouseButton.Left) return;
-            if (mapListBox.SelectedItems.Count == 0) return;
-            if (e.MouseDevice.DirectlyOver is not TextBlock) return;
-
+            if (e.ClickCount > 2) return;
+            if (selectedItems.Count == 0) return;
+            //if (e.MouseDevice.DirectlyOver is not TextBlock) return;
+            
+            /*
             string lastSelMapName = (e.MouseDevice.DirectlyOver as TextBlock).Text;
             List<string> mapNames = new List<string>();
             foreach (FolderAndFileInfo m in mapListBox.SelectedItems)
@@ -368,7 +369,7 @@ namespace GbxMapBrowser
                 mapNames.Add(m.Name);
             }
             if (!mapNames.Contains(lastSelMapName)) return;
-
+            */
             if (MapInfoController.AtleastOneExists(selectedItems.ToArray()))
                 DragOutMaps(selectedItems.ToArray());
         }
