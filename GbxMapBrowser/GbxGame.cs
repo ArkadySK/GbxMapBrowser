@@ -213,5 +213,10 @@ namespace GbxMapBrowser
             gameProcess.StartInfo.WorkingDirectory = InstalationFolder; //to avoid exe not found message
             gameProcess.Start();
         }
+
+        public GbxGame Clone()
+        {
+            return (GbxGame)MemberwiseClone();
+        }
     }
 }

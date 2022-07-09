@@ -7,6 +7,7 @@ using System.Windows.Data;
 using Microsoft.Win32;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GbxMapBrowser
 {
@@ -79,8 +80,10 @@ namespace GbxMapBrowser
                 return;
             }
 
-            if (selGame is CustomGbxGame customGame)
+            if (selGame is CustomGbxGame)
             {
+                var customGame = selGame.Clone() as CustomGbxGame;
+
                 EditGameWindow editGameWindow = new EditGameWindow(customGame);
                 editGameWindow.Owner = this;
                 bool? result = editGameWindow.ShowDialog();
@@ -90,7 +93,7 @@ namespace GbxMapBrowser
                     return;
                 // If the game is changed, replace the game in the game list
                 int replacementIndex = GbxGameController.GbxGames.IndexOf(selGame);
-                GbxGameController.GbxGames[replacementIndex] = editGameWindow.Game;
+                GbxGameController.GbxGames[replacementIndex] = customGame;
             }
             else if(selGame is GbxGame)
             {
@@ -139,16 +142,6 @@ namespace GbxMapBrowser
             EditSelectedGame();
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
-        }
-
-        [Obsolete]
-        private void addCustomGameButtonOld_Click(object sender, RoutedEventArgs e)
-        {
-            var selGame = (GbxGame)(listView.SelectedItem);
-            if(selGame == null) return;
-            var addWindow = new AddGameWindow(GbxGameController, selGame);
-            addWindow.Owner = this;
-            addWindow.ShowDialog();
         }
 
         private void addCustomGameButton_Click(object sender, RoutedEventArgs e)
