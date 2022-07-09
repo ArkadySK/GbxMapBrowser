@@ -120,13 +120,24 @@ namespace GbxMapBrowser
             listView.ItemsSource = GbxGameController.GbxGames;
         }
 
-        private void addCustomGameButton_Click(object sender, RoutedEventArgs e)
+        [Obsolete]
+        private void addCustomGameButtonOld_Click(object sender, RoutedEventArgs e)
         {
             var selGame = (GbxGame)(listView.SelectedItem);
             if(selGame == null) return;
             var addWindow = new AddGameWindow(GbxGameController, selGame);
             addWindow.Owner = this;
             addWindow.ShowDialog();
+        }
+
+        private void addCustomGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            var addWindow = new EditGameWindow();
+            addWindow.Owner = this;
+            bool? result = addWindow.ShowDialog();
+            if (!result.HasValue) return;
+            if (result.Value == true)
+                GbxGameController.GbxGames.Add(addWindow.Game);
         }
     }
 }
