@@ -18,16 +18,6 @@ namespace GbxMapBrowser
                 _isUnlimiter = value;
             }
         }
-        public CustomGbxGame(string name, GbxGame baseGbxGame)
-        {
-            Name = name;
-            Icon = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\GameIcons\\Custom.png"));
-            TargetExeName = "";
-            MapsFolder = baseGbxGame.MapsFolder;
-            ExeLocation = baseGbxGame.ExeLocation;
-            IsVisibleInGameLaunchMenu = baseGbxGame.IsVisibleInGameLaunchMenu;
-            IsVisibleInGameList = baseGbxGame.IsVisibleInGameList;
-        }
 
         public CustomGbxGame()
         {
