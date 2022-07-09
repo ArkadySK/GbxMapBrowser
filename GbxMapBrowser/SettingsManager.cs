@@ -176,8 +176,7 @@ namespace GbxMapBrowser
                         game.IsUnlimiter = false;
 
                     controller.GbxGames.Add(game);
-                    //game.Icon = props[6]; //to do
-                    game.Icon = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\GameIcons\\Custom.png"));
+                    game.Icon = new BitmapImage(new Uri(props[6]));
 
                     if (props.Length >= 8)
                     {
@@ -222,7 +221,7 @@ namespace GbxMapBrowser
                     enabledString + "|" + 
                     visibleInGameListString + "|" + 
                     unlimiterString  + "|" + 
-                    game.Icon.ToString() + "|" +
+                    game.Icon.UriSource.AbsoluteUri + "|" +
                     Sorting.KindsShort[(int)game.DefaultSortKind]);
             }
             File.WriteAllLinesAsync(customGamesSettingsFilePath, settingsText);
