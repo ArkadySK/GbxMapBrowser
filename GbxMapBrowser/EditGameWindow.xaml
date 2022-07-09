@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GbxMapBrowser"
         mc:Ignorable="d"
         d:Background="Black"
-        Title="Edit game..." Width="600" SizeToContent="Height" WindowStartupLocation="CenterOwner">
+        Title="Edit game..." Width="620" SizeToContent="Height" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -20,12 +20,12 @@
         </Grid.RowDefinitions>
 
 
-        <Label FontSize="20" FontWeight="Black">Game Name:</Label>
-        <TextBox x:Name="nameTextBox" Grid.Column="1" Text="{Binding Name}" FontSize="20" HorizontalAlignment="Stretch" MinWidth="100" Grid.ColumnSpan="2"/>
+        <Label FontSize="20" Margin="5" FontWeight="Black">Game Name:</Label>
+        <TextBox x:Name="nameTextBox" Margin="5" Grid.Column="1" Text="{Binding Name}" FontSize="20" HorizontalAlignment="Stretch" MinWidth="100" Grid.ColumnSpan="2"/>
 
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" Margin="5 20">
             <Label Content="Icon" FontWeight="Black"/>
-            <Image x:Name="gameIconImage" Source="{Binding Icon}" Width="200" Height="200"/>
+            <Image x:Name="gameIconImage" Source="{Binding Icon}" Width="200" Height="200" Margin="5"/>
             <Button x:Name="chageIconButton" Content="Change Icon" Click="chageIconButton_Click"/>
             <Button x:Name="resetIconButton" Content="Reset Icon" Click="resetIconButton_Click"/>
         </StackPanel>
