@@ -21,6 +21,8 @@ namespace GbxMapBrowser
         static string settingsFilePath = Directory.GetCurrentDirectory() + "\\config\\settings.dat";
         static string customGamesSettingsFilePath = Directory.GetCurrentDirectory() + "\\config\\customgames.dat";
         static string settingsFolderPath = Directory.GetCurrentDirectory() + "\\config";
+        public static string DefaultGameIconPath = Environment.CurrentDirectory + "\\Data\\GameIcons\\Custom.png";
+
 
         public static SettingState SettingsState = SettingsManager.SettingState.NotLoaded;
 
@@ -176,7 +178,11 @@ namespace GbxMapBrowser
                         game.IsUnlimiter = false;
 
                     controller.GbxGames.Add(game);
-                    game.Icon = new BitmapImage(new Uri(props[6]));
+                    string iconPath = props[6];
+                    if(File.Exists(iconPath))
+                        game.Icon = new BitmapImage(new Uri(iconPath));
+                    else
+                        game.Icon = new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
 
                     if (props.Length >= 8)
                     {
@@ -215,13 +221,16 @@ namespace GbxMapBrowser
                 if((game as CustomGbxGame).IsUnlimiter)
                     unlimiterString = "U";
 
+                if(game.Icon is null)
+                    game.Icon = new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
+
                 settingsText.Add(game.Name + "|" + 
                     game.MapsFolder + "|" + 
                     game.ExeLocation + "|" + 
                     enabledString + "|" + 
                     visibleInGameListString + "|" + 
                     unlimiterString  + "|" + 
-                    game.Icon.UriSource.AbsoluteUri + "|" +
+                    game.Icon.UriSource.LocalPath + "|" +
                     Sorting.KindsShort[(int)game.DefaultSortKind]);
             }
             File.WriteAllLinesAsync(customGamesSettingsFilePath, settingsText);

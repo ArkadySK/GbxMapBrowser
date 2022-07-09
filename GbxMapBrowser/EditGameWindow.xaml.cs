@@ -69,7 +69,7 @@ namespace GbxMapBrowser
 
         private void resetIconButton_Click(object sender, RoutedEventArgs e)
         {
-            Game.Icon = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\GameIcons\\Custom.png"));
+            Game.Icon = new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
         }
     }
 }
