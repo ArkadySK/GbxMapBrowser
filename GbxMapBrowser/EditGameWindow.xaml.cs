@@ -26,6 +26,7 @@ namespace GbxMapBrowser
             InitializeComponent();
             Game = new CustomGbxGame();
             this.DataContext = Game;
+            Title = "Add new game...";
         }
         /// <summary>
         /// Edit existing CustomGbxGame
@@ -36,6 +37,7 @@ namespace GbxMapBrowser
             InitializeComponent();
             this.Game = game;
             this.DataContext = this.Game;
+            Title = "Edit " + game.Name;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
