@@ -77,5 +77,17 @@ namespace GbxMapBrowser
             if(dialogResult.Value == true)
                 ExeLocation = dialog.FileName;
         }
+
+        public void SetCustomIcon()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog()
+            {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Title = "Select the icon of " + Name
+            };
+            bool? dialogResult = dialog.ShowDialog();
+            Icon = new BitmapImage(new Uri(dialog.FileName));
+        }
     }
 }
