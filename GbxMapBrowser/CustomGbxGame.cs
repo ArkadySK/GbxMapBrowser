@@ -84,10 +84,14 @@ namespace GbxMapBrowser
             {
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Title = "Select the icon of " + Name
-            };
+                Title = "Select the icon of " + Name,
+                Filter = "Supported Image Files (*.png, *.jpg, *.bmp, *.ico)|*.png;*.jpg;*.bmp;*.ico|All files (*.*)|*.*"
+        };
             bool? dialogResult = dialog.ShowDialog();
-            Icon = new BitmapImage(new Uri(dialog.FileName));
+            if (!dialogResult.HasValue)
+                return;
+            if(dialogResult == true)
+                Icon = new BitmapImage(new Uri(dialog.FileName));
         }
     }
 }
