@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GbxMapBrowser"
         mc:Ignorable="d"
-        Title="Configure Gbx Games" Height="550" Width="750" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
+        d:Background="Black"
+        Title="Configure Gbx Games" Height="550" Width="770" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -13,11 +14,19 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto" MinHeight="50" />
         </Grid.RowDefinitions>
 
-        <ListView Margin="5" x:Name="listView" ItemsSource="{Binding GbxGames}" MouseDoubleClick="listView_MouseDoubleClick" SelectedIndex="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <StackPanel x:Name="welcomeStackPanel" Visibility="Collapsed" Margin="5" d:Visibility="Visible" Grid.ColumnSpan="2">
+            <TextBlock FontSize="25" FontWeight="Bold" Foreground="{StaticResource MahApps.Brushes.AccentBase}" Text="Welcome!" />
+            <TextBlock FontSize="20" FontWeight="DemiBold" TextWrapping="Wrap" Foreground="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}"
+                   Text="Please, set your game preferences before you start to use this program. Configure atleast one game from this list, then you can close this window."/>
+
+        </StackPanel>
+
+        <ListView Margin="5" x:Name="listView" Grid.Row="1" ItemsSource="{Binding GbxGames}" MouseDoubleClick="listView_MouseDoubleClick" SelectedIndex="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <!--GbxGame Item Template-->
             <ListView.ItemTemplate>
                 <DataTemplate >
@@ -35,11 +44,11 @@
                             <Label Style="{StaticResource DefaultUIStyle}" FontSize="20" FontWeight="Bold" Content="{Binding Name}" ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                            <Label Margin="2" Style="{StaticResource DefaultUIStyle}">Maps: </Label>
+                            <Label Margin="2" Style="{StaticResource DefaultUIStyle}">Maps:</Label>
                             <Label Style="{StaticResource DefaultUIStyle}" FontSize="12" FontWeight="Light" Content="{Binding MapsFolder}" ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
-                            <Label Margin="2" Style="{StaticResource DefaultUIStyle}">Exe: </Label>
+                            <Label Margin="2" Style="{StaticResource DefaultUIStyle}">Exe:</Label>
                             <Label Style="{StaticResource DefaultUIStyle}" FontSize="12" FontWeight="Light" Content="{Binding ExeLocation}" ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"/>
                         </StackPanel>
                         <Image Grid.RowSpan="3" Source="{Binding Icon}"/>
@@ -48,20 +57,19 @@
             </ListView.ItemTemplate>
             <!--GbxGame Item Template END-->
         </ListView>
-        
-        
-             <!--Add custom game-->
-        <!--<Button x:Name="addCustomGameButtonOld" Style="{StaticResource StandardButtonStyle}" Background="{DynamicResource MahApps.Brushes.AccentBase}" Grid.Row="1" Margin="5" Click="addCustomGameButtonOld_Click">Create a new game with settings based on the selected one</Button>-->
-        <Button x:Name="addCustomGameButton" Style="{StaticResource StandardButtonStyle}" Background="{DynamicResource MahApps.Brushes.AccentBase}" Grid.Row="1" Margin="5" Click="addCustomGameButton_Click">Add custom game</Button>
-        
+
+
+        <!--Add custom game-->
+        <Button x:Name="addCustomGameButton" Style="{StaticResource StandardButtonStyle}" Grid.Row="2" Margin="5" Click="addCustomGameButton_Click">Add custom game</Button>
+
         <!--Save all-->
-        <Label Grid.Column="1" MaxHeight="30" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" Foreground="{DynamicResource MahApps.Brushes.AccentBase}">Changes are saved automatically.</Label>
-        <Button Margin="5" Grid.Column="1" Grid.Row="1" Style="{StaticResource StandardButtonStyle}" Click="ButtonSaveAllChanges_Click">Close</Button>
-        
+        <Label Grid.Column="1" MaxHeight="30" Grid.Row="1" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" Foreground="{DynamicResource MahApps.Brushes.AccentBase}">Changes are saved automatically.</Label>
+        <Button Margin="5" Grid.Column="1" Background="{DynamicResource MahApps.Brushes.AccentBase}" Grid.Row="2" Style="{StaticResource StandardButtonStyle}" Click="ButtonSaveAllChanges_Click">Close</Button>
+
         <!--GbxGame Settings Panel-->
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Grid.Row="1">
             <Label Style="{StaticResource DefaultUIStyle}"  HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Content="{Binding SelectedItem.Name, ElementName=listView, FallbackValue='Choose a game'}"/>
-            <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonChangeInstallLocation_Click">Change install location</Button>
+            <Button Margin="5" Style="{StaticResource StandardButtonStyle}" Click="ButtonChangeInstallLocation_Click">Edit game</Button>
             <Button x:Name="buttonRemoveGame" Margin="5" Style="{StaticResource StandardButtonStyle}" Background="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Background.MouseOver}" Click="ButtonRemoveGame_Click">Remove game</Button>
             <CheckBox Margin="5" VerticalContentAlignment="Center" IsChecked="{Binding SelectedItem.IsVisibleInGameLaunchMenu, ElementName=listView}">
                 <Label Style="{StaticResource DefaultUIStyle}" Content="Visible in game launch menu"/>

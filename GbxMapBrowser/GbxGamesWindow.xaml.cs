@@ -20,8 +20,12 @@ namespace GbxMapBrowser
 
         public GbxGamesWindow(GbxGameViewModel gbxGameController)
         {
-            if (Properties.Settings.Default.IsFirstRun) Title = "Configure your games";
             InitializeComponent();
+            if (Properties.Settings.Default.IsFirstRun)
+            {
+                Title = "Configure your games";
+                welcomeStackPanel.Visibility = Visibility.Visible;
+            }
             GbxGameController = gbxGameController;
             DataContext = GbxGameController;
             //SettingsManager.LoadAllSettingsFromFile(gbxGameController);
@@ -130,7 +134,6 @@ namespace GbxMapBrowser
             listView.ItemsSource = GbxGameController.GbxGames;
 
         }
-
 
         private void ButtonSaveAllChanges_Click(object sender, RoutedEventArgs e)
         {
