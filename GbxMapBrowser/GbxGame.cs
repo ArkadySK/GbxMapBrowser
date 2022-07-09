@@ -53,13 +53,14 @@ namespace GbxMapBrowser
         private string _mapsFolder;
 
         public string TargetExeName { get; internal set; }
-        public string MapsFolder { 
-            get => _mapsFolder; 
+        public string MapsFolder
+        {
+            get => _mapsFolder;
             set
             {
                 _mapsFolder = value;
                 NotifyPropertyChanged();
-            } 
+            }
         }
         public bool IsVisibleInGameList
         {
@@ -70,8 +71,15 @@ namespace GbxMapBrowser
                 NotifyPropertyChanged();
             }
         }
-
-        public BitmapImage Icon { get; internal set; }
+        private BitmapImage _icon;
+        public BitmapImage Icon { 
+            get => _icon; 
+            internal set 
+            {
+                _icon = value;
+                NotifyPropertyChanged();
+            }  
+        }
         public bool IsVisibleInGameLaunchMenu { get; set; }
 
 
