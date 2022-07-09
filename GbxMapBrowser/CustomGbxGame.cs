@@ -58,5 +58,24 @@ namespace GbxMapBrowser
                 MapsFolder = path;
             }        
         }
+        public void SetCustomExe()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog()
+            {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Filter = ".exe|*.exe",
+                Title = "Select the .exe file for " + Name
+            };
+
+            if (!string.IsNullOrWhiteSpace(InstalationFolder))
+                dialog.InitialDirectory = Path.GetFileName(InstalationFolder);
+
+            bool? dialogResult = dialog.ShowDialog();
+            if(!dialogResult.HasValue)
+                return;
+            if(dialogResult.Value == true)
+                ExeLocation = dialog.FileName;
+        }
     }
 }
