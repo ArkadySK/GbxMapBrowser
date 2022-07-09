@@ -18,13 +18,19 @@ namespace GbxMapBrowser
     public partial class EditGameWindow : Window
     {
         internal CustomGbxGame Game { get; private set; }
+        /// <summary>
+        /// Add new CustomGbxGame
+        /// </summary>
         internal EditGameWindow()
         {
             InitializeComponent();
             Game = new CustomGbxGame();
             this.DataContext = Game;
         }
-
+        /// <summary>
+        /// Edit existing CustomGbxGame
+        /// </summary>
+        /// <param name="game">A game to edit</param>
         internal EditGameWindow(CustomGbxGame game)
         {
             InitializeComponent();
