@@ -69,15 +69,38 @@ namespace GbxMapBrowser
             e.Cancel = CanCloseWindow();
         }
 
-        private void ButtonChangeInstallLocation_Click(object sender, RoutedEventArgs e)
+        private void EditSelectedGame()
         {
             var selGame = (GbxGame)listView.SelectedItem;
-            if(selGame==null)
+
+            if (selGame == null)
             {
-                MessageBox.Show("Can't change game folder - please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            selGame.GetInstallationAndMapFolderDialog();
+
+            if (selGame is CustomGbxGame customGame)
+            {
+                EditGameWindow editGameWindow = new EditGameWindow(customGame);
+                editGameWindow.Owner = this;
+                bool? result = editGameWindow.ShowDialog();
+                if (!result.HasValue)
+                    return;
+                if (result.Value == false)
+                    return;
+                // If the game is changed, replace the game in the game list
+                int replacementIndex = GbxGameController.GbxGames.IndexOf(selGame);
+                GbxGameController.GbxGames[replacementIndex] = editGameWindow.Game;
+            }
+            else if(selGame is GbxGame)
+            {
+                selGame.GetInstallationAndMapFolderDialog();
+            }
+        }
+
+        private void ButtonChangeInstallLocation_Click(object sender, RoutedEventArgs e)
+        {
+            EditSelectedGame();
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
 
@@ -113,9 +136,7 @@ namespace GbxMapBrowser
 
         private void listView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var selGame = (GbxGame)listView.SelectedItem;
-            if (selGame == null) return;
-            selGame.GetInstallationAndMapFolderDialog();
+            EditSelectedGame();
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
         }
