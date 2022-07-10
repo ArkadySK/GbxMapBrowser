@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GbxMapBrowser"
         mc:Ignorable="d"
         d:Background="Black"
-        Title="Configure Gbx Games" Height="550" Width="770" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
+        Title="Configure Gbx Games" Height="550" Width="700" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width=".5*" />
@@ -43,10 +43,8 @@
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Column="1">
-                            <Label Style="{StaticResource DefaultUIStyle}" FontSize="20" FontWeight="Bold" Content="{Binding Name}" 
+                        <Label Grid.Column="1" Style="{StaticResource DefaultUIStyle}" FontSize="20" FontWeight="Bold" Content="{Binding Name}" 
                                    ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"/>
-                        </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                             <Label Margin="2" Style="{StaticResource DefaultUIStyle}">Maps:</Label>
                             <Label Style="{StaticResource DefaultUIStyle}" FontSize="12" FontWeight="Light" Content="{Binding MapsFolder}" 
