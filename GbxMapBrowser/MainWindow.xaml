@@ -110,7 +110,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Visibility="{Binding IsVisibleInGameList, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="5" 
                                 ContextMenu="{StaticResource GameLibraryContextMenu}" ContextMenuOpening="gameLibraryItem_ContextMenuOpening">
-                        <Image Width="40" Source="{Binding Icon}"></Image>
+                        <Image Width="40" Height="40" Source="{Binding Icon}"></Image>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="5 0 0 0" Content="{Binding Name}" />
                             <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="0" Content=" Maps" />
