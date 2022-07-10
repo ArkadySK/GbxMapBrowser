@@ -481,25 +481,47 @@ namespace GbxMapBrowser
             
             if (e.Key == Key.Delete)
             {
+                if(selectedItems.Count == 0) 
+                    return;
                 await DeleteSelectedItems();
                 await UpdateMapList(curFolder);
             }
             if (Keyboard.Modifiers == ModifierKeys.Shift && Keyboard.IsKeyDown(Key.F10))   //SHIFT + F10        
                 ShowContextMenu(); //context menu
-            if (e.SystemKey == Key.F2)
+            if (e.Key == Key.F2)
             {
-                if(selectedItems.Count > 0)
+                if (selectedItems.Count == 0) 
+                    return;
+                if (selectedItems.Count > 1)
                 {
                     MessageBox.Show("Cannot rename multiple maps", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                MapOperations.RenameMap(selectedItems[0] as MapInfo);
+                if(Keyboard.Modifiers == ModifierKeys.Shift)
+                {
+                    if (selectedItems[0] is MapInfo mapInfo)
+                    {
+                        MapOperations.RenameMap(mapInfo);
+                        await UpdateMapList(curFolder);
+                    }
+                    return;
+                }
+                if (selectedItems[0] is MapInfo)
+                    FileOperations.RenameFile(selectedItems[0].FullPath);
+                else if (selectedItems[0] is FolderInfo)
+                    FileOperations.RenameFolder(selectedItems[0].FullPath);
                 await UpdateMapList(curFolder);
+
 
             }
             if (Keyboard.IsKeyDown(Key.Enter) && Keyboard.Modifiers == ModifierKeys.Alt) //ALT + ENTER
                 if(selectedItems.Count == 1)
                 FileOperations.ShowFileProperties(selectedItems[0].FullPath);
+            if (e.Key == Key.F5)
+            {
+                refreshMapsButton_Click(null, null);
+            }
+
         }
 
         #endregion
