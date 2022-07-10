@@ -87,7 +87,7 @@ namespace GbxMapBrowser
                     }
 
                     FileInfo fileInfo = new FileInfo(path);
-                    fileInfo.CopyTo(folderToCopyFiles + "\\" + newName, true);
+                    fileInfo.CopyTo(folderToCopyFiles + "\\" + newName);
                                   
                 }
                 catch (Exception e)
@@ -143,9 +143,15 @@ namespace GbxMapBrowser
             string curFolder = GetFolderFromFilePath(oldpath);
 
             RenameWindow renameDialog = new RenameWindow(shortFileName, true);           
-            renameDialog.ShowDialog();
-
-            if (string.IsNullOrEmpty(renameDialog.newName)) return;
+            var result = renameDialog.ShowDialog();
+            if (!result.HasValue) 
+                return;
+            if (result.Value == false)
+                return;
+            if (string.IsNullOrEmpty(renameDialog.newName)) 
+                return;
+            if (renameDialog.newName == oldpath)
+                return;
             var mapInfoPaths = new string[] { oldpath }; 
             var newMapInfoPaths = new string[] { renameDialog.newName };
             try
