@@ -74,10 +74,8 @@ namespace GbxMapBrowser
             e.Cancel = CanCloseWindow();
         }
 
-        private void EditSelectedGame()
+        private void EditGame(GbxGame selGame)
         {
-            var selGame = (GbxGame)listView.SelectedItem;
-
             if (selGame == null)
             {
                 MessageBox.Show("Please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -105,20 +103,16 @@ namespace GbxMapBrowser
             }
         }
 
-        private void ButtonChangeInstallLocation_Click(object sender, RoutedEventArgs e)
+        private void buttonRemoveGame_Click(object sender, RoutedEventArgs e)
         {
-            EditSelectedGame();
-            listView.ItemsSource = null;
-            listView.ItemsSource = GbxGameController.GbxGames;
+            Button curButton = (Button)sender;
+            Grid parentGrid = (Grid)curButton.Parent;
+            string selectedName = (parentGrid.Children[0] as Label).Content.ToString();
 
-        }
-
-        private void ButtonRemoveGame_Click(object sender, RoutedEventArgs e)
-        {
-            var selGame = (GbxGame)listView.SelectedItem;
+            var selGame = GbxGameController.FindSelectedGameByName(selectedName);
             if (selGame == null)
             {
-                MessageBox.Show("Can't change game folder - please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Impossible to remove - please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -130,6 +124,7 @@ namespace GbxMapBrowser
             }
             selGame.ExeLocation = null;
             selGame.IsVisibleInGameLaunchMenu = false;
+
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
 
@@ -142,7 +137,10 @@ namespace GbxMapBrowser
 
         private void listView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            EditSelectedGame();
+            var selGame = listView.SelectedItem as GbxGame;
+
+            EditGame(selGame);
+
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameController.GbxGames;
         }
@@ -155,6 +153,19 @@ namespace GbxMapBrowser
             if (!result.HasValue) return;
             if (result.Value == true)
                 GbxGameController.GbxGames.Add(addWindow.Game);
+        }
+
+        private void buttonConfigureGame_Click(object sender, RoutedEventArgs e)
+        {
+            Button curButton = (Button)sender;
+            Grid parentGrid = (Grid)curButton.Parent;
+            string selectedName = (parentGrid.Children[0] as Label).Content.ToString();
+            var selGame = GbxGameController.FindSelectedGameByName(selectedName);
+
+            EditGame(selGame);
+
+            listView.ItemsSource = null;
+            listView.ItemsSource = GbxGameController.GbxGames;
         }
     }
 }
