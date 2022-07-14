@@ -23,7 +23,7 @@ namespace GbxMapBrowser
             InitializeComponent();
             if (Properties.Settings.Default.IsFirstRun)
             {
-                Title = "Configure your games";
+                Title = "Settings - configure your games first!";
                 welcomeStackPanel.Visibility = Visibility.Visible;
             }
             GbxGameViewModel = gbxGameViewModel;
