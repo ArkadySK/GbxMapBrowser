@@ -16,9 +16,9 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        GbxGameViewModel GbxGameController;
+        GbxGameViewModel GbxGameViewModel;
 
-        public SettingsWindow(GbxGameViewModel gbxGameController)
+        public SettingsWindow(GbxGameViewModel gbxGameViewModel)
         {
             InitializeComponent();
             if (Properties.Settings.Default.IsFirstRun)
@@ -26,8 +26,8 @@ namespace GbxMapBrowser
                 Title = "Configure your games";
                 welcomeStackPanel.Visibility = Visibility.Visible;
             }
-            GbxGameController = gbxGameController;
-            DataContext = GbxGameController;
+            GbxGameViewModel = gbxGameViewModel;
+            DataContext = GbxGameViewModel;
             //SettingsManager.LoadAllSettingsFromFile(gbxGameController);
         }
 
@@ -49,7 +49,7 @@ namespace GbxMapBrowser
         void SaveSettings()
         {
             Properties.Settings.Default.IsFirstRun = true;
-            foreach (GbxGame game in GbxGameController.GbxGames)
+            foreach (GbxGame game in GbxGameViewModel.GbxGames)
             {
                 if (!Directory.Exists(game.InstalationFolder) || !File.Exists(game.ExeLocation))
                 {
@@ -58,14 +58,14 @@ namespace GbxMapBrowser
                 }
             }
 
-            foreach (var gbxGame in GbxGameController.GbxGames)
+            foreach (var gbxGame in GbxGameViewModel.GbxGames)
             {
                 if (gbxGame.IsVisibleInGameLaunchMenu || gbxGame.IsVisibleInGameList) Properties.Settings.Default.IsFirstRun = false;
             }
 
             
             Properties.Settings.Default.Save();
-            SettingsManager.SaveAllSettings(GbxGameController);
+            SettingsManager.SaveAllSettings(GbxGameViewModel);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -94,8 +94,8 @@ namespace GbxMapBrowser
                 if (result.Value == false)
                     return;
                 // If the game is changed, replace the game in the game list
-                int replacementIndex = GbxGameController.GbxGames.IndexOf(selGame);
-                GbxGameController.GbxGames[replacementIndex] = customGame;
+                int replacementIndex = GbxGameViewModel.GbxGames.IndexOf(selGame);
+                GbxGameViewModel.GbxGames[replacementIndex] = customGame;
             }
             else if(selGame is GbxGame)
             {
@@ -109,7 +109,7 @@ namespace GbxMapBrowser
             Grid parentGrid = (Grid)curButton.Parent;
             string selectedName = (parentGrid.Children[0] as Label).Content.ToString();
 
-            var selGame = GbxGameController.FindSelectedGameByName(selectedName);
+            var selGame = GbxGameViewModel.FindSelectedGameByName(selectedName);
             if (selGame == null)
             {
                 MessageBox.Show("Impossible to remove - please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -118,7 +118,7 @@ namespace GbxMapBrowser
 
             if (selGame is CustomGbxGame)
             {
-                GbxGameController.GbxGames.Remove(selGame);
+                GbxGameViewModel.GbxGames.Remove(selGame);
                 selGame = null;
                 return;
             }
@@ -126,7 +126,7 @@ namespace GbxMapBrowser
             selGame.IsVisibleInGameLaunchMenu = false;
 
             listView.ItemsSource = null;
-            listView.ItemsSource = GbxGameController.GbxGames;
+            listView.ItemsSource = GbxGameViewModel.GbxGames;
 
         }
 
@@ -142,7 +142,7 @@ namespace GbxMapBrowser
             EditGame(selGame);
 
             listView.ItemsSource = null;
-            listView.ItemsSource = GbxGameController.GbxGames;
+            listView.ItemsSource = GbxGameViewModel.GbxGames;
         }
 
         private void addCustomGameButton_Click(object sender, RoutedEventArgs e)
@@ -152,7 +152,7 @@ namespace GbxMapBrowser
             bool? result = addWindow.ShowDialog();
             if (!result.HasValue) return;
             if (result.Value == true)
-                GbxGameController.GbxGames.Add(addWindow.Game);
+                GbxGameViewModel.GbxGames.Add(addWindow.Game);
         }
 
         private void buttonConfigureGame_Click(object sender, RoutedEventArgs e)
@@ -160,12 +160,12 @@ namespace GbxMapBrowser
             Button curButton = (Button)sender;
             Grid parentGrid = (Grid)curButton.Parent;
             string selectedName = (parentGrid.Children[0] as Label).Content.ToString();
-            var selGame = GbxGameController.FindSelectedGameByName(selectedName);
+            var selGame = GbxGameViewModel.FindSelectedGameByName(selectedName);
 
             EditGame(selGame);
 
             listView.ItemsSource = null;
-            listView.ItemsSource = GbxGameController.GbxGames;
+            listView.ItemsSource = GbxGameViewModel.GbxGames;
         }
     }
 }

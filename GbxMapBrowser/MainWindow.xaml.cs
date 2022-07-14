@@ -25,8 +25,8 @@ namespace GbxMapBrowser
     public partial class MainWindow : Window
     {
         string curFolder = "";
-        MapInfoViewModel MapInfoController = new MapInfoViewModel();
-        GbxGameViewModel GbxGameController = new GbxGameViewModel();
+        MapInfoViewModel MapInfoViewModel = new MapInfoViewModel();
+        GbxGameViewModel GbxGameViewModel = new GbxGameViewModel();
         SearchOption searchOption;
         List<FolderAndFileInfo> selectedItems = new List<FolderAndFileInfo> ();
 
@@ -38,7 +38,7 @@ namespace GbxMapBrowser
             InitializeComponent();
             LoadGbxGameList();
             UpdateMapPreviewVisibility(Properties.Settings.Default.ShowMapPreviewColumn);
-            loadingLabel.DataContext = MapInfoController;
+            loadingLabel.DataContext = MapInfoViewModel;
             LoadSorting();
             //Properties.Settings.Default.IsFirstRun = true;
             if (Properties.Settings.Default.IsFirstRun)
@@ -66,7 +66,7 @@ namespace GbxMapBrowser
                 MessageBoxResult result = MessageBox.Show("New update is available. \n\nDownload now?", "Update Available", MessageBoxButton.YesNo, MessageBoxImage.Information);
                 if(result == MessageBoxResult.Yes)
                 {
-                    SettingsManager.SaveAllSettings(GbxGameController);
+                    SettingsManager.SaveAllSettings(GbxGameViewModel);
                     updater.DownloadUpdate();
                 }
             }
@@ -89,14 +89,14 @@ namespace GbxMapBrowser
         #region GbxGameListInit
         void LoadGbxGameList()
         {
-            gamesListMenu.DataContext = GbxGameController;
-            openInComboBox.DataContext = GbxGameController;
-            GbxGameController.LoadGames();
+            gamesListMenu.DataContext = GbxGameViewModel;
+            openInComboBox.DataContext = GbxGameViewModel;
+            GbxGameViewModel.LoadGames();
         }
 
         void ShowGbxGamesWindow()
         {
-            SettingsWindow settingsWindow = new SettingsWindow(GbxGameController);
+            SettingsWindow settingsWindow = new SettingsWindow(GbxGameViewModel);
             if(this.IsVisible && this is not null)
                 settingsWindow.Owner = this;
             settingsWindow.ShowDialog();
@@ -117,11 +117,11 @@ namespace GbxMapBrowser
             if (!selGame.IsVisibleInGameList) return;
 
             // Assign selection of the game
-            GbxGameController.SelectedGbxGame = selGame;
+            GbxGameViewModel.SelectedGbxGame = selGame;
             openInComboBox.SelectedItem = selGame;
 
             // Assign sorting
-            MapInfoController.SortKind = selGame.DefaultSortKind;
+            MapInfoViewModel.SortKind = selGame.DefaultSortKind;
 
             // Load the folder, add it to history
             curFolder = selGame.MapsFolder;
@@ -163,10 +163,10 @@ namespace GbxMapBrowser
 
         async Task UpdateMapList(string mapsFolder)
         {
-            MapInfoController.IsLoading = true;
+            MapInfoViewModel.IsLoading = true;
 
             UpdateMapPreview(null);
-            MapInfoController.ClearMapList();
+            MapInfoViewModel.ClearMapList();
 
             //update enabled/disabled navigation buttons
             undoButton.IsEnabled = HistoryManager.CanUndo; 
@@ -186,24 +186,24 @@ namespace GbxMapBrowser
 
             foreach (var folderPath in folders)
             {
-                await MapInfoController.AddFolder(folderPath);
+                await MapInfoViewModel.AddFolder(folderPath);
                 //mapTasks[i] = folderTask;
                 i++;
             }
             foreach (string mapPath in mapFiles)
             {
-                await MapInfoController.AddMap(mapPath);
+                await MapInfoViewModel.AddMap(mapPath);
                 //mapTasks[i] = mapTask;
                 i++;
             }
 
-            await MapInfoController.SortMapList();
+            await MapInfoViewModel.SortMapList();
 
-            mapListBox.ItemsSource = MapInfoController.MapList;
-            sortMapsComboBox.Text = Sorting.Kinds[(int)MapInfoController.SortKind];
+            mapListBox.ItemsSource = MapInfoViewModel.MapList;
+            sortMapsComboBox.Text = Sorting.Kinds[(int)MapInfoViewModel.SortKind];
 
             mapListBox.Items.Refresh();
-            MapInfoController.IsLoading = false;
+            MapInfoViewModel.IsLoading = false;
 
 
         }
@@ -253,7 +253,7 @@ namespace GbxMapBrowser
         #region LaunchingItemAndMapListSelection
         private async Task MapListBoxLaunchItemAsync(FolderAndFileInfo item)
         {
-            if (MapInfoController.IsLoading) return;
+            if (MapInfoViewModel.IsLoading) return;
             if (item is FolderInfo selFolder)
             {
                 curFolder = selFolder.FullPath;
@@ -366,8 +366,8 @@ namespace GbxMapBrowser
             if (e.ClickCount > 2) return;
             if (selectedItems.Count == 0) return;
 
-            if (MapInfoController.IsLoading) return;
-            if (MapInfoController.AtleastOneExists(selectedItems.ToArray()))
+            if (MapInfoViewModel.IsLoading) return;
+            if (MapInfoViewModel.AtleastOneExists(selectedItems.ToArray()))
                 DragOutMaps(selectedItems.ToArray());
         }
 
@@ -376,7 +376,7 @@ namespace GbxMapBrowser
         #region DragInMaps
         private async void mapListBox_Drop(object sender, DragEventArgs e)
         {
-            if (MapInfoController.IsLoading) return;
+            if (MapInfoViewModel.IsLoading) return;
             string[] paths = (string[])(e.Data).GetData(DataFormats.FileDrop, false);
             if (paths.Length == 0) return;
             try
@@ -689,7 +689,7 @@ namespace GbxMapBrowser
                 if (selMenuItem.Header.ToString() == "Hide from the game library")
                 {
                     game.IsVisibleInGameList = false;
-                    await Task.Run(() => SettingsManager.SaveAllSettings(GbxGameController));
+                    await Task.Run(() => SettingsManager.SaveAllSettings(GbxGameViewModel));
                 }
                 else
                 {
@@ -714,7 +714,7 @@ namespace GbxMapBrowser
                 return;
             }
 
-            await MapInfoController.FindMaps(text);
+            await MapInfoViewModel.FindMaps(text);
             mapListBox.Items.Refresh();
         }
 
@@ -728,7 +728,7 @@ namespace GbxMapBrowser
         {
             searchMapsTextBox.Opacity = .5;
             searchMapsTextBox.Text = "search for a map...";
-            MapInfoController.ClearMapList();
+            MapInfoViewModel.ClearMapList();
             await UpdateMapList(curFolder);
         }
         #endregion
@@ -736,14 +736,14 @@ namespace GbxMapBrowser
         #region Sorting
         private async void sortMapsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MapInfoController.SortKind = (Sorting.Kind)sortMapsComboBox.SelectedIndex;
-            GbxGameController.SelectedGbxGame.DefaultSortKind = MapInfoController.SortKind;
-            SettingsManager.SaveAllSettings(GbxGameController);
+            MapInfoViewModel.SortKind = (Sorting.Kind)sortMapsComboBox.SelectedIndex;
+            GbxGameViewModel.SelectedGbxGame.DefaultSortKind = MapInfoViewModel.SortKind;
+            SettingsManager.SaveAllSettings(GbxGameViewModel);
             await UpdateMapList(curFolder);
         }
         private void LoadSorting()
         {
-            sortMapsComboBox.DataContext = MapInfoController;
+            sortMapsComboBox.DataContext = MapInfoViewModel;
             sortMapsComboBox.ItemsSource = Sorting.Kinds;
         }
         #endregion
