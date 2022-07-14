@@ -14,11 +14,11 @@ namespace GbxMapBrowser
     /// <summary>
     /// Interaction logic for GbxGamesWindow.xaml
     /// </summary>
-    public partial class GbxGamesWindow : Window
+    public partial class SettingsWindow : Window
     {
         GbxGameViewModel GbxGameController;
 
-        public GbxGamesWindow(GbxGameViewModel gbxGameController)
+        public SettingsWindow(GbxGameViewModel gbxGameController)
         {
             InitializeComponent();
             if (Properties.Settings.Default.IsFirstRun)

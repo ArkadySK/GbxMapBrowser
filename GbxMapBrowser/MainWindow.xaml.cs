@@ -96,10 +96,10 @@ namespace GbxMapBrowser
 
         void ShowGbxGamesWindow()
         {
-            GbxGamesWindow gbxGamesWindow = new GbxGamesWindow(GbxGameController);
+            SettingsWindow settingsWindow = new SettingsWindow(GbxGameController);
             if(this.IsVisible && this is not null)
-                gbxGamesWindow.Owner = this;
-            gbxGamesWindow.ShowDialog();
+                settingsWindow.Owner = this;
+            settingsWindow.ShowDialog();
         }
         #endregion
 
