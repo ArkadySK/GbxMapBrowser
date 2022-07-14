@@ -48,6 +48,7 @@
                         <RowDefinition />
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
+                    <Label x:Name="loadingLabel" Content="Loading..." Panel.ZIndex="10" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" FontStyle="Italic" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" ScrollViewer.CanContentScroll="False" Padding="5"
                              PreviewMouseDoubleClick="mapListBox_MouseDoubleClickAsync" AllowDrop="True" Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" 
                              PreviewMouseLeftButtonDown="mapListBox_PreviewMouseleftButonDown" KeyDown="mapListBox_KeyDown" SelectionMode="Extended" ContextMenuOpening="mapListBox_ContextMenuOpening">
