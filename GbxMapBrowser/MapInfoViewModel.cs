@@ -1,12 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
-    class MapInfoViewModel
+    class MapInfoViewModel:  INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        void NotifyPropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        private bool _isLoading;
+        public bool IsLoading { 
+            get 
+            {
+                return _isLoading; 
+            }
+            set
+            {
+                _isLoading = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+
         public IReadOnlyList<object> MapList {
             get
             {

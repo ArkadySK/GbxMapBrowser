@@ -38,6 +38,7 @@ namespace GbxMapBrowser
             InitializeComponent();
             LoadGbxGameList();
             UpdateMapPreviewVisibility(Properties.Settings.Default.ShowMapPreviewColumn);
+            loadingLabel.DataContext = MapInfoController;
             LoadSorting();
             //Properties.Settings.Default.IsFirstRun = true;
             if (Properties.Settings.Default.IsFirstRun)
@@ -162,6 +163,8 @@ namespace GbxMapBrowser
 
         async Task UpdateMapList(string mapsFolder)
         {
+            MapInfoController.IsLoading = true;
+
             UpdateMapPreview(null);
             MapInfoController.ClearMapList();
 
@@ -172,7 +175,7 @@ namespace GbxMapBrowser
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                //mapListBox.ItemsSource = null;
+                mapListBox.ItemsSource = null;
                 currentFolderTextBox.Text = mapsFolder;
             }
             );
@@ -200,6 +203,8 @@ namespace GbxMapBrowser
             sortMapsComboBox.Text = Sorting.Kinds[(int)MapInfoController.SortKind];
 
             mapListBox.Items.Refresh();
+            MapInfoController.IsLoading = false;
+
 
         }
         #endregion
@@ -248,6 +253,7 @@ namespace GbxMapBrowser
         #region LaunchingItemAndMapListSelection
         private async Task MapListBoxLaunchItemAsync(FolderAndFileInfo item)
         {
+            if (MapInfoController.IsLoading) return;
             if (item is FolderInfo selFolder)
             {
                 curFolder = selFolder.FullPath;
@@ -359,17 +365,8 @@ namespace GbxMapBrowser
         {
             if (e.ClickCount > 2) return;
             if (selectedItems.Count == 0) return;
-            //if (e.MouseDevice.DirectlyOver is not TextBlock) return;
-            
-            /*
-            string lastSelMapName = (e.MouseDevice.DirectlyOver as TextBlock).Text;
-            List<string> mapNames = new List<string>();
-            foreach (FolderAndFileInfo m in mapListBox.SelectedItems)
-            {
-                mapNames.Add(m.Name);
-            }
-            if (!mapNames.Contains(lastSelMapName)) return;
-            */
+
+            if (MapInfoController.IsLoading) return;
             if (MapInfoController.AtleastOneExists(selectedItems.ToArray()))
                 DragOutMaps(selectedItems.ToArray());
         }
@@ -379,6 +376,7 @@ namespace GbxMapBrowser
         #region DragInMaps
         private async void mapListBox_Drop(object sender, DragEventArgs e)
         {
+            if (MapInfoController.IsLoading) return;
             string[] paths = (string[])(e.Data).GetData(DataFormats.FileDrop, false);
             if (paths.Length == 0) return;
             try
