@@ -77,6 +77,26 @@ namespace GbxMapBrowser
         #endregion
 
         #region GameProperties
+        private void AddGame()
+        {
+            var addWindow = new EditGameWindow();
+            addWindow.Owner = this;
+            bool? result = addWindow.ShowDialog();
+            if (!result.HasValue) return;
+            if (result.Value == false) return;
+
+            var game = addWindow.Game;
+
+            // Test if the name is not same as some other game by searching its name in the game list
+            if (GbxGameViewModel.FindGameByName(game.Name) is not null)
+            {
+                MessageBox.Show("The game with name '" + game.Name + "' already exists!\nPlease use different name.", "Cannot add game", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            GbxGameViewModel.GbxGames.Add(game);
+        }
+
         private void EditGame(GbxGame game)
         {
             if (game == null)
@@ -135,7 +155,7 @@ namespace GbxMapBrowser
             Grid parentGrid = (Grid)curButton.Parent;
             string selectedName = (parentGrid.Children[0] as Label).Content.ToString();
 
-            var selGame = GbxGameViewModel.FindSelectedGameByName(selectedName);
+            var selGame = GbxGameViewModel.FindGameByName(selectedName);
             RemoveGame(selGame);
         }
 
@@ -156,12 +176,7 @@ namespace GbxMapBrowser
 
         private void addCustomGameButton_Click(object sender, RoutedEventArgs e)
         {
-            var addWindow = new EditGameWindow();
-            addWindow.Owner = this;
-            bool? result = addWindow.ShowDialog();
-            if (!result.HasValue) return;
-            if (result.Value == true)
-                GbxGameViewModel.GbxGames.Add(addWindow.Game);
+            AddGame();
         }
 
         private void buttonConfigureGame_Click(object sender, RoutedEventArgs e)
@@ -171,7 +186,7 @@ namespace GbxMapBrowser
             Label nameLabel = parentGrid.Children[0] as Label;
             if (nameLabel.Content is null) return;
             string selectedName = nameLabel.Content.ToString();
-            var selGame = GbxGameViewModel.FindSelectedGameByName(selectedName);
+            var selGame = GbxGameViewModel.FindGameByName(selectedName);
 
             EditGame(selGame);
 

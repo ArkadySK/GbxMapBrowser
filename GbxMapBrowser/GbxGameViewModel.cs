@@ -36,7 +36,7 @@ namespace GbxMapBrowser
 
             SettingsManager.LoadAllSettingsFromFile(this);
         }
-        public GbxGame FindSelectedGameByName(string name)
+        public GbxGame FindGameByName(string name)
         {
             if(string.IsNullOrWhiteSpace(name))
             return null;
