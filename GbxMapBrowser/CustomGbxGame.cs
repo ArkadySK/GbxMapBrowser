@@ -78,7 +78,7 @@ namespace GbxMapBrowser
                 CheckFileExists = true,
                 CheckPathExists = true,
                 Title = "Select the icon of " + Name,
-                Filter = "Supported Image Files (*.png, *.jpg, *.bmp, *.ico)|*.png;*.jpg;*.bmp;*.ico|All files (*.*)|*.*"
+                Filter = "Supported Image Files (*.png, *.jpg, *.bmp, *.ico, *.dds)|*.png;*.jpg;*.bmp;*.ico;*.dds|All files (*.*)|*.*"
         };
             bool? dialogResult = dialog.ShowDialog();
             if (!dialogResult.HasValue)
