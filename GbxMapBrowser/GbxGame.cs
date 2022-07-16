@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 
 namespace GbxMapBrowser
 {
+    /// <summary>
+    /// Represents a Nadeo GameBox game. The game MUST have an executable and a maps folder. User can set only the executable and visibility, the rest is done automatically.
+    /// </summary>
     public class GbxGame : INotifyPropertyChanged
     {
         private string _exeLocation;

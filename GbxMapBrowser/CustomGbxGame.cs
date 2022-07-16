@@ -6,6 +6,9 @@ using System.Windows.Media.Imaging;
 
 namespace GbxMapBrowser
 {
+    /// <summary>
+    /// Custom Nadeo Gbx game. The game must have either path, executable or both of them. User can set custom icon and other properties.
+    /// </summary>
     internal class CustomGbxGame: GbxGame
     {
         private bool _isUnlimiter;
