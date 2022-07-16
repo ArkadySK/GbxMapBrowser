@@ -12,7 +12,7 @@ using System.Reflection;
 namespace GbxMapBrowser
 {
     /// <summary>
-    /// Interaction logic for GbxGamesWindow.xaml
+    /// Interaction logic for SettingsWindow.xaml
     /// </summary>
     public partial class SettingsWindow : Window
     {
@@ -50,17 +50,30 @@ namespace GbxMapBrowser
         void SaveSettings()
         {
             Properties.Settings.Default.IsFirstRun = true;
+            // Check if the locations exist to avoid errors
             foreach (GbxGame game in GbxGameViewModel.GbxGames)
             {
-                if (!Directory.Exists(game.InstalationFolder) || !File.Exists(game.ExeLocation))
+                if (game is CustomGbxGame)
                 {
-                    game.IsVisibleInGameLaunchMenu = false;
-                    game.IsVisibleInGameList = false;
+                    if (!Directory.Exists(game.MapsFolder))
+                        game.IsVisibleInGameList = false;
+                    if(!File.Exists(game.ExeLocation))
+                        game.IsVisibleInGameLaunchMenu = false;
+                }
+                else
+                {
+                    if (!Directory.Exists(game.MapsFolder) || !File.Exists(game.ExeLocation))
+                    {
+                        game.IsVisibleInGameLaunchMenu = false;
+                        game.IsVisibleInGameList = false;
+                    }
                 }
             }
 
+            // Check if there is atleast one game configured, but dont count custom games
             foreach (var gbxGame in GbxGameViewModel.GbxGames)
             {
+                if (gbxGame is CustomGbxGame) continue;
                 if (gbxGame.IsVisibleInGameLaunchMenu || gbxGame.IsVisibleInGameList) Properties.Settings.Default.IsFirstRun = false;
             }
 
