@@ -118,7 +118,10 @@ namespace GbxMapBrowser
 
             // Assign selection of the game
             GbxGameViewModel.SelectedGbxGame = selGame;
-            openInComboBox.SelectedItem = selGame;
+            if(selGame.IsVisibleInGameLaunchMenu)
+                openInComboBox.SelectedItem = selGame;
+            else
+                openInComboBox.SelectedItem = null;
 
             // Assign sorting
             MapInfoViewModel.SortKind = selGame.DefaultSortKind;
