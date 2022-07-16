@@ -31,6 +31,7 @@ namespace GbxMapBrowser
             //SettingsManager.LoadAllSettingsFromFile(gbxGameController);
         }
 
+        #region SaveAndClose
         bool CanCloseWindow()
         {
             if (Properties.Settings.Default.IsFirstRun)
@@ -73,18 +74,20 @@ namespace GbxMapBrowser
             SaveSettings();
             e.Cancel = CanCloseWindow();
         }
+        #endregion
 
-        private void EditGame(GbxGame selGame)
+        #region GameProperties
+        private void EditGame(GbxGame game)
         {
-            if (selGame == null)
+            if (game == null)
             {
                 MessageBox.Show("Please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            if (selGame is CustomGbxGame)
+            if (game is CustomGbxGame)
             {
-                var customGame = selGame.Clone() as CustomGbxGame;
+                var customGame = game.Clone() as CustomGbxGame;
 
                 EditGameWindow editGameWindow = new EditGameWindow(customGame);
                 editGameWindow.Owner = this;
@@ -94,15 +97,38 @@ namespace GbxMapBrowser
                 if (result.Value == false)
                     return;
                 // If the game is changed, replace the game in the game list
-                int replacementIndex = GbxGameViewModel.GbxGames.IndexOf(selGame);
+                int replacementIndex = GbxGameViewModel.GbxGames.IndexOf(game);
                 GbxGameViewModel.GbxGames[replacementIndex] = customGame;
             }
-            else if(selGame is GbxGame)
+            else if(game is GbxGame)
             {
-                selGame.GetInstallationAndMapFolderDialog();
+                game.GetInstallationAndMapFolderDialog();
             }
         }
 
+        private void RemoveGame(GbxGame game)
+        {
+            if (game == null)
+            {
+                MessageBox.Show("Please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (game is CustomGbxGame)
+            {
+                GbxGameViewModel.GbxGames.Remove(game);
+                game = null;
+                return;
+            }
+            game.ExeLocation = null;
+            game.IsVisibleInGameLaunchMenu = false;
+
+            listView.ItemsSource = null;
+            listView.ItemsSource = GbxGameViewModel.GbxGames;
+        }
+
+        #endregion
+
+        #region ButtonEvents
         private void buttonRemoveGame_Click(object sender, RoutedEventArgs e)
         {
             Button curButton = (Button)sender;
@@ -110,24 +136,7 @@ namespace GbxMapBrowser
             string selectedName = (parentGrid.Children[0] as Label).Content.ToString();
 
             var selGame = GbxGameViewModel.FindSelectedGameByName(selectedName);
-            if (selGame == null)
-            {
-                MessageBox.Show("Impossible to remove - please select a game from list.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            if (selGame is CustomGbxGame)
-            {
-                GbxGameViewModel.GbxGames.Remove(selGame);
-                selGame = null;
-                return;
-            }
-            selGame.ExeLocation = null;
-            selGame.IsVisibleInGameLaunchMenu = false;
-
-            listView.ItemsSource = null;
-            listView.ItemsSource = GbxGameViewModel.GbxGames;
-
+            RemoveGame(selGame);
         }
 
         private void ButtonSaveAllChanges_Click(object sender, RoutedEventArgs e)
@@ -168,6 +177,23 @@ namespace GbxMapBrowser
 
             listView.ItemsSource = null;
             listView.ItemsSource = GbxGameViewModel.GbxGames;
+        }
+        #endregion
+
+        private void listView_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(listView.SelectedItem is null) return;
+
+            var selGame = (GbxGame)listView.SelectedItem;
+
+            if (e.Key == System.Windows.Input.Key.Delete)
+            {
+                RemoveGame(selGame);
+            }
+            else if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                EditGame(selGame);
+            }
         }
     }
 }
