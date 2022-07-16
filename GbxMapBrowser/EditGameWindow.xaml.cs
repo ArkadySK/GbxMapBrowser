@@ -42,6 +42,22 @@ namespace GbxMapBrowser
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(Game.Name))
+            {
+                MessageBox.Show("Please give your game a name", "Cannot save game", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(Game.MapsFolder) && string.IsNullOrWhiteSpace(Game.ExeLocation))
+            {
+                MessageBox.Show("Please choose an executable file or a maps folder for your game", "Cannot save game", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Game.MapsFolder))
+                Game.IsVisibleInGameLaunchMenu = false;
+            if (string.IsNullOrWhiteSpace(Game.ExeLocation))
+                Game.IsVisibleInGameLaunchMenu = false;
+
             this.DialogResult = true;
             this.Close();
         }
