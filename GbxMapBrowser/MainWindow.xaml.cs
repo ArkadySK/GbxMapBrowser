@@ -364,10 +364,37 @@ namespace GbxMapBrowser
             DragDrop.DoDragDrop((DependencyObject)mapListBox, mapFile, DragDropEffects.Copy);
         }
 
+        private bool IsSelectedItemByName(string name)
+        {
+            foreach (var mapInfo in selectedItems)
+            {
+                if (mapInfo.Name == name) return true;
+            }
+            return false;
+        }
+
         private void mapListBox_PreviewMouseleftButonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount > 2) return;
+            if (e.ClickCount >= 2) return;
             if (selectedItems.Count == 0) return;
+            // To avoid unintentional drag
+            bool canCopy = false;
+
+            // Check if it is not dragging out non-selected item
+            if (e.OriginalSource is Border border)
+            {
+                if(border.Child is ContentPresenter contentPresenter)
+                {
+                    var mapName = contentPresenter.Content.ToString();
+                    canCopy = IsSelectedItemByName(mapName); ;
+                }
+            }
+            else if(e.OriginalSource is TextBlock textBlock)
+            {
+                canCopy = IsSelectedItemByName(textBlock.Text);
+            }
+
+            if (!canCopy) return;
 
             if (MapInfoViewModel.IsLoading) return;
             if (MapInfoViewModel.AtleastOneExists(selectedItems.ToArray()))
