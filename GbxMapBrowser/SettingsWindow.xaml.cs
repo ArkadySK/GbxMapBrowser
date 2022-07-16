@@ -159,7 +159,9 @@ namespace GbxMapBrowser
         {
             Button curButton = (Button)sender;
             Grid parentGrid = (Grid)curButton.Parent;
-            string selectedName = (parentGrid.Children[0] as Label).Content.ToString();
+            Label nameLabel = parentGrid.Children[0] as Label;
+            if (nameLabel.Content is null) return;
+            string selectedName = nameLabel.Content.ToString();
             var selGame = GbxGameViewModel.FindSelectedGameByName(selectedName);
 
             EditGame(selGame);
