@@ -41,7 +41,7 @@ namespace GbxMapBrowser
             if(string.IsNullOrWhiteSpace(name))
             return null;
 
-            return GbxGames.First(x => x.Name == name);     
+            return GbxGames.FirstOrDefault(x => x.Name == name);     
         }
 
     }
