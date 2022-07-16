@@ -27,6 +27,9 @@ namespace GbxMapBrowser
             Game = new CustomGbxGame();
             this.DataContext = Game;
             Title = "Add new game...";
+            Game.IsVisibleInGameLaunchMenu = true;
+            Game.IsVisibleInGameList = true;
+            ResetIcon();
         }
         /// <summary>
         /// Edit existing CustomGbxGame
@@ -86,6 +89,11 @@ namespace GbxMapBrowser
         }
 
         private void resetIconButton_Click(object sender, RoutedEventArgs e)
+        {
+            ResetIcon();
+        }
+
+        private void ResetIcon()
         {
             Game.Icon = new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
         }
