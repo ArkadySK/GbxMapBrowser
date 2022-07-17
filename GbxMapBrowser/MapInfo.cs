@@ -64,7 +64,11 @@ namespace GbxMapBrowser
                 Name = ToReadableText(challenge.MapName);
                 ExactMapName = challenge.MapName;
                 Titlepack = challenge.TitleID;
-
+                if (string.IsNullOrEmpty(ExactMapName)) {
+                    Name = "ERROR - Empty map (" + shortName + ")";
+                    ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
+                    return;
+                }
                 Uri enviImagePath = EnviManager.GetEnvironmentImagePath(challenge.Collection, Titlepack);
                 if (File.Exists(enviImagePath.AbsolutePath))
                     ImageSmall = enviImagePath;
