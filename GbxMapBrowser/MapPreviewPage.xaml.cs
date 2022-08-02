@@ -67,10 +67,12 @@ namespace GbxMapBrowser
             if (folderInfo == null) return;
             mapImage.Source = new BitmapImage(folderInfo.ImageSmall);
             mapNameLabel.Content = folderInfo.Name;
-            if(folderInfo.FilesInsideCount != 1)
-                descriptionTextBlock.Text = "This folder contains " + folderInfo.FilesInsideCount + " files";
-            else
-                descriptionTextBlock.Text = "This folder contains 1 file"; 
+
+            descriptionTextBlock.Text = 
+                "Contains: " + Environment.NewLine
+                + "Files: " + folderInfo.FilesInsideCount + Environment.NewLine
+                + "Maps: " + folderInfo.MapsInsideCount;
+            
         }
 
         void FadeInAnimation()
