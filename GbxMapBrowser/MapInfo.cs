@@ -15,7 +15,6 @@ namespace GbxMapBrowser
 {
     public class MapInfo: FolderAndFileInfo
     {
-        public string ExactMapName { get; } 
         private string shortName;
         public string Author { get; }
         public string CopperPrice { get; }
@@ -50,7 +49,7 @@ namespace GbxMapBrowser
             }
             catch (Exception e)
             {
-                Name = "ERROR (" + shortName + ")";
+                DisplayName = "ERROR (" + shortName + ")";
                 ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
                 Debug.WriteLine("Error: Map '" + fullnamepath + "' - impossible to load" + Environment.NewLine + e.Message);
                 IsWorking = false;
@@ -61,11 +60,11 @@ namespace GbxMapBrowser
             {
                 CGameCtnChallenge challenge = gbxMap;
 
-                Name = ToReadableText(challenge.MapName);
-                ExactMapName = challenge.MapName;
+                DisplayName = ToReadableText(challenge.MapName);
+                OriginalName = challenge.MapName;
                 Titlepack = challenge.TitleID;
-                if (string.IsNullOrEmpty(ExactMapName)) {
-                    Name = "ERROR - Empty map (" + shortName + ")";
+                if (string.IsNullOrEmpty(OriginalName)) {
+                    DisplayName = "ERROR - Empty map (" + shortName + ")";
                     ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
                     return;
                 }
@@ -115,7 +114,7 @@ namespace GbxMapBrowser
             {
                 CGameCtnReplayRecord replay = gbxReplay;
                 ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png");
-                Name = shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
+                DisplayName = shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
                 ObjectiveGold = TimeSpanToString(replay.Time);
                 if (basicInfoOnly) return;
                 MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));

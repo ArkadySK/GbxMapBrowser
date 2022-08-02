@@ -6,7 +6,9 @@ namespace GbxMapBrowser
 {
     public class FolderAndFileInfo
     {
-        public string Name { get; internal set; }
+        public string DisplayName { get; internal set; }
+        public string OriginalName { get; internal set; }
+
         public string FullPath { get; internal set; }
         public Uri ImageSmall { get; internal set; }
 

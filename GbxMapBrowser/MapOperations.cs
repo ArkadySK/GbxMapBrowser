@@ -10,7 +10,7 @@ namespace GbxMapBrowser
 
         public static void RenameMap(MapInfo mapInfo)
         {
-            RenameWindow renameWindow = new RenameWindow(mapInfo.ExactMapName, false);
+            RenameWindow renameWindow = new RenameWindow(mapInfo.OriginalName, false);
             renameWindow.ShowDialog();
             if (String.IsNullOrEmpty(renameWindow.newName)) return;
             mapInfo.RenameAndSave(renameWindow.newName);

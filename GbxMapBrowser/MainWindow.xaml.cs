@@ -368,7 +368,7 @@ namespace GbxMapBrowser
         {
             foreach (var mapInfo in selectedItems)
             {
-                if (mapInfo.Name == name) return true;
+                if (mapInfo.DisplayName == name) return true;
             }
             return false;
         }
@@ -455,7 +455,7 @@ namespace GbxMapBrowser
             //Delete One
             if (selectedItems[0] is FolderAndFileInfo itemInfo)
             {
-                var messageBoxResult = MessageBox.Show($"Are you sure to delete {itemInfo.Name} \nPath: {itemInfo.FullPath}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                var messageBoxResult = MessageBox.Show($"Are you sure to delete {itemInfo.DisplayName} \nPath: {itemInfo.FullPath}?", "Delete file?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     await DeleteItem(itemInfo);

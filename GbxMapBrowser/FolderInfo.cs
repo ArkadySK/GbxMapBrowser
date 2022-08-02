@@ -26,7 +26,8 @@ namespace GbxMapBrowser
 
         public FolderInfo(string fullnamepath)
         {
-            Name = fullnamepath.Split('\\').LastOrDefault();
+            DisplayName = fullnamepath.Split('\\').LastOrDefault();
+            OriginalName = fullnamepath;
             FullPath = fullnamepath;
             DirectoryInfo directoryInfo = new DirectoryInfo(fullnamepath);
             DateModified = directoryInfo.LastWriteTime;

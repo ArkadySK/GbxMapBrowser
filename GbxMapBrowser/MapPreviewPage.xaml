@@ -15,7 +15,7 @@
 
         <!-- Thumbnail and title -->
         <Image x:Name="mapImage" Source="{Binding MapThumbnail}" MinHeight="50" Grid.Row="0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5"/>
-        <Label x:Name="mapNameLabel" Content="{Binding Name, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="12" Background="{x:Null}"/>
+        <Label x:Name="mapNameLabel" Content="{Binding DisplayName, FallbackValue=''}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Panel.ZIndex="12" Background="{x:Null}"/>
         <Label  HorizontalAlignment="Stretch" Panel.ZIndex="10" Background="#7F000000" Height="32" VerticalAlignment="Top"/>
         <Image Source="{Binding MoodIcon}" Height="50" Margin="5 0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
@@ -51,9 +51,9 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="File name: " Style="{StaticResource DefaultUIStyle}"/>
-                        <Label Content="{Binding ExactMapName}" Style="{StaticResource DefaultUIStyle}">
+                        <Label Content="{Binding OriginalName}" Style="{StaticResource DefaultUIStyle}">
                             <Label.ToolTip>
-                                <ToolTip Content="{Binding ExactMapName}"/>
+                                <ToolTip Content="{Binding OriginalName}"/>
                             </Label.ToolTip>
                         </Label>
                     </StackPanel>

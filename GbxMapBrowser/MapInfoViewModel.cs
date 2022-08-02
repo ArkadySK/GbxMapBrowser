@@ -71,8 +71,8 @@ namespace GbxMapBrowser
         {
             IOrderedEnumerable<MapInfo> foundMapInfos = null;
             foundMapInfos = from map in mapInfosList
-                            where map.Name.Contains(mapName, StringComparison.OrdinalIgnoreCase) 
-                            orderby map.Name ascending
+                            where map.DisplayName.Contains(mapName, StringComparison.OrdinalIgnoreCase) 
+                            orderby map.DisplayName ascending
                             select map;
             mapList.Clear();
             await Task.Run(() => mapList.AddRange(foundMapInfos));
@@ -86,18 +86,18 @@ namespace GbxMapBrowser
             {
                 case Sorting.Kind.ByNameAscending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
-                                                            orderby map.Name ascending
+                                                            orderby map.DisplayName ascending
                                             select map));
                     orderedFolderInfos = await Task.Run(() => (from folder in folderInfosList
-                                                                orderby folder.Name ascending
+                                                                orderby folder.DisplayName ascending
                                         select folder));
                     break;
                 case Sorting.Kind.ByNameDescending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
-                                                            orderby map.Name descending
+                                                            orderby map.DisplayName descending
                                         select map));
                     orderedFolderInfos = await Task.Run(() => (from folder in folderInfosList
-                                                                orderby folder.Name descending
+                                                                orderby folder.DisplayName descending
                                             select folder));
                     break;
                 case Sorting.Kind.ByDateModifiedAscending:
@@ -151,7 +151,7 @@ namespace GbxMapBrowser
             if(orderedFolderInfos == null) //fix when null
             {
                 orderedFolderInfos = await Task.Run(() => from folder in folderInfosList
-                                                          orderby folder.Name ascending
+                                                          orderby folder.DisplayName ascending
                                                           select folder);
             }
             
@@ -167,7 +167,7 @@ namespace GbxMapBrowser
             foreach (var mi in MapList)
             {
                 if (!(mi is MapInfo)) continue;
-                var mapName = (mi as MapInfo).Name;
+                var mapName = (mi as MapInfo).DisplayName;
                 if (mapNames.ToList().Contains(mapName)) maps.Add((MapInfo)mi);
             }
             return maps.ToArray();

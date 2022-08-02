@@ -63,7 +63,7 @@
                                     <ColumnDefinition Width="158"/>
                                 </Grid.ColumnDefinitions>
                                     <Image Source="{Binding ImageSmall}" Width="50"></Image>
-                                <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="1" Content="{Binding Name}" Margin="5"/>
+                                    <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="1" Content="{Binding DisplayName}" Margin="5"/>
                                 <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding SizeString}" Margin="5"/>
                                 <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="4" Content="{Binding DateModifiedString}" Margin="5"/>
                             </Grid>
@@ -78,7 +78,7 @@
                                     <ColumnDefinition Width="158"/>
                                 </Grid.ColumnDefinitions>
                                     <Image Source="{Binding ImageSmall}" Grid.Column="0" Margin="5"/>
-                                <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding Name}" Grid.Column="1" Margin="5"/>
+                                <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding DisplayName}" Grid.Column="1" Margin="5"/>
                                 <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding SizeString}" Margin="5"/>
                                 <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="3" Margin="5"/>
                                 <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding DateModifiedString}" Grid.Column="4" Margin="5"/>
