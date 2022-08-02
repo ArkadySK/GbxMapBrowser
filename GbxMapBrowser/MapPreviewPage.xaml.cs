@@ -19,11 +19,12 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class MapPreviewPage : Page
     {
-        MapInfo Map;
+        List<FolderAndFileInfo> Data;
 
         public MapPreviewPage(List<FolderAndFileInfo> data)
         {       
             InitializeComponent();
+            Data = data;
             Opacity = 0;
             if(data.Count == 0)
             {
@@ -38,25 +39,31 @@ namespace GbxMapBrowser
                 return;
             }
 
-            var item = data[0];    
-            if (item is MapInfo map)
-            {
-                Map = map;   
-            }
-            else if (item is FolderInfo folder)
-            {
-                PreviewFolder(folder);
-            }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Delay(new TimeSpan(50000));
-            if (Map is not null) 
+            if (Data.Count != 1)
+                return;
+            var item = Data[0];
+
+            if (item is null)
+                return;
+
+            if (item is MapInfo map)
             {
-                Map = await Task.Run(() => new MapInfo(Map.FullPath, false));
-                DataContext = Map;
-                if (!Map.IsWorking) HideMapPreviewUI();
+                var fullMap = await Task.Run(() => new MapInfo(map.FullPath, false));
+                if (!fullMap.IsWorking) HideMapPreviewUI();
+                DataContext = fullMap;
+            }
+            else if (item is FolderInfo folder)
+            {
+                DataContext = folder;
+                await Task.Run(
+                    () => Dispatcher.BeginInvoke(
+                        () => PreviewFolder(folder)
+                    )
+                );
             }
             FadeInAnimation();
         }
@@ -66,8 +73,7 @@ namespace GbxMapBrowser
             HideMapPreviewUI();
             if (folderInfo == null) return;
             mapImage.Source = new BitmapImage(folderInfo.ImageSmall);
-            mapNameLabel.Content = folderInfo.Name;
-
+            mapNameLabel.Content = folderInfo.DisplayName;
             descriptionTextBlock.Text = 
                 "Contains: " + Environment.NewLine
                 + "Files: " + folderInfo.FilesInsideCount + Environment.NewLine
@@ -89,7 +95,7 @@ namespace GbxMapBrowser
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            Map = null;
+            Data = null;
             GC.Collect();
         }
     }
