@@ -52,6 +52,8 @@ namespace GbxMapBrowser
                 DisplayName = "ERROR (" + shortName + ")";
                 ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
                 Debug.WriteLine("Error: Map '" + fullnamepath + "' - impossible to load" + Environment.NewLine + e.Message);
+                MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png"));
+                MapThumbnail.Freeze();
                 IsWorking = false;
                 return;
             }
@@ -90,7 +92,7 @@ namespace GbxMapBrowser
                     Author = ToReadableText(challenge.AuthorNickname);
 
                 CopperPrice = challenge.Cost.ToString();
-                
+
                 if (string.IsNullOrEmpty(challenge.ChallengeParameters.MapType))
                 {
                     if (challenge.Mode.HasValue)
@@ -99,7 +101,12 @@ namespace GbxMapBrowser
                 else
                     MapType = challenge.ChallengeParameters.MapType;
 
-                if (challenge.Thumbnail == null) return;
+                if (challenge.Thumbnail == null)
+                {
+                    MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\NoThumbnail.png"));
+                    MapThumbnail.Freeze();
+                    return;
+                }
                 var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail);
 
                 if (thumbnailMemoryStream == null) throw new Exception("buffer is empty");
