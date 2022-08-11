@@ -19,6 +19,9 @@
         <Label  HorizontalAlignment="Stretch" Panel.ZIndex="10" Background="#7F000000" Height="32" VerticalAlignment="Top"/>
         <Image Source="{Binding MoodIcon}" Height="50" Margin="5 0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
+            <StackPanel.Effect>
+                <DropShadowEffect/>
+            </StackPanel.Effect>
             <Label Style="{StaticResource DefaultUIStyle}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{Binding CopperPrice, FallbackValue='0'}"/>
             <Label Style="{StaticResource DefaultUIStyle}" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content=" C"/>
         </StackPanel>

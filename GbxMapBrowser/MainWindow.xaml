@@ -95,7 +95,7 @@
                         <Rectangle Fill="{DynamicResource MahApps.Brushes.Badged.Background.Disabled}" Grid.Row="1" Height="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Panel.ZIndex="10"/>
                         <Label Grid.Column="0" Content="🔎" BorderThickness="0" VerticalContentAlignment="Center" FontSize="15"/>
                         <TextBox x:Name="searchMapsTextBox" Grid.Column="1" Text="search for a map..." Opacity=".5" BorderThickness="0" VerticalContentAlignment="Center" FontSize="15" TextChanged="searchMapsTextBox_TextChanged" GotFocus="searchMapsTextBox_GotFocus" LostFocus="searchMapsTextBox_LostFocus"/>
-                        <ComboBox x:Name="sortMapsComboBox" Grid.Column="2" SelectionChanged="sortMapsComboBox_SelectionChanged" Width="150">
+                        <ComboBox x:Name="sortMapsComboBox" Grid.Column="2" SelectionChanged="sortMapsComboBox_SelectionChanged" Width="150" BorderBrush="#7FCCCCCC">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Style="{StaticResource DefaultUIStyle}"  Content="{Binding .}" />
@@ -113,7 +113,7 @@
                                 ContextMenu="{StaticResource GameLibraryContextMenu}" ContextMenuOpening="gameLibraryItem_ContextMenuOpening">
                         <Image Width="40" Height="40" Source="{Binding Icon}"></Image>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="5 0 0 0" Content="{Binding Name}" />
+                            <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="5 0 0 0" Content="{Binding Name}" FontWeight="DemiBold"/>
                             <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="0" Content=" Maps" />
                         </StackPanel>
                     </StackPanel>
