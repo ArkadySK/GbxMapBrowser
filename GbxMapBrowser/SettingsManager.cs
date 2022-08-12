@@ -241,12 +241,20 @@ namespace GbxMapBrowser
         {
             SaveSettings(controller);
             SaveCustomGamesSettings(controller);
+            DeleteTemp();
         }
 
         public static void LoadAllSettingsFromFile(GbxGameViewModel controller)
         {
             LoadSettingsFromFile(controller);
             LoadCustomGamesSettingsFromFile(controller);
+        }
+
+        public static void DeleteTemp()
+        {
+            var tempPath = Environment.CurrentDirectory + "\\Temp";
+            if (Directory.Exists(tempPath))
+                //TO DO
         }
 
     }

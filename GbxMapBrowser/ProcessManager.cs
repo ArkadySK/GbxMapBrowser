@@ -36,7 +36,7 @@ namespace GbxMapBrowser
         public static void StartHiddenProcess(string processName, string arguments)
         {
             var pInfo = new ProcessStartInfo(processName, arguments);
-            pInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //pInfo.WindowStyle = ProcessWindowStyle.Hidden;
             Process.Start(pInfo);
         }
     }
