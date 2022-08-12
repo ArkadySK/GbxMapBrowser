@@ -21,5 +21,11 @@ namespace GbxMapBrowser
 
             return true;
         }
+
+        public static void OpenFile(string fileName)
+        {
+            string argument = "/open, \"" + fileName + "\"";
+            Process.Start("explorer.exe", argument);
+        }
     }
 }
