@@ -54,7 +54,12 @@ namespace GbxMapBrowser
             {
                 var fullMap = await Task.Run(() => new MapInfo(map.FullPath, false));
                 if (!fullMap.IsWorking) HideMapPreviewUI();
-                else mapImage.ContextMenu = App.Current.Resources["ThumbnailContextMenu"] as ContextMenu;
+                else
+                {
+                    mapImage.ContextMenu = App.Current.Resources["ThumbnailContextMenu"] as ContextMenu;
+                    mapImage.ContextMenu.PreviewMouseUp += MapThumbnailContextMenu_PreviewMouseUp;
+                }
+                Data[0] = fullMap;
                 DataContext = fullMap;
             }
             else if (item is FolderInfo folder)
@@ -68,7 +73,7 @@ namespace GbxMapBrowser
             }
             FadeInAnimation();
         }
-
+             
         void PreviewFolder(FolderInfo folderInfo)
         {
             HideMapPreviewUI();
@@ -99,5 +104,46 @@ namespace GbxMapBrowser
             Data = null;
             GC.Collect();
         }
+
+        #region Context menu
+        private async void MapThumbnailContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!(e.Source is MenuItem)) return;
+            var selMenuItem = (MenuItem)e.Source;
+
+            if (Data == null) return;
+
+            var mapInfo = Data[0] as MapInfo;
+            if (mapInfo == null) return;
+
+            string curPath = Environment.CurrentDirectory;
+
+            e.Handled = true; //avoid running this code more than once
+            switch (selMenuItem.Header)
+            {
+                case "Open image":
+                    string path = curPath + "\\Temp\\" + mapInfo.OriginalName + ".png";
+                    var task = mapInfo.ExportThumbnail(path);
+                    await task;
+                    if (task.IsCompleted)
+                        ProcessManager.OpenFile(path);
+                    else
+                        MessageBox.Show("Error exporting thumbnail", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    break;
+                case "Export as image":
+                    string path2 = curPath + "\\Thumbnails\\" + mapInfo.OriginalName + ".png";
+                    var task2 = mapInfo.ExportThumbnail(path2);
+                    await task2;
+                    if (task2.IsCompleted)
+                        MessageBox.Show("Thumbnail exported successfully!\n\nPath: " + path2, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    else
+                        MessageBox.Show("Error exporting thumbnail", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    break;
+            }
+        }
+        #endregion
+
+
     }
 }
