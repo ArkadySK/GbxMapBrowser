@@ -224,5 +224,23 @@ namespace GbxMapBrowser
             gameGbx.Start();
         }
 
+
+        internal async Task ExportThumbnail(string filePath)
+        {
+            var dirPath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(dirPath)){
+                Directory.CreateDirectory(dirPath);
+            }
+
+            var img = MapThumbnail as BitmapImage;
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(img));
+
+            using (var fileStream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+            {
+                encoder.Save(fileStream);
+                await Task.CompletedTask;
+            }
+        }
     }
 }
