@@ -107,6 +107,19 @@
                 </Setter>
             </Style>
 
+            
+            <!--CONTEXT MENUS-->
+            
+            <!-- Map thumbnail context menu -->
+            <ContextMenu x:Key="ThumbnailContextMenu">
+                <MenuItem Header="Open"/>
+                <Separator/>
+                <!--<MenuItem Header="Replace"/>
+                <MenuItem Header="Delete"/>
+                <Separator/>-->
+                <MenuItem Header="Export as image"/>
+            </ContextMenu>
+                        
             <!-- No selection context menu -->
             <ContextMenu x:Key="NoSelectionContextMenu">
                 <MenuItem Header="Refresh"/>
@@ -165,6 +178,7 @@
                 <Separator/>
                 <MenuItem Header="Hide from the game library"/>
             </ContextMenu>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

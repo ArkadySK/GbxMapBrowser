@@ -54,6 +54,7 @@ namespace GbxMapBrowser
             {
                 var fullMap = await Task.Run(() => new MapInfo(map.FullPath, false));
                 if (!fullMap.IsWorking) HideMapPreviewUI();
+                else mapImage.ContextMenu = App.Current.Resources["ThumbnailContextMenu"] as ContextMenu;
                 DataContext = fullMap;
             }
             else if (item is FolderInfo folder)
