@@ -27,5 +27,17 @@ namespace GbxMapBrowser
             string argument = "/open, \"" + fileName + "\"";
             Process.Start("explorer.exe", argument);
         }
+
+        public static void StartProcess(string processName, string arguments)
+        {
+            Process.Start(processName, arguments);
+        }
+        
+        public static void StartHiddenProcess(string processName, string arguments)
+        {
+            var pInfo = new ProcessStartInfo(processName, arguments);
+            pInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            Process.Start(pInfo);
+        }
     }
 }
