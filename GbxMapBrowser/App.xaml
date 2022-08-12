@@ -112,7 +112,7 @@
             
             <!-- Map thumbnail context menu -->
             <ContextMenu x:Key="ThumbnailContextMenu">
-                <MenuItem Header="Open"/>
+                <MenuItem Header="Open image"/>
                 <Separator/>
                 <!--<MenuItem Header="Replace"/>
                 <MenuItem Header="Delete"/>
