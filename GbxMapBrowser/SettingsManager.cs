@@ -254,7 +254,7 @@ namespace GbxMapBrowser
         {
             var tempPath = Environment.CurrentDirectory + "\\Temp";
             if (Directory.Exists(tempPath))
-                //TO DO
+                Directory.Delete(tempPath, true);
         }
 
     }
