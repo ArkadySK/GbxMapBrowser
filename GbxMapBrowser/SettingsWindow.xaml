@@ -61,7 +61,7 @@
 
                             <!-- Icon buttons-->
                             <Button x:Name="buttonConfigureGame" Grid.Row="3" Grid.Column="2" Content="⛭" Style="{StaticResource AddressButtonStyle}"
-                                Click="buttonConfigureGame_Click" FontSize="16" Width="25" Height="25"/>
+                                Click="buttonConfigureGame_Click" FontSize="16" Width="25" Height="25" FontFamily="{StaticResource SegoeUISymbol}"/>
                             <Button x:Name="buttonRemoveGame" Grid.Row="0" Grid.Column="2" Content="r" FontFamily="Marlett" Style="{StaticResource AddressButtonStyle}"
                                 FontSize="14" Height="25" Width="25" Foreground="DarkRed" Click="buttonRemoveGame_Click"/>
 
