@@ -12,7 +12,9 @@
             <!-- Theme setting -->
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        
+
+            <FontFamily x:Key="SegoeUISymbol">pack://application:,,,/Data/Fonts/#Segoe UI Symbol</FontFamily>
+
             <Style x:Key="DigitalTimeStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="15"/>
                 <Setter Property="FontWeight" Value="Thin"/>

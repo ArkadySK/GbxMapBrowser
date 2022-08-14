@@ -17,6 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\Fonts\seguisym.ttf" />
     <None Remove="Data\Medals\BlackMedal.png" />
     <None Remove="Data\Medals\BronzeMedal.png" />
     <None Remove="Data\Medals\GoldMedal.png" />
@@ -34,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Data\Fonts\seguisym.ttf" />
     <Resource Include="Data\Medals\BlackMedal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
