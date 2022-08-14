@@ -14,6 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <FontFamily x:Key="SegoeUISymbol">pack://application:,,,/Data/Fonts/#Segoe UI Symbol</FontFamily>
+            <FontFamily x:Key="Arial">pack://application:,,,/Data/Fonts/#Arial</FontFamily>
 
             <Style x:Key="DigitalTimeStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="15"/>
