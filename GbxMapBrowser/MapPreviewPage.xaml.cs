@@ -59,8 +59,12 @@ namespace GbxMapBrowser
                     mapImage.ContextMenu = App.Current.Resources["ThumbnailContextMenu"] as ContextMenu;
                     mapImage.ContextMenu.PreviewMouseUp += MapThumbnailContextMenu_PreviewMouseUp;
                 }
-                Data[0] = fullMap;
-                DataContext = fullMap;
+                Dispatcher.Invoke(() =>
+                {
+                    if (Data is not null)
+                        Data[0] = fullMap;
+                    DataContext = fullMap;
+                });        
             }
             else if (item is FolderInfo folder)
             {
