@@ -354,7 +354,8 @@ namespace GbxMapBrowser
         #endregion
 
         #region DragOutMaps
-
+        Point initialMousePosition;
+        Point currentPosition;
         void DragOutMaps(FolderAndFileInfo[] mapInfos)
         {
             List<string> files = new List<string>();
@@ -377,19 +378,35 @@ namespace GbxMapBrowser
         {
             if (e.ClickCount >= 2) return;
             if (selectedItems.Count == 0) return;
-            // To avoid unintentional drag
-            bool canCopy = false;
+            
+            currentPosition = e.GetPosition(sender as IInputElement);
+            initialMousePosition = e.GetPosition(mapListBox);
+        }
 
+        private void mapListBox_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            // To avoid unintentional drag
+            Point mousePosition = e.GetPosition(mapListBox);
+            Vector diff = initialMousePosition - mousePosition;
+
+            if (Math.Abs(diff.X) < 10 && Math.Abs(diff.Y) < 10)
+                return;
+            
+            bool canCopy = false;
+            e.Handled = true;
             // Check if it is not dragging out non-selected item
             if (e.OriginalSource is Border border)
             {
-                if(border.Child is ContentPresenter contentPresenter)
+                if (border.Child is ContentPresenter contentPresenter)
                 {
                     var mapName = contentPresenter.Content.ToString();
-                    canCopy = IsSelectedItemByName(mapName); ;
+                    canCopy = IsSelectedItemByName(mapName);
                 }
             }
-            else if(e.OriginalSource is TextBlock textBlock)
+            else if (e.OriginalSource is TextBlock textBlock)
             {
                 canCopy = IsSelectedItemByName(textBlock.Text);
             }
@@ -776,5 +793,7 @@ namespace GbxMapBrowser
             sortMapsComboBox.ItemsSource = Sorting.Kinds;
         }
         #endregion
+
+        
     }
 }

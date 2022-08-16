@@ -51,41 +51,41 @@
                     <Label x:Name="loadingLabel" Content="Loading..." Panel.ZIndex="10" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" FontStyle="Italic" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" ScrollViewer.CanContentScroll="False" Padding="5"
                              MouseDoubleClick="mapListBox_MouseDoubleClickAsync" AllowDrop="True" Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" 
-                             PreviewMouseLeftButtonDown="mapListBox_PreviewMouseleftButonDown" KeyDown="mapListBox_KeyDown" SelectionMode="Extended" ContextMenuOpening="mapListBox_ContextMenuOpening">
-                    <ListBox.Resources>
-                        <DataTemplate DataType="{x:Type local:FolderInfo}">
+                             PreviewMouseLeftButtonDown="mapListBox_PreviewMouseleftButonDown" KeyDown="mapListBox_KeyDown" SelectionMode="Extended" ContextMenuOpening="mapListBox_ContextMenuOpening" PreviewMouseMove="mapListBox_PreviewMouseMove">
+                        <ListBox.Resources>
+                            <DataTemplate DataType="{x:Type local:FolderInfo}">
                                 <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="90"/>
-                                    <ColumnDefinition Width="158"/>
-                                </Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="158"/>
+                                    </Grid.ColumnDefinitions>
                                     <Image Source="{Binding ImageSmall}" Width="50"></Image>
                                     <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="1" Content="{Binding DisplayName}" Margin="5"/>
-                                <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding SizeString}" Margin="5"/>
-                                <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="4" Content="{Binding DateModifiedString}" Margin="5"/>
-                            </Grid>
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type local:MapInfo}">
+                                    <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding SizeString}" Margin="5"/>
+                                    <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="4" Content="{Binding DateModifiedString}" Margin="5"/>
+                                </Grid>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type local:MapInfo}">
                                 <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="90"/>
-                                    <ColumnDefinition Width="158"/>
-                                </Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="158"/>
+                                    </Grid.ColumnDefinitions>
                                     <Image Source="{Binding ImageSmall}" Grid.Column="0" Margin="5"/>
-                                <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding DisplayName}" Grid.Column="1" Margin="5"/>
-                                <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding SizeString}" Margin="5"/>
-                                <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="3" Margin="5"/>
-                                <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding DateModifiedString}" Grid.Column="4" Margin="5"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.Resources>
-                </ListBox>
+                                    <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding DisplayName}" Grid.Column="1" Margin="5"/>
+                                    <Label Style="{StaticResource DefaultUIStyle}" Grid.Column="2" Content="{Binding SizeString}" Margin="5"/>
+                                    <Label Style="{StaticResource DigitalTimeStyle}" Content="{Binding ObjectiveGold}" Grid.Column="3" Margin="5"/>
+                                    <Label Style="{StaticResource DefaultUIStyle}" Content="{Binding DateModifiedString}" Grid.Column="4" Margin="5"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.Resources>
+                    </ListBox>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
