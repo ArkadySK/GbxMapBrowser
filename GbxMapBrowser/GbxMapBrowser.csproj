@@ -17,7 +17,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\Fonts\.otf" />
+    <None Remove="Data\Fonts\segmdl2.ttf" />
+    <None Remove="Data\Fonts\SEGOEUI.TTF" />
+    <None Remove="Data\Fonts\SEGOEUIB.TTF" />
+    <None Remove="Data\Fonts\segoeuii.ttf" />
+    <None Remove="Data\Fonts\segoeuil.ttf" />
+    <None Remove="Data\Fonts\segoeuisl.ttf" />
+    <None Remove="Data\Fonts\segoeuiz.ttf" />
+    <None Remove="Data\Fonts\seguisb.ttf" />
     <None Remove="Data\Fonts\seguisym.ttf" />
+    <None Remove="Data\Fonts\Segoe MDL2 Assetsbold.otf" />
+    <None Remove="Data\Fonts\Segoe MDL2 Assetsbookitalic.otf" />
+    <None Remove="Data\Fonts\Segoe MDL2 Assetslight.otf" />
+    <None Remove="Data\Fonts\Segoe MDL2 Assetslightitalic.otf" />
+    <None Remove="Data\Fonts\Segoe MDL2 Assetsmedium.otf" />
+    <None Remove="Data\Fonts\Segoe MDL2 Assetsmediumitalic.otf" />
+    <None Remove="Data\Fonts\Segoe MDL2 Assetssemibold.otf" />
+    <None Remove="Data\Fonts\Segoe MDL2 AssetsSemiboldItalic.otf" />
     <None Remove="Data\Medals\BlackMedal.png" />
     <None Remove="Data\Medals\BronzeMedal.png" />
     <None Remove="Data\Medals\GoldMedal.png" />
@@ -35,7 +52,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Data\Fonts\seguisym.ttf" />
+    <Resource Include="Data\Fonts\segmdl2.ttf" />
+    <Resource Include="Data\Fonts\segoeuil.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Data\Fonts\segoeuisl.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Data\Fonts\seguisb.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Data\Fonts\seguisym.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Data\Medals\BlackMedal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
