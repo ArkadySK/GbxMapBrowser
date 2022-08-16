@@ -13,8 +13,9 @@
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <!-- Fonts -->
             <FontFamily x:Key="SegoeUISymbol">pack://application:,,,/Data/Fonts/#Segoe UI Symbol</FontFamily>
-            <FontFamily x:Key="Arial">pack://application:,,,/Data/Fonts/#Arial</FontFamily>
+            <FontFamily x:Key="Segoe MDL2 Assets">pack://application:,,,/Data/Fonts/#Segoe MDL2 Assets</FontFamily>
 
             <Style x:Key="DigitalTimeStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="15"/>
@@ -66,7 +67,7 @@
             </Style>
 
             <Style x:Key="AddressButtonStyle" TargetType="{x:Type Button}">
-                <Setter Property="FontSize" Value="28"/>
+                <Setter Property="FontSize" Value="22"/>
                 <Setter Property="Width" Value="48"/>
                 <Setter Property="Height" Value="48"/>
                 <Setter Property="Padding" Value="0"/>
