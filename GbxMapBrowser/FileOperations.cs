@@ -106,6 +106,7 @@ namespace GbxMapBrowser
             // Check if the source directory exists
             if (!dir.Exists)
                 throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+            if (sourceDir == destinationDir) return;
 
             DirectoryInfo[] dirs = dir.GetDirectories();
             Directory.CreateDirectory(destinationDir);
