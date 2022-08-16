@@ -172,14 +172,5 @@ namespace GbxMapBrowser
             }
             return maps.ToArray();
         }
-
-        public bool AtleastOneExists(FolderAndFileInfo[] mapInfos) 
-        {
-            foreach (var mi in mapInfos)
-            {
-                if (mapList.Contains(mi)) return true;
-            }
-            return false;
-        }
     }
 }

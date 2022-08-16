@@ -397,8 +397,7 @@ namespace GbxMapBrowser
             if (!canCopy) return;
 
             if (MapInfoViewModel.IsLoading) return;
-            if (MapInfoViewModel.AtleastOneExists(selectedItems.ToArray()))
-                DragOutMaps(selectedItems.ToArray());
+            DragOutMaps(selectedItems.ToArray());
         }
 
         #endregion
