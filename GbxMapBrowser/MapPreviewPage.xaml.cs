@@ -62,6 +62,7 @@ namespace GbxMapBrowser
                 Dispatcher.Invoke(() =>
                 {
                     if (Data is not null)
+                        if(Data.Count > 0)
                         Data[0] = fullMap;
                     DataContext = fullMap;
                 });        
