@@ -494,11 +494,13 @@ namespace GbxMapBrowser
 
         private async void mapListBox_KeyDown(object sender, KeyEventArgs e)
         {
+            // Launch / Open
             if (e.Key == Key.Enter)
             {
                 await LaunchItemsAsync(selectedItems);
             }
 
+            // Parent directory
             if(e.Key == Key.Back)
             {
                 try
@@ -515,14 +517,17 @@ namespace GbxMapBrowser
                 HistoryManager.AddToHistory(curFolder);
             }
 
+            // Undo
             if (Keyboard.Modifiers == ModifierKeys.Alt && Keyboard.IsKeyDown(Key.Left))
                 if(HistoryManager.CanUndo)
                     undoButton_Click(this, null);
+
+            // Redo
             if (Keyboard.Modifiers == ModifierKeys.Alt && Keyboard.IsKeyDown(Key.Right))
                 if (HistoryManager.CanRedo)
                     redoButton_Click(this, null);
 
-            
+            // Delete
             if (e.Key == Key.Delete)
             {
                 if(selectedItems.Count == 0) 
@@ -530,8 +535,12 @@ namespace GbxMapBrowser
                 await DeleteSelectedItems();
                 await UpdateMapList(curFolder);
             }
+
+            // Show context menu
             if (Keyboard.Modifiers == ModifierKeys.Shift && Keyboard.IsKeyDown(Key.F10))   //SHIFT + F10        
-                ShowContextMenu(); //context menu
+                ShowContextMenu();
+
+            // Rename
             if (e.Key == Key.F2)
             {
                 if (selectedItems.Count == 0) 
@@ -558,14 +567,29 @@ namespace GbxMapBrowser
 
 
             }
+
+            // Properties
             if (Keyboard.IsKeyDown(Key.Enter) && Keyboard.Modifiers == ModifierKeys.Alt) //ALT + ENTER
                 if(selectedItems.Count == 1)
-                FileOperations.ShowFileProperties(selectedItems[0].FullPath);
+                    FileOperations.ShowFileProperties(selectedItems[0].FullPath);
+
+            // Refresh
             if (e.Key == Key.F5)
             {
                 refreshMapsButton_Click(null, null);
             }
 
+            // Copy
+            if(e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+
+            }
+
+            // Paste
+            if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+
+            }
         }
 
         #endregion
