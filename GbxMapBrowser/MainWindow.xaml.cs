@@ -122,14 +122,17 @@ namespace GbxMapBrowser
                 openInComboBox.SelectedItem = selGame;
             else
                 openInComboBox.SelectedItem = null;
+            await Task.Delay(100);
 
             // Assign sorting
             MapInfoViewModel.SortKind = selGame.DefaultSortKind;
 
             // Load the folder, add it to history
             curFolder = selGame.MapsFolder;
+            
             await UpdateMapList(selGame.MapsFolder);
             HistoryManager.AddToHistory(curFolder);
+            await Task.CompletedTask;
         }
         #endregion
 
