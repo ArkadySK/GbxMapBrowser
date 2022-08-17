@@ -85,7 +85,15 @@ namespace GbxMapBrowser
 
         private void chageIconButton_Click(object sender, RoutedEventArgs e)
         {
-            Game.SetCustomIcon();
+            try
+            {
+                Game.SetCustomIcon();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void resetIconButton_Click(object sender, RoutedEventArgs e)
