@@ -808,33 +808,34 @@ namespace GbxMapBrowser
             string text = searchMapsTextBox.Text;
             if (text == "search for a map...")
                 return;
-            if (string.IsNullOrEmpty(text))
+            if(string.IsNullOrEmpty(text))
             {
-                MapInfoViewModel.ClearMapList();
                 await UpdateMapList(curFolder);
                 return;
             }
 
+            selectedItems.Clear();
+            mapListBox.SelectedItems.Clear();
             await MapInfoViewModel.FindMaps(text);
             mapListBox.Items.Refresh();
         }
 
         private void searchMapsTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            searchMapsTextBox.Text = "";
+            if( searchMapsTextBox.Text == "search for a map...")
+                searchMapsTextBox.Text = "";
             searchMapsTextBox.Opacity = .9;
         }
 
-        private async void searchMapsTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void searchMapsTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
+            // Set the color back
             searchMapsTextBox.Opacity = .5;
-            if (!string.IsNullOrWhiteSpace(searchMapsTextBox.Text))
+
+            // Restore default view if searchbox is empty
+            if (!string.IsNullOrWhiteSpace(searchMapsTextBox.Text) || searchMapsTextBox.Text == "search for a map...")
                 return;
-            if (searchMapsTextBox.Text == "search for a map...")
-                return;
-            searchMapsTextBox.Text = "search for a map...";
-            MapInfoViewModel.ClearMapList();
-            await UpdateMapList(curFolder);        
+            searchMapsTextBox.Text = "search for a map...";     
         }
         #endregion
 
