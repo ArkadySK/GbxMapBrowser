@@ -804,9 +804,14 @@ namespace GbxMapBrowser
 
         private async void searchMapsTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            await Task.Delay(200);
             string text = searchMapsTextBox.Text;
+            if (text == "search for a map...")
+                return;
             if (string.IsNullOrEmpty(text))
             {
+                MapInfoViewModel.ClearMapList();
+                await UpdateMapList(curFolder);
                 return;
             }
 
@@ -823,9 +828,13 @@ namespace GbxMapBrowser
         private async void searchMapsTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             searchMapsTextBox.Opacity = .5;
+            if (!string.IsNullOrWhiteSpace(searchMapsTextBox.Text))
+                return;
+            if (searchMapsTextBox.Text == "search for a map...")
+                return;
             searchMapsTextBox.Text = "search for a map...";
             MapInfoViewModel.ClearMapList();
-            await UpdateMapList(curFolder);
+            await UpdateMapList(curFolder);        
         }
         #endregion
 
