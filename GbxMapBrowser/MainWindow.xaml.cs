@@ -480,6 +480,39 @@ namespace GbxMapBrowser
         }
         #endregion
 
+        #region CopyAndPaste
+        private void CopyItemsToMemory(List<FolderAndFileInfo> selectedItems)
+        {
+            if (selectedItems.Count == 0)
+                return;
+            var fileDropList = new StringCollection();
+            foreach (var item in selectedItems)
+                fileDropList.Add(item.FullPath);
+            Clipboard.SetFileDropList(fileDropList);
+        }
+
+        private async Task PasteItemsFromMemory()
+        {
+
+            string[] clipboardText = null;
+            await Task.Run(() =>
+            Dispatcher.Invoke(() =>
+            clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop)
+            )
+            );
+
+            if (clipboardText is null)
+            {
+                throw new Exception("The clipboard is empty.");
+            }
+            else
+            {
+                FileOperations.CopyFilesToFolder(clipboardText, curFolder);
+                await UpdateMapList(curFolder);
+            }
+        }
+        #endregion
+
         #region KeyPresses
 
         private async void currentFolderTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -727,37 +760,6 @@ namespace GbxMapBrowser
             }
             await Task.Delay(100);
             ((ContextMenu)sender).IsOpen = false;
-        }
-
-        private void CopyItemsToMemory(List<FolderAndFileInfo> selectedItems)
-        {
-            if (selectedItems.Count == 0) 
-                return;
-            var fileDropList = new StringCollection();
-            foreach (var item in selectedItems)
-                fileDropList.Add(item.FullPath);
-            Clipboard.SetFileDropList(fileDropList);
-        }
-
-        private async Task PasteItemsFromMemory()
-        {
-            
-            string[] clipboardText = null;
-            await Task.Run(() =>
-            Dispatcher.Invoke(() =>
-            clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop)
-            )
-            );
-
-            if (clipboardText is null)
-            {
-                throw new Exception("The clipboard is empty.");
-            }
-            else
-            {
-                FileOperations.CopyFilesToFolder(clipboardText, curFolder);
-                await UpdateMapList(curFolder);
-            }
         }
 
         private void gameLibraryItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
