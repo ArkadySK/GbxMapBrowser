@@ -582,13 +582,20 @@ namespace GbxMapBrowser
             // Copy
             if(e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
             {
-
+                CopyItemsToMemory(selectedItems);
             }
 
             // Paste
             if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
             {
-
+                try
+                {
+                    await PasteItemsFromMemory();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -650,22 +657,7 @@ namespace GbxMapBrowser
                 case "Paste":
                     try
                     {
-                        string[] clipboardText = null;
-                        await Task.Run(() =>
-                        Dispatcher.Invoke(() =>
-                        clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop)
-                        )
-                        );
-
-                        if (clipboardText is null)
-                        {
-                            throw new Exception("The clipboard is empty.");
-                        }
-                        else
-                        {
-                            FileOperations.CopyFilesToFolder(clipboardText, curFolder);
-                            await UpdateMapList(curFolder);
-                        }
+                        await PasteItemsFromMemory();
                     }
                     catch (Exception ex)
                     {
@@ -700,9 +692,7 @@ namespace GbxMapBrowser
                     await LaunchItemsAsync(selectedItems);
                     break;
                 case "Copy":
-                    var fileDropList = new StringCollection();
-                    fileDropList.Add(path);
-                    Clipboard.SetFileDropList(fileDropList);
+                    CopyItemsToMemory(selectedItems);
                     break;
                 case "Delete":
                     await DeleteSelectedItems();
@@ -737,6 +727,37 @@ namespace GbxMapBrowser
             }
             await Task.Delay(100);
             ((ContextMenu)sender).IsOpen = false;
+        }
+
+        private void CopyItemsToMemory(List<FolderAndFileInfo> selectedItems)
+        {
+            if (selectedItems.Count == 0) 
+                return;
+            var fileDropList = new StringCollection();
+            foreach (var item in selectedItems)
+                fileDropList.Add(item.FullPath);
+            Clipboard.SetFileDropList(fileDropList);
+        }
+
+        private async Task PasteItemsFromMemory()
+        {
+            
+            string[] clipboardText = null;
+            await Task.Run(() =>
+            Dispatcher.Invoke(() =>
+            clipboardText = (string[])Clipboard.GetDataObject().GetData(DataFormats.FileDrop)
+            )
+            );
+
+            if (clipboardText is null)
+            {
+                throw new Exception("The clipboard is empty.");
+            }
+            else
+            {
+                FileOperations.CopyFilesToFolder(clipboardText, curFolder);
+                await UpdateMapList(curFolder);
+            }
         }
 
         private void gameLibraryItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
