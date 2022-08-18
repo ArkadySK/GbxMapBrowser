@@ -390,6 +390,8 @@ namespace GbxMapBrowser
         {
             if (e.LeftButton != MouseButtonState.Pressed)
                 return;
+            if (e.OriginalSource is MahApps.Metro.Controls.MetroThumb)
+                return;
 
             // To avoid unintentional drag
             Point mousePosition = e.GetPosition(mapListBox);
