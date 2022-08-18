@@ -1,0 +1,38 @@
+name: Publish
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  build-and-publish:
+    name: Build and Publish
+
+    runs-on: windows-latest
+
+    steps:
+    
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Publish
+      run: dotnet publish -c Release --nologo -o publish\GbxMapBrowser
+      
+    - name: Zip
+      uses: thedoctor0/zip-release@main
+      with:
+        directory: publish
+        path: GbxMapBrowser
+        filename: GbxMapBrowser.zip
+      
+    - name: Upload
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: publish\GbxMapBrowser.zip
+        tag: ${{ github.ref }}
+        overwrite: true
