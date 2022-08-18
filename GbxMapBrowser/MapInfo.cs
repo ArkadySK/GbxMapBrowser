@@ -120,6 +120,7 @@ namespace GbxMapBrowser
             else if (gbx is CGameCtnReplayRecord gbxReplay)
             {
                 CGameCtnReplayRecord replay = gbxReplay;
+                OriginalName = shortName;
                 ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png");
                 DisplayName = shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
                 ObjectiveGold = TimeSpanToString(replay.Time);
