@@ -23,8 +23,16 @@ namespace GbxMapBrowser
                     infos.Add(new FolderInfo(file));
             }
 
+            LaunchMapPreview(infos);
+        }
+
+        private void LaunchMapPreview(List<FolderAndFileInfo> infos)
+        {
             Window window = new Window();
-            window.Content = new MapPreviewPage(infos);
+            var previewPage = new MapPreviewPage(infos);
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            previewPage.mapImage.Stretch = System.Windows.Media.Stretch.None;
+            window.Content = previewPage;
             window.ShowDialog();
         }
     }
