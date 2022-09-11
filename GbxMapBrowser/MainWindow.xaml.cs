@@ -45,7 +45,6 @@ namespace GbxMapBrowser
             {
                 ShowGbxGamesWindow();
             }
-
         }
 
         private async void Window_LoadedAsync(object sender, RoutedEventArgs e)
