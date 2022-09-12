@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -15,15 +16,24 @@ namespace GbxMapBrowser
                 return;
 
             var infos = new List<FolderAndFileInfo>();
-            foreach(var file in e.Args)
+            try
             {
-                if (file.EndsWith(".Gbx"))
-                    infos.Add(new MapInfo(file, true));
-                else
-                    infos.Add(new FolderInfo(file));
-            }
+                foreach (var path in e.Args)
+                {
+                    if (string.IsNullOrWhiteSpace(path))
+                        continue;
+                    if (Directory.Exists(path))
+                        infos.Add(new FolderInfo(path));
+                    else if (path.ToLower().EndsWith(".gbx"))
+                        infos.Add(new MapInfo(path, true));
+                }
 
-            LaunchMapPreview(infos);
+                LaunchMapPreview(infos);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);    
+            }
         }
 
         private void LaunchMapPreview(List<FolderAndFileInfo> infos)
