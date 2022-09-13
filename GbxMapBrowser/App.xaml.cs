@@ -15,6 +15,15 @@ namespace GbxMapBrowser
             if (e.Args.Length == 0)
                 return;
 
+            try
+            {
+                // Fix for proper app CurrentDirectory value
+                var appPath = Environment.CommandLine.Split(' ')[0];
+                appPath = appPath.Replace(Path.GetFileName(appPath), "");
+                Environment.CurrentDirectory = appPath;
+            }
+            catch   {   }
+
             var infos = new List<FolderAndFileInfo>();
             try
             {
@@ -27,7 +36,6 @@ namespace GbxMapBrowser
                     else if (path.ToLower().EndsWith(".gbx"))
                         infos.Add(new MapInfo(path, true));
                 }
-
                 LaunchMapPreview(infos);
             }
             catch (Exception ex)
