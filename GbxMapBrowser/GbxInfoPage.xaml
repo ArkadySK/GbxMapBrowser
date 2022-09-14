@@ -16,7 +16,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Panel.ZIndex="10" Style="{StaticResource DefaultUIStyle}" Grid.Row="0" FontWeight="Bold" Foreground="White" FontSize="20" Content="GBX Info:"/>
-        <TextBox x:Name="infoTextBlock" Grid.Row="1" TextWrapping="Wrap" Foreground="White" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Focusable="True"/>
-        <TreeView x:Name="dataTreeView"></TreeView>
+        <TreeView x:Name="dataTreeView" Grid.Row="1" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Focusable="True">
+        </TreeView>
     </Grid>
 </Page>
