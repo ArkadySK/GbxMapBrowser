@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -18,11 +19,12 @@ namespace GbxMapBrowser
             try
             {
                 // Fix for proper app CurrentDirectory value
-                var appPath = Environment.CommandLine.Split(' ')[0];
-                appPath = appPath.Replace(Path.GetFileName(appPath), "");
-                Environment.CurrentDirectory = appPath;
+                Environment.CurrentDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
             }
-            catch   {   }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             var infos = new List<FolderAndFileInfo>();
             try
