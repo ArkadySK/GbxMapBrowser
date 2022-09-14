@@ -31,68 +31,72 @@ namespace GbxMapBrowser
             InitializeComponent();
 
             Node gbx;
-
+            CGameCtnChallenge challenge = null;
             try
             {
                 gbx = GameBox.Parse(filePath);
-                if (gbx is not CGameCtnChallenge challenge)
-                    return;
-
-                    //infoTextBlock.Text += "Chunks count: " + gbx.Chunks.Count;
-
-                    foreach (var ch in gbx.Chunks)
-                {
-                    
-                    
-                    infoTextBlock.Text += Environment.NewLine + ch.ToString();
-                    int i = 0;
-
-                    {
-                        foreach (var p in challenge.GetType().GetProperties())
-                        {
-                            if (p == null) continue;
-                            if (!p.CanRead) continue;
-
-                            try
-                            {
-                                infoTextBlock.Text += string.Format("{0}: ({1})", p.Name, p.GetValue(challenge)) + Environment.NewLine + Environment.NewLine;
-                            }
-                            catch
-                            {
-                                infoTextBlock.Text += "ERROR: " + p.Name + ": ???";
-                            }
-
-                            finally {                              
-                                i++; 
-                            }
-                        }
-                    }
-                }
-
-
-                
-                /*
-                if (gbx is CGameCtnChallenge challenge)
-                {
-                    DataContext = challenge;
-                    challenge.Read(new GameBoxReader(new FileStream(filePath, FileMode.Open)));
-                    challenge.Chunks.DiscoverAll(false);
-                }*/
+                if (gbx is CGameCtnChallenge cGameCtnChallenge)
+                    challenge = cGameCtnChallenge;
             }
             catch
             {
-                infoTextBlock.Text += Environment.NewLine + "An error happened while reading \"" + filePath + "\".";
+                //infoTextBlock.Text += Environment.NewLine + "An error happened while reading \"" + filePath + "\".";
             }
-            finally
+
+            
+            TreeViewItem curTreeViewItem = new TreeViewItem() { Header = "Challenge" };
+            PopulateTreeView(null, curTreeViewItem, challenge);
+        }
+
+        void PopulateTreeView(TreeViewItem parentTreeViewItem, TreeViewItem curTreeViewItem, object classToExplore)
+        {
+            if (parentTreeViewItem == null)
+                dataTreeView.Items.Add(curTreeViewItem);
+            else
+                parentTreeViewItem.Items.Add(curTreeViewItem);
+
+            if (classToExplore == null)
+                return;
+
+            
+            foreach (var p in classToExplore.GetType().GetProperties())
             {
-                gbx = null;
-                GC.Collect();
+                if (p == null) continue;
+                if (!p.CanRead) continue;
+
+                try
+                {
+                    if (p.PropertyType.IsGenericType)
+                    {
+                        var name = string.Format("{0}: ({1})", p.Name, p.GetValue(classToExplore));
+                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = name }, null);
+
+                    }
+                    else if (p.PropertyType.IsEnum)
+                    {
+                        
+                    }
+                    else if (!p.PropertyType.IsClass)
+                    {
+                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = p.Name }, p);
+                    }
+                }
+                catch
+                {
+                    curTreeViewItem.Items.Add("ERROR: " + p.Name + ": ???");
+                }
+
             }
         }
 
+
+
+
+
+
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            infoTextBlock.Text = "";
+            //infoTextBlock.Text = "";
             GC.Collect();
         }
     }
