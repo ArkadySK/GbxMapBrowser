@@ -128,7 +128,7 @@
         </ScrollViewer>
 
         <!--The translation color effect-->
-        <Rectangle VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Panel.ZIndex="19" Height="180">
+        <Rectangle VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" Panel.ZIndex="19" IsEnabled="False" IsHitTestVisible="False" Height="180">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#0000"/>
