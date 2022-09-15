@@ -40,16 +40,22 @@ namespace GbxMapBrowser
             }
             catch
             {
-                //infoTextBlock.Text += Environment.NewLine + "An error happened while reading \"" + filePath + "\".";
+                MessageBox.Show("An error happened while reading \"" + filePath + "\".", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
-            
+
             TreeViewItem curTreeViewItem = new TreeViewItem() { Header = "Challenge" };
+            curTreeViewItem.IsExpanded = true;
             PopulateTreeView(null, curTreeViewItem, challenge);
         }
 
+        int maximumDepth = 8;
+        int curDepth = 0;
+
         void PopulateTreeView(TreeViewItem parentTreeViewItem, TreeViewItem curTreeViewItem, object classToExplore)
         {
+
             if (parentTreeViewItem == null)
                 dataTreeView.Items.Add(curTreeViewItem);
             else
@@ -58,40 +64,52 @@ namespace GbxMapBrowser
             if (classToExplore == null)
                 return;
 
-            
-            foreach (var p in classToExplore.GetType().GetProperties())
+            var properties = classToExplore.GetType().GetProperties();
+            foreach (System.Reflection.PropertyInfo p in properties)
             {
                 if (p == null) continue;
                 if (!p.CanRead) continue;
 
-                try
+
+                if (p.PropertyType == typeof(string))
                 {
-                    if (p.PropertyType.IsGenericType)
+                    var stringValue = (string)p.GetValue(classToExplore);
+                    if(string.IsNullOrWhiteSpace(stringValue))
+                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = $"{p.Name}: (empty)", Opacity = 0.5 }, null);
+                    else
+                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = $"{p.Name}: { stringValue }", ToolTip=stringValue }, null);
+                }
+                else if (p.PropertyType.IsValueType)
+                {
+                    try
                     {
-                        var name = string.Format("{0}: ({1})", p.Name, p.GetValue(classToExplore));
+                        var name = $"{p.Name}: {p.GetValue(classToExplore)}";
                         PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = name }, null);
-
                     }
-                    else if (p.PropertyType.IsEnum)
-                    {
-                        
-                    }
-                    else if (!p.PropertyType.IsClass)
-                    {
-                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = p.Name }, p);
-                    }
+                    catch { }
                 }
-                catch
+                else if (p.PropertyType.IsEnum)
                 {
-                    curTreeViewItem.Items.Add("ERROR: " + p.Name + ": ???");
+                    PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = p.Name, Foreground = Brushes.GreenYellow }, p.PropertyType.GetEnumValues());
                 }
+                else if (p.PropertyType.IsArray)
+                {
+                    PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = p.Name, Foreground = Brushes.GreenYellow }, (Array)p.GetValue(classToExplore));
 
+                }
+                else if (p.PropertyType.IsClass)
+                {
+                    if (curDepth >= maximumDepth) return;
+                        curDepth++;
+                    try
+                    {
+                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = p.Name, FontWeight = FontWeights.Bold }, p.GetValue(classToExplore));
+                        curDepth--;
+                    }
+                        catch { }
+                }
             }
         }
-
-
-
-
 
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
