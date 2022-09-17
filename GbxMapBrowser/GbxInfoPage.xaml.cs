@@ -118,6 +118,12 @@ namespace GbxMapBrowser
                 foreach(var chunk in chunkSet)
                     PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = chunk.ToString()}, chunk);
             }
+            else if (objectToExplore.GetType() == typeof(HeaderChunkSet))
+            {
+                HeaderChunkSet chunkSet = (HeaderChunkSet)objectToExplore;
+                foreach (var chunk in chunkSet)
+                    PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = chunk.ToString() }, chunk);
+            }
 
             // If it has properties
             var properties = objectToExplore.GetType().GetProperties();
