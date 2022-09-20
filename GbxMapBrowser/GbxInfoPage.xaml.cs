@@ -50,7 +50,7 @@ namespace GbxMapBrowser
             PopulateTreeView(null, curTreeViewItem, challenge);
         }
 
-        int maximumDepth = 5;
+        int maximumDepth = 6;
         int curDepth = 0;
 
         void PopulateTreeView(TreeViewItem parentTreeViewItem, TreeViewItem curTreeViewItem, object objectToExplore)
@@ -64,8 +64,10 @@ namespace GbxMapBrowser
             if (objectToExplore == null)
                 return;
 
+            Type objectType = objectToExplore.GetType();
+
             // If the object is an array
-            if (objectToExplore.GetType().IsArray)
+            if (objectType.IsArray)
             {
                 var array = (Array)objectToExplore;
                 if (curDepth >= maximumDepth) return;
@@ -80,53 +82,50 @@ namespace GbxMapBrowser
                 return;
             }
             // If the object is IEnumerable
-            else if (objectToExplore.GetType().IsGenericType)
+            else if (objectType.IsGenericType)
             {
-                System.Collections.IEnumerable items = (System.Collections.IEnumerable)objectToExplore;
-                if (items is null)
+                if (objectType == typeof(System.Collections.IEnumerable))
                 {
-                    PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = items.ToString() + " (empty)", Opacity = 0.5 }, null);
+                    System.Collections.IEnumerable items = (System.Collections.IEnumerable)objectToExplore;
+                    if (items is null)
+                    {
+                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = items.ToString() + " (empty)", Opacity = 0.5 }, null);
+                        return;
+                    }
+                    int counter = 0;
+                    int counterMax = 400;
+
+                    if (curDepth < maximumDepth) 
+                    { 
+                        curDepth++;
+                        foreach (var item in items)
+                        {   
+                            if (counter < counterMax)
+                            {
+                                PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = item.ToString()}, item);
+                                counter++;
+                            }
+                            else
+                            {
+                                PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = "nb of items has been reduced to improve performance", Opacity = 0.5 }, null);
+                                break;
+                            }
+                        }
+                        curDepth--;
+                    }
                     return;
                 }
-                int counter = 0;
-                int counterMax = 200;
-
-                if (curDepth < maximumDepth) 
-                { 
-                    curDepth++;
-                    foreach (var item in items)
-                    {   
-                        if (counter < counterMax)
-                        {
-                            PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = item.ToString()}, item);
-                            counter++;
-                        }
-                        else
-                        {
-                            PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = "nb of items has been reduced to improve performance", Background = Brushes.Gray }, null);
-                            break;
-                        }
-                    }
-                    curDepth--;
-                }
-                return;
             }
             // Make a list of chunks
-            else if(objectToExplore.GetType() == typeof(ChunkSet))
+            else if(objectType.BaseType == typeof(SortedSet<Chunk>))
             {
-                ChunkSet chunkSet = (ChunkSet)objectToExplore;
+                SortedSet<Chunk> chunkSet = (SortedSet<Chunk>)objectToExplore;
                 foreach(var chunk in chunkSet)
-                    PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = chunk.ToString()}, chunk);
-            }
-            else if (objectToExplore.GetType() == typeof(HeaderChunkSet))
-            {
-                HeaderChunkSet chunkSet = (HeaderChunkSet)objectToExplore;
-                foreach (var chunk in chunkSet)
                     PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = chunk.ToString() }, chunk);
             }
 
             // If it has properties
-            var properties = objectToExplore.GetType().GetProperties();
+            var properties = objectType.GetProperties();
             foreach (System.Reflection.PropertyInfo p in properties)
             {
                 if (p == null) continue;
@@ -166,7 +165,7 @@ namespace GbxMapBrowser
                     curDepth++;
                     try
                     {
-                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = p.Name, Background=Brushes.Gray }, p.GetValue(objectToExplore));
+                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = p.Name }, p.GetValue(objectToExplore));
                         curDepth--;
                     }
                     catch { }
