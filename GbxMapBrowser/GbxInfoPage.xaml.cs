@@ -58,11 +58,15 @@ namespace GbxMapBrowser
                 MessageBox.Show("An error happened while reading \"" + path + "\".\nError message: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            titleLabel.Content = "Loading...";
+            await Task.Delay(1000);
 
             TreeViewItem curTreeViewItem = new TreeViewItem() { Header = "Challenge" };
             curTreeViewItem.IsExpanded = true;
             PopulateTreeView(null, curTreeViewItem, challenge);
             await Task.CompletedTask;
+            titleLabel.Content = "GBX Preview:";
+
         }
 
         int maximumDepth = 5;

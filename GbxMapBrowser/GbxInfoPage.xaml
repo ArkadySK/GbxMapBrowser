@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Panel.ZIndex="10" Style="{StaticResource DefaultUIStyle}" Grid.Row="0" FontWeight="Bold" Foreground="White" FontSize="20" Content="GBX Info:"/>
+        <Label x:Name="titleLabel" Panel.ZIndex="10" Style="{StaticResource DefaultUIStyle}" Grid.Row="0" FontWeight="Bold" Foreground="White" FontSize="20"/>
         <TreeView x:Name="dataTreeView" Grid.Row="1" >
         </TreeView>
     </Grid>
