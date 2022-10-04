@@ -19,7 +19,10 @@ It uses Octokit: https://github.com/octokit/octokit.net
 - search for a map
 - sort maps - by name, date, size, lendth, ...
 - drag and drop a map to other folder/app (eg. TMX) or into this program
+- drop a map on the program's exe and it will show the map preview directly
+- see all map properties in Gbx Preview feature
 - use games' shortcuts to navigate directly into your maps
+- edit settings for a TrackMania / ShootMania game - change map folder, change launched exe location, change icon, ...
 - full keyboard navigation and shortcuts
 - open current folder in windows file explorer
 - show system file dialog
@@ -29,6 +32,8 @@ It uses Octokit: https://github.com/octokit/octokit.net
 <h2>Showcase</h2>
 
 ![obrázok](https://user-images.githubusercontent.com/74670743/184122122-627564dd-ee62-4152-85eb-909bd8795a3d.png)
+
+![image](https://user-images.githubusercontent.com/74670743/193781905-579c74fb-d20b-44cf-adde-f04f808fb923.png)
 
 
 <h2>Requirements</h2>
