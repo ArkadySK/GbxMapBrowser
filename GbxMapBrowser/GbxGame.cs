@@ -197,7 +197,7 @@ namespace GbxMapBrowser
             if (dialogResult.Value)
             {
                 var exeName = openFileDialog.FileName.Split("\\").Last();
-                if (exeName == TargetExeName || TargetExeName == "")
+                if (exeName.ToLower() == TargetExeName.ToLower() || TargetExeName == "")
                 {
                     ExeLocation = openFileDialog.FileName;
                     UpdateMapsFolder();
