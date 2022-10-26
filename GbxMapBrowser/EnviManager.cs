@@ -14,6 +14,7 @@ namespace GbxMapBrowser
             Tuple.Create("TMOneSpeed@unbitn", "TMOneSpeed"),
             Tuple.Create("TMOneAlpine@unbitn", "TMOneAlpine"),
             Tuple.Create("Trackmania", "TMNextStadium"),
+            Tuple.Create("TMStadium", "TMNextStadium"),
             Tuple.Create("OrbitalDev", "TMNextStadium")          
         };
 
