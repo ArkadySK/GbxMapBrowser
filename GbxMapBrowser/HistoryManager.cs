@@ -9,15 +9,15 @@ namespace GbxMapBrowser
     public static class HistoryManager
     {
         static public event EventHandler UpdateListUI;
-        private static List<string> HistoryList = new List<string>();
+        private static List<string> historyList = new List<string>();
         public static List<string> HistoryListMinimal { 
             get 
             {
                 List<string> list = new List<string>(); 
                 for(int i = 0; i < 5; i++)
                 {
-                    if(i < HistoryList.Count)
-                        list.Add(HistoryList[i]);
+                    if(i < historyList.Count)
+                        list.Add(historyList[i]);
                 }
                 return list;
             } 
@@ -32,13 +32,13 @@ namespace GbxMapBrowser
 
             CurrentIndex++;      
 
-            if(HistoryList.Count > 0)
+            if(historyList.Count > 0)
             {
-                if(CurrentIndex < HistoryList.Count) //remove all other items from previous history branch
-                    HistoryList.RemoveRange(CurrentIndex, HistoryList.Count - CurrentIndex);
+                if(CurrentIndex < historyList.Count) //remove all other items from previous history branch
+                    historyList.RemoveRange(CurrentIndex, historyList.Count - CurrentIndex);
             }
 
-            HistoryList.Add(path);
+            historyList.Add(path);
             CheckUndoRedo();
 
             UpdateListUI?.Invoke(null, EventArgs.Empty);
@@ -50,7 +50,7 @@ namespace GbxMapBrowser
             CanRedo = false;
             if (CurrentIndex > 0)
                 CanUndo = true;
-            if(CurrentIndex < HistoryList.Count - 1)
+            if(CurrentIndex < historyList.Count - 1)
                 CanRedo = true; 
         }
 
@@ -61,7 +61,7 @@ namespace GbxMapBrowser
                 try
                 {
                     CheckUndoRedo();
-                    string pathToReturn = HistoryList[CurrentIndex];
+                    string pathToReturn = historyList[CurrentIndex];
                     return pathToReturn;
                 }
                 catch {}
@@ -77,7 +77,7 @@ namespace GbxMapBrowser
                 try
                 {
                     CheckUndoRedo();
-                    string pathToReturn = HistoryList[CurrentIndex];
+                    string pathToReturn = historyList[CurrentIndex];
                     return pathToReturn;
                 }
                 catch {}

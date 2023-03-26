@@ -22,11 +22,6 @@ namespace GbxMapBrowser
             }
         }
 
-        public CustomGbxGame()
-        {
-
-        }
-
         public void SetCustomMapsFolder()
         {
             var dialog = new Microsoft.Win32.SaveFileDialog();

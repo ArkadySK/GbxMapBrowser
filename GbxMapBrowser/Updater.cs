@@ -10,20 +10,20 @@ namespace GbxMapBrowser
     public class Updater
     {
         private IReleasesClient _releaseClient;
-        private GitHubClient Github;
-        string RepositoryOwner;
-        string RepositoryName;
-        Version CurrentVersion;
-        Version LatestVersion;
+        private GitHubClient _github;
+        string _repositoryOwner;
+        string _repositoryName;
+        Version _currentVersion;
+        Version _latestVersion;
 
         public Updater()
         {
-            RepositoryOwner = "ArkadySK";
-            RepositoryName = "GbxMapBrowser";
-            CurrentVersion = GetCurrentVersion();
+            _repositoryOwner = "ArkadySK";
+            _repositoryName = "GbxMapBrowser";
+            _currentVersion = GetCurrentVersion();
 
-            Github = new GitHubClient(new ProductHeaderValue(RepositoryName + @"-UpdateCheck"));
-            _releaseClient = Github.Repository.Release;
+            _github = new GitHubClient(new ProductHeaderValue(_repositoryName + @"-UpdateCheck"));
+            _releaseClient = _github.Repository.Release;
         }
 
         private Version RemoveV(string version)
@@ -38,29 +38,29 @@ namespace GbxMapBrowser
 
         private async Task<Version> GetNewVersion()
         {
-            if (String.IsNullOrWhiteSpace(RepositoryName) || String.IsNullOrWhiteSpace(RepositoryOwner)) return null;
+            if (String.IsNullOrWhiteSpace(_repositoryName) || String.IsNullOrWhiteSpace(_repositoryOwner)) return null;
 
-            var allReleases = await _releaseClient.GetAll(RepositoryOwner, RepositoryName);
+            var allReleases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
             var latestRelease = allReleases.FirstOrDefault(release => !release.Prerelease && 
-                                                                    (RemoveV(release.TagName) > CurrentVersion));
+                                                                    (RemoveV(release.TagName) > _currentVersion));
             if (latestRelease != null)
-                LatestVersion = RemoveV(latestRelease.TagName);
+                _latestVersion = RemoveV(latestRelease.TagName);
             else
-                LatestVersion = CurrentVersion;
-            return LatestVersion;
+                _latestVersion = _currentVersion;
+            return _latestVersion;
         }
 
         public async Task<bool> IsUpToDate()
         {
             Version newVersion = await GetNewVersion();
 
-            return (newVersion == CurrentVersion);       
+            return (newVersion == _currentVersion);       
         }
 
         public void DownloadUpdate()
         {
             const string urlTemplate = "https://github.com/{0}/{1}/releases/download/{2}/{3}";
-            var url = string.Format(urlTemplate, RepositoryOwner, RepositoryName, "v" + LatestVersion, "GbxMapBrowser.zip");
+            var url = string.Format(urlTemplate, _repositoryOwner, _repositoryName, "v" + _latestVersion, "GbxMapBrowser.zip");
             
             url = url.Replace("&", "^&");
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });

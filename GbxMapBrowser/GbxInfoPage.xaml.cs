@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-using GBX.NET;
+﻿using GBX.NET;
 using GBX.NET.Engines.Game;
-using GBX.NET.Extensions;
-using GBX.NET.Engines.MwFoundations;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace GbxMapBrowser
 {
@@ -25,29 +14,31 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class GbxInfoPage : Page
     {
-        private CGameCtnChallenge challenge = null;
-        string path;
+        private CGameCtnChallenge _challenge = null;
+        private readonly string _path;
 
+        private int _curDepth = 0;
+        private readonly int _maximumDepth = 5;
 
         public GbxInfoPage(string filePath)
         {
             InitializeComponent();
-            path = filePath;
+            _path = filePath;
         }
 
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(path)) return;
-            if (!File.Exists(path)) return;
+            if (string.IsNullOrEmpty(_path)) return;
+            if (!File.Exists(_path)) return;
 
 
             Node gbx;
             try
             {
-                gbx = GameBox.Parse(path);
+                gbx = GameBox.Parse(_path);
                 if (gbx is CGameCtnChallenge cGameCtnChallenge)
-                    challenge = cGameCtnChallenge;
+                    _challenge = cGameCtnChallenge;
                 else
                 {
                     throw new Exception("Selected file is not challenge / map!");
@@ -55,7 +46,7 @@ namespace GbxMapBrowser
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error happened while reading \"" + path + "\".\nError message: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error happened while reading \"" + _path + "\".\nError message: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             titleLabel.Content = "Loading...";
@@ -63,14 +54,12 @@ namespace GbxMapBrowser
 
             TreeViewItem curTreeViewItem = new TreeViewItem() { Header = "Challenge" };
             curTreeViewItem.IsExpanded = true;
-            PopulateTreeView(null, curTreeViewItem, challenge);
+            PopulateTreeView(null, curTreeViewItem, _challenge);
             await Task.CompletedTask;
             titleLabel.Content = "GBX Preview:";
 
         }
 
-        int maximumDepth = 5;
-        int curDepth = 0;
 
         private void PopulateTreeView(TreeViewItem parentTreeViewItem, TreeViewItem curTreeViewItem, object objectToExplore)
         {
@@ -89,15 +78,15 @@ namespace GbxMapBrowser
             if (objectType.IsArray)
             {
                 var array = (Array)objectToExplore;
-                if (curDepth >= maximumDepth) return;
+                if (_curDepth >= _maximumDepth) return;
                 if (array.Length > 400) return;
-                curDepth++;
+                _curDepth++;
                 foreach (var item in array)
                 {
                     if (item is null) continue;
                     curTreeViewItem.Items.Add(new TreeViewItem() { Header = item.ToString() });
                 }
-                curDepth--;
+                _curDepth--;
                 return;
             }
             // If the object is IEnumerable
@@ -114,9 +103,9 @@ namespace GbxMapBrowser
                     int counter = 0;
                     int counterMax = 400;
 
-                    if (curDepth < maximumDepth)
+                    if (_curDepth < _maximumDepth)
                     {
-                        curDepth++;
+                        _curDepth++;
                         foreach (var item in items)
                         {
                             if (counter < counterMax)
@@ -130,7 +119,7 @@ namespace GbxMapBrowser
                                 break;
                             }
                         }
-                        curDepth--;
+                        _curDepth--;
                     }
                     return;
                 }
@@ -158,7 +147,7 @@ namespace GbxMapBrowser
                     else
                     {
                         var shortStringValue = ShortenString(stringValue, 40);
-                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = $"{p.Name}: { shortStringValue }", ToolTip = stringValue }, null);
+                        PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = $"{p.Name}: {shortStringValue}", ToolTip = stringValue }, null);
                     }
                 }
                 else if (p.PropertyType.IsValueType)
@@ -181,12 +170,12 @@ namespace GbxMapBrowser
                 }
                 else /*if (p.PropertyType.IsClass)*/
                 {
-                    if (curDepth >= maximumDepth) return;
-                    curDepth++;
+                    if (_curDepth >= _maximumDepth) return;
+                    _curDepth++;
                     try
                     {
                         PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = p.Name }, p.GetValue(objectToExplore));
-                        curDepth--;
+                        _curDepth--;
                     }
                     catch { }
 
