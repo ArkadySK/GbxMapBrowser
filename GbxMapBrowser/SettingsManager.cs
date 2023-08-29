@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Media.Imaging;
 
 namespace GbxMapBrowser
@@ -89,7 +88,7 @@ namespace GbxMapBrowser
                                 game.IsVisibleInGameList = false;
                         }
 
-                        if(props.Length >= 5)
+                        if (props.Length >= 5)
                         {
                             string sortString = props[4];
                             if (Sorting.KindsShort.Contains(sortString))
@@ -125,13 +124,13 @@ namespace GbxMapBrowser
                 if (game.IsVisibleInGameList)
                     visibleInGameListString = "V";
 
-                settingsText.Add(game.Name + ": " + 
-                    game.MapsFolder + "|" + 
-                    game.ExeLocation + "|" + 
-                    enabledString + "|" + 
+                settingsText.Add(game.Name + ": " +
+                    game.MapsFolder + "|" +
+                    game.ExeLocation + "|" +
+                    enabledString + "|" +
                     visibleInGameListString + "|" +
                     Sorting.KindsShort[(int)game.DefaultSortKind]
-                    );            
+                    );
             }
             File.WriteAllLinesAsync(settingsFilePath, settingsText);
             SettingsState = SettingState.Saved;
@@ -179,7 +178,7 @@ namespace GbxMapBrowser
 
                     controller.GbxGames.Add(game);
                     string iconPath = props[6];
-                    if(File.Exists(iconPath))
+                    if (File.Exists(iconPath))
                         game.Icon = new BitmapImage(new Uri(iconPath));
                     else
                         game.Icon = new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
@@ -194,7 +193,8 @@ namespace GbxMapBrowser
                     }
 
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     Console.WriteLine(ex.Message);
                 }
 
@@ -218,18 +218,18 @@ namespace GbxMapBrowser
                 if (game.IsVisibleInGameList)
                     visibleInGameListString = "V";
                 string unlimiterString = "N";
-                if((game as CustomGbxGame).IsUnlimiter)
+                if ((game as CustomGbxGame).IsUnlimiter)
                     unlimiterString = "U";
 
-                if(game.Icon is null)
+                if (game.Icon is null)
                     game.Icon = new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
 
-                settingsText.Add(game.Name + "|" + 
-                    game.MapsFolder + "|" + 
-                    game.ExeLocation + "|" + 
-                    enabledString + "|" + 
-                    visibleInGameListString + "|" + 
-                    unlimiterString  + "|" + 
+                settingsText.Add(game.Name + "|" +
+                    game.MapsFolder + "|" +
+                    game.ExeLocation + "|" +
+                    enabledString + "|" +
+                    visibleInGameListString + "|" +
+                    unlimiterString + "|" +
                     game.Icon.UriSource.LocalPath + "|" +
                     Sorting.KindsShort[(int)game.DefaultSortKind]);
             }

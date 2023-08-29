@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace GbxMapBrowser
 {
@@ -10,19 +7,20 @@ namespace GbxMapBrowser
     {
         static public event EventHandler UpdateListUI;
         private static List<string> historyList = new List<string>();
-        public static List<string> HistoryListMinimal { 
-            get 
+        public static List<string> HistoryListMinimal
+        {
+            get
             {
-                List<string> list = new List<string>(); 
-                for(int i = 0; i < 5; i++)
+                List<string> list = new List<string>();
+                for (int i = 0; i < 5; i++)
                 {
-                    if(i < historyList.Count)
+                    if (i < historyList.Count)
                         list.Add(historyList[i]);
                 }
                 return list;
-            } 
+            }
         }
-        public static bool CanUndo { get; private set; } = false; 
+        public static bool CanUndo { get; private set; } = false;
         public static bool CanRedo { get; private set; } = false;
         static int CurrentIndex = -1;
 
@@ -30,11 +28,11 @@ namespace GbxMapBrowser
         {
             if (string.IsNullOrEmpty(path)) return; // do not add empty path, do nothing
 
-            CurrentIndex++;      
+            CurrentIndex++;
 
-            if(historyList.Count > 0)
+            if (historyList.Count > 0)
             {
-                if(CurrentIndex < historyList.Count) //remove all other items from previous history branch
+                if (CurrentIndex < historyList.Count) //remove all other items from previous history branch
                     historyList.RemoveRange(CurrentIndex, historyList.Count - CurrentIndex);
             }
 
@@ -50,8 +48,8 @@ namespace GbxMapBrowser
             CanRedo = false;
             if (CurrentIndex > 0)
                 CanUndo = true;
-            if(CurrentIndex < historyList.Count - 1)
-                CanRedo = true; 
+            if (CurrentIndex < historyList.Count - 1)
+                CanRedo = true;
         }
 
         public static string RequestPrev()
@@ -64,7 +62,7 @@ namespace GbxMapBrowser
                     string pathToReturn = historyList[CurrentIndex];
                     return pathToReturn;
                 }
-                catch {}
+                catch { }
 
             return null;
         }
@@ -73,14 +71,14 @@ namespace GbxMapBrowser
         {
             CurrentIndex += 1;
 
-            if(CanRedo) 
+            if (CanRedo)
                 try
                 {
                     CheckUndoRedo();
                     string pathToReturn = historyList[CurrentIndex];
                     return pathToReturn;
                 }
-                catch {}
+                catch { }
             return null;
         }
 

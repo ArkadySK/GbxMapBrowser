@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Text;
-using System.Windows;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using Microsoft.Win32;
-using System.Linq;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace GbxMapBrowser
 {
@@ -40,9 +34,9 @@ namespace GbxMapBrowser
                 if (result == MessageBoxResult.No)
                     return true;
                 else
-                {                   
+                {
                     Application.Current.Shutdown();
-                }           
+                }
             }
             return false;
         }
@@ -57,7 +51,7 @@ namespace GbxMapBrowser
                 {
                     if (!Directory.Exists(game.MapsFolder))
                         game.IsVisibleInGameList = false;
-                    if(!File.Exists(game.ExeLocation))
+                    if (!File.Exists(game.ExeLocation))
                         game.IsVisibleInGameLaunchMenu = false;
                 }
                 else
@@ -77,7 +71,7 @@ namespace GbxMapBrowser
                 if (gbxGame.IsVisibleInGameLaunchMenu || gbxGame.IsVisibleInGameList) Properties.Settings.Default.IsFirstRun = false;
             }
 
-            
+
             Properties.Settings.Default.Save();
             SettingsManager.SaveAllSettings(_gbxGameViewModel);
         }
@@ -133,7 +127,7 @@ namespace GbxMapBrowser
                 int replacementIndex = _gbxGameViewModel.GbxGames.IndexOf(game);
                 _gbxGameViewModel.GbxGames[replacementIndex] = customGame;
             }
-            else if(game is GbxGame)
+            else if (game is GbxGame)
             {
                 game.GetInstallationAndMapFolderDialog();
             }
@@ -210,7 +204,7 @@ namespace GbxMapBrowser
 
         private void listView_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if(listView.SelectedItem is null) return;
+            if (listView.SelectedItem is null) return;
 
             var selGame = (GbxGame)listView.SelectedItem;
 

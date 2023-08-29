@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 
@@ -11,12 +9,12 @@ namespace GbxMapBrowser.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is not bool) 
+            if (value is not bool)
                 return Visibility.Collapsed;
 
-            if((bool)value == true)
-                return Visibility.Visible;            
-            else 
+            if ((bool)value == true)
+                return Visibility.Visible;
+            else
                 return Visibility.Collapsed;
         }
 

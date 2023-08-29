@@ -1,19 +1,18 @@
-﻿using System;
-using System.Windows.Media;
-using System.IO;
-using GBX.NET;
+﻿using GBX.NET;
 using GBX.NET.Engines.Game;
-using System.Windows.Media.Imaging;
-using System.Drawing;
+using System;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
-using GBX.NET.Engines.MwFoundations;
-using TmEssentials;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using TmEssentials;
 
 namespace GbxMapBrowser
 {
-    public class MapInfo: FolderAndFileInfo
+    public class MapInfo : FolderAndFileInfo
     {
         private readonly string _shortName;
         public string Author { get; }
@@ -41,10 +40,10 @@ namespace GbxMapBrowser
 
             try
             {
-                if(basicInfoOnly)
-                gbx = GameBox.ParseNodeHeader(fullnamepath);
+                if (basicInfoOnly)
+                    gbx = GameBox.ParseNodeHeader(fullnamepath);
                 else
-                gbx = GameBox.ParseNode(fullnamepath);
+                    gbx = GameBox.ParseNode(fullnamepath);
                 IsWorking = true;
             }
             catch (Exception e)
@@ -65,7 +64,8 @@ namespace GbxMapBrowser
                 DisplayName = ToReadableText(challenge.MapName);
                 OriginalName = challenge.MapName;
                 Titlepack = challenge.TitleID;
-                if (string.IsNullOrEmpty(OriginalName)) {
+                if (string.IsNullOrEmpty(OriginalName))
+                {
                     DisplayName = "ERROR - Empty map (" + _shortName + ")";
                     ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
                     return;
@@ -110,7 +110,7 @@ namespace GbxMapBrowser
                 var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail);
 
                 if (thumbnailMemoryStream == null) throw new Exception("buffer is empty");
-                
+
                 Bitmap mapThumbnail = new Bitmap(new StreamReader(thumbnailMemoryStream).BaseStream);
                 mapThumbnail.RotateFlip(RotateFlipType.Rotate180FlipX);
                 MapThumbnail = ConvertToImageSource(mapThumbnail);
@@ -160,7 +160,7 @@ namespace GbxMapBrowser
             }
             else
                 throw new NotImplementedException("Only Maps could be renamed.");
-            
+
         }
 
         BitmapImage ConvertToImageSource(Bitmap src)
@@ -206,7 +206,8 @@ namespace GbxMapBrowser
             string exeName = "TmForever.exe";
             bool isRunning = ProcessManager.IsRunning(exeName);
 
-            if (!isRunning) { 
+            if (!isRunning)
+            {
                 //start the unlimiter first
                 await Task.Run(() => selGame.Launch());
                 string unlimiterExeName = selGame.ExeLocation.Replace(selGame.InstalationFolder + "\\", "");
@@ -218,7 +219,7 @@ namespace GbxMapBrowser
             else //show msg about running game
                 Console.WriteLine("An instance of TMUF is running already");
 
-            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo((selGame.InstalationFolder + "\\"+ exeName), "/useexedir /singleinst /file=\"" + FullPath + "\"");
+            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo((selGame.InstalationFolder + "\\" + exeName), "/useexedir /singleinst /file=\"" + FullPath + "\"");
             Process gameGbx = new Process();
             gameGbxStartInfo.WorkingDirectory = selGame.InstalationFolder; //to avoid exe not found message
             gameGbx.StartInfo = gameGbxStartInfo;
@@ -229,7 +230,8 @@ namespace GbxMapBrowser
         internal async Task ExportThumbnail(string filePath)
         {
             var dirPath = Path.GetDirectoryName(filePath);
-            if (!Directory.Exists(dirPath)){
+            if (!Directory.Exists(dirPath))
+            {
                 Directory.CreateDirectory(dirPath);
             }
 

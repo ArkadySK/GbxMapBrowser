@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace GbxMapBrowser
 {
-    public class GbxGameViewModel: INotifyPropertyChanged
+    public class GbxGameViewModel : INotifyPropertyChanged
     {
         internal void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -38,10 +35,10 @@ namespace GbxMapBrowser
         }
         public GbxGame FindGameByName(string name)
         {
-            if(string.IsNullOrWhiteSpace(name))
-            return null;
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
 
-            return GbxGames.FirstOrDefault(x => x.Name == name);     
+            return GbxGames.FirstOrDefault(x => x.Name == name);
         }
 
     }

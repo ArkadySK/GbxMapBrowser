@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace GbxMapBrowser
 {
@@ -42,7 +39,7 @@ namespace GbxMapBrowser
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);    
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

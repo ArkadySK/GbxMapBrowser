@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GbxMapBrowser
 {
@@ -25,7 +16,7 @@ namespace GbxMapBrowser
 
         private void SaveChanges()
         {
-            if(nameTextBox.Text.Length == 0)
+            if (nameTextBox.Text.Length == 0)
             {
                 MessageBox.Show("Please enter a name", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
-    class MapInfoViewModel:  INotifyPropertyChanged
+    class MapInfoViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -17,10 +17,11 @@ namespace GbxMapBrowser
         }
 
         private bool _isLoading;
-        public bool IsLoading { 
-            get 
+        public bool IsLoading
+        {
+            get
             {
-                return _isLoading; 
+                return _isLoading;
             }
             set
             {
@@ -30,7 +31,8 @@ namespace GbxMapBrowser
         }
 
 
-        public IReadOnlyList<object> MapList {
+        public IReadOnlyList<object> MapList
+        {
             get
             {
                 return mapList.AsReadOnly();
@@ -49,7 +51,7 @@ namespace GbxMapBrowser
             FolderInfo folderInfo = await Task.Run(() => new FolderInfo(fullnamepath));
             folderInfosList.Add(folderInfo);
         }
-        
+
         public async Task AddMap(string fullnamepath)
         {
             if (fullnamepath.Contains(".Map.Gbx", StringComparison.OrdinalIgnoreCase) || fullnamepath.Contains(".Replay.Gbx", StringComparison.OrdinalIgnoreCase) || fullnamepath.Contains(".Challenge.Gbx", StringComparison.OrdinalIgnoreCase))
@@ -71,7 +73,7 @@ namespace GbxMapBrowser
         {
             IOrderedEnumerable<MapInfo> foundMapInfos = null;
             foundMapInfos = from map in mapInfosList
-                            where map.DisplayName.Contains(mapName, StringComparison.OrdinalIgnoreCase) 
+                            where map.DisplayName.Contains(mapName, StringComparison.OrdinalIgnoreCase)
                             orderby map.DisplayName ascending
                             select map;
             mapList.Clear();
@@ -87,34 +89,34 @@ namespace GbxMapBrowser
                 case Sorting.Kind.ByNameAscending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
                                                             orderby map.DisplayName ascending
-                                            select map));
+                                                            select map));
                     orderedFolderInfos = await Task.Run(() => (from folder in folderInfosList
-                                                                orderby folder.DisplayName ascending
-                                        select folder));
+                                                               orderby folder.DisplayName ascending
+                                                               select folder));
                     break;
                 case Sorting.Kind.ByNameDescending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
                                                             orderby map.DisplayName descending
-                                        select map));
+                                                            select map));
                     orderedFolderInfos = await Task.Run(() => (from folder in folderInfosList
-                                                                orderby folder.DisplayName descending
-                                            select folder));
+                                                               orderby folder.DisplayName descending
+                                                               select folder));
                     break;
                 case Sorting.Kind.ByDateModifiedAscending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
                                                             orderby map.DateModified ascending
-                                            select map));
+                                                            select map));
                     orderedFolderInfos = await Task.Run(() => (from folder in folderInfosList
-                                                                orderby folder.DateModified ascending
-                                            select folder));
+                                                               orderby folder.DateModified ascending
+                                                               select folder));
                     break;
                 case Sorting.Kind.ByDateModifiedDescending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
                                                             orderby map.DateModified descending
                                                             select map));
                     orderedFolderInfos = await Task.Run(() => (from folder in folderInfosList
-                                                            orderby folder.DateModified descending
-                                                            select folder));
+                                                               orderby folder.DateModified descending
+                                                               select folder));
                     break;
                 case Sorting.Kind.BySizeAscending:
                     orderedMapInfos = await Task.Run(() => (from map in mapInfosList
@@ -148,13 +150,13 @@ namespace GbxMapBrowser
                     break;
             }
 
-            if(orderedFolderInfos == null) //fix when null
+            if (orderedFolderInfos == null) //fix when null
             {
                 orderedFolderInfos = await Task.Run(() => from folder in folderInfosList
                                                           orderby folder.DisplayName ascending
                                                           select folder);
             }
-            
+
             mapList.Clear();
             await Task.Run(() => mapList.AddRange(orderedFolderInfos));
             await Task.Delay(2);

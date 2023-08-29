@@ -1,7 +1,5 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
-using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace GbxMapBrowser
@@ -9,14 +7,15 @@ namespace GbxMapBrowser
     /// <summary>
     /// Custom Nadeo Gbx game. The game must have either path, executable or both of them. User can set custom icon and other properties.
     /// </summary>
-    internal class CustomGbxGame: GbxGame
+    internal class CustomGbxGame : GbxGame
     {
         private bool _isUnlimiter;
         public bool IsUnlimiter
         {
             get
                 => _isUnlimiter;
-            set {
+            set
+            {
                 base.NotifyPropertyChanged();
                 _isUnlimiter = value;
             }
@@ -26,9 +25,9 @@ namespace GbxMapBrowser
         {
             var dialog = new Microsoft.Win32.SaveFileDialog();
 
-            if(!string.IsNullOrWhiteSpace(MapsFolder))
-                dialog.InitialDirectory = MapsFolder; 
-            dialog.Title = "Select a Maps Folder for " + Name; 
+            if (!string.IsNullOrWhiteSpace(MapsFolder))
+                dialog.InitialDirectory = MapsFolder;
+            dialog.Title = "Select a Maps Folder for " + Name;
             dialog.Filter = "Directory|*.this.directory"; // prevents displaying files
             dialog.FileName = "select";
 
@@ -44,7 +43,7 @@ namespace GbxMapBrowser
                 }
                 // Our final value is in path
                 MapsFolder = path;
-            }        
+            }
         }
         public void SetCustomExe()
         {
@@ -60,9 +59,9 @@ namespace GbxMapBrowser
                 dialog.InitialDirectory = Path.GetFileName(InstalationFolder);
 
             bool? dialogResult = dialog.ShowDialog();
-            if(!dialogResult.HasValue)
+            if (!dialogResult.HasValue)
                 return;
-            if(dialogResult.Value == true)
+            if (dialogResult.Value == true)
                 ExeLocation = dialog.FileName;
         }
 
@@ -74,11 +73,11 @@ namespace GbxMapBrowser
                 CheckPathExists = true,
                 Title = "Select the icon of " + Name,
                 Filter = "Supported Image Files (*.png, *.jpg, *.bmp, *.ico, *.dds)|*.png;*.jpg;*.bmp;*.ico;*.dds|All files (*.*)|*.*"
-        };
+            };
             bool? dialogResult = dialog.ShowDialog();
             if (!dialogResult.HasValue)
                 return;
-            if(dialogResult == true)
+            if (dialogResult == true)
                 Icon = new BitmapImage(new Uri(dialog.FileName));
         }
     }

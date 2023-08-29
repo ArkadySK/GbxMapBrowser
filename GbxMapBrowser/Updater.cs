@@ -41,7 +41,7 @@ namespace GbxMapBrowser
             if (String.IsNullOrWhiteSpace(_repositoryName) || String.IsNullOrWhiteSpace(_repositoryOwner)) return null;
 
             var allReleases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
-            var latestRelease = allReleases.FirstOrDefault(release => !release.Prerelease && 
+            var latestRelease = allReleases.FirstOrDefault(release => !release.Prerelease &&
                                                                     (RemoveV(release.TagName) > _currentVersion));
             if (latestRelease != null)
                 _latestVersion = RemoveV(latestRelease.TagName);
@@ -54,14 +54,14 @@ namespace GbxMapBrowser
         {
             Version newVersion = await GetNewVersion();
 
-            return (newVersion == _currentVersion);       
+            return (newVersion == _currentVersion);
         }
 
         public void DownloadUpdate()
         {
             const string urlTemplate = "https://github.com/{0}/{1}/releases/download/{2}/{3}";
             var url = string.Format(urlTemplate, _repositoryOwner, _repositoryName, "v" + _latestVersion, "GbxMapBrowser.zip");
-            
+
             url = url.Replace("&", "^&");
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
 

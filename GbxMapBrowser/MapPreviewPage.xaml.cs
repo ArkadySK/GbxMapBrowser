@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 namespace GbxMapBrowser
 {
     /// <summary>
@@ -22,11 +16,11 @@ namespace GbxMapBrowser
         List<FolderAndFileInfo> Data;
 
         public MapPreviewPage(List<FolderAndFileInfo> data)
-        {       
+        {
             InitializeComponent();
             Data = data;
             Opacity = 0;
-            if(data.Count == 0)
+            if (data.Count == 0)
             {
                 HideMapPreviewUI();
                 return;
@@ -62,10 +56,10 @@ namespace GbxMapBrowser
                 Dispatcher.Invoke(() =>
                 {
                     if (Data is not null)
-                        if(Data.Count > 0)
-                        Data[0] = fullMap;
+                        if (Data.Count > 0)
+                            Data[0] = fullMap;
                     DataContext = fullMap;
-                });        
+                });
             }
             else if (item is FolderInfo folder)
             {
@@ -78,18 +72,18 @@ namespace GbxMapBrowser
             }
             FadeInAnimation();
         }
-             
+
         void PreviewFolder(FolderInfo folderInfo)
         {
             HideMapPreviewUI();
             if (folderInfo == null) return;
             mapImage.Source = new BitmapImage(folderInfo.ImageSmall);
             mapNameLabel.Content = folderInfo.DisplayName;
-            descriptionTextBlock.Text = 
+            descriptionTextBlock.Text =
                 "Contains: " + Environment.NewLine
                 + "Files: " + folderInfo.FilesInsideCount + Environment.NewLine
                 + "Maps: " + folderInfo.MapsInsideCount;
-            
+
         }
 
         void FadeInAnimation()

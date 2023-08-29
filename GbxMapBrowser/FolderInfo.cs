@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using System.Diagnostics;
+using System.Linq;
 
 namespace GbxMapBrowser
 {
-    class FolderInfo: FolderAndFileInfo
+    class FolderInfo : FolderAndFileInfo
     {
         public int FilesInsideCount
         {
@@ -37,7 +35,7 @@ namespace GbxMapBrowser
 
         int GetFilesCount()
         {
-            if(!Directory.Exists(FullPath)) return 0;
+            if (!Directory.Exists(FullPath)) return 0;
             try
             {
                 return Directory.GetFiles(FullPath).Length;
@@ -53,7 +51,7 @@ namespace GbxMapBrowser
                 var maps = files.Where(x => x.EndsWith(".Gbx")).ToArray();
                 return maps.Length;
             }
-            catch {}
+            catch { }
             return 0;
         }
     }

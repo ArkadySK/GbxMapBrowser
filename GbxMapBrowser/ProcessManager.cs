@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Linq;
 
 namespace GbxMapBrowser
@@ -12,11 +10,11 @@ namespace GbxMapBrowser
         {
             var processes = Process.GetProcesses();
 
-            IEnumerable<Process> foundProcesses = from p in processes 
-                        where (p.ProcessName + ".exe").ToLower() == processName.ToLower()
-                        select p;
+            IEnumerable<Process> foundProcesses = from p in processes
+                                                  where (p.ProcessName + ".exe").ToLower() == processName.ToLower()
+                                                  select p;
 
-            if(foundProcesses.Count()== 0)
+            if (foundProcesses.Count() == 0)
                 return false;
 
             return true;
@@ -32,7 +30,7 @@ namespace GbxMapBrowser
         {
             Process.Start(processName, arguments);
         }
-        
+
         public static void StartHiddenProcess(string processName, string arguments)
         {
             var pInfo = new ProcessStartInfo(processName, arguments);
