@@ -1,5 +1,7 @@
 ﻿using GBX.NET;
 using GBX.NET.Engines.Game;
+using GBX.NET.Engines.MwFoundations;
+using GBX.NET.Serialization.Chunking;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,10 +35,10 @@ namespace GbxMapBrowser
             if (!File.Exists(_path)) return;
 
 
-            Node gbx;
+            CMwNod gbx;
             try
             {
-                gbx = GameBox.Parse(_path);
+                gbx = Gbx.ParseNode(_path);
                 if (gbx is CGameCtnChallenge cGameCtnChallenge)
                     _challenge = cGameCtnChallenge;
                 else
@@ -125,9 +127,9 @@ namespace GbxMapBrowser
                 }
             }
             // Make a list of chunks
-            else if (objectType.BaseType == typeof(SortedSet<Chunk>))
+            else if (objectType.BaseType == typeof(SortedSet<IChunk>))
             {
-                SortedSet<Chunk> chunkSet = (SortedSet<Chunk>)objectToExplore;
+                SortedSet<IChunk> chunkSet = (SortedSet<IChunk>)objectToExplore;
                 foreach (var chunk in chunkSet)
                     PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = chunk.ToString() }, chunk);
             }

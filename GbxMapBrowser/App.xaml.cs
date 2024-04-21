@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GBX.NET;
+using GBX.NET.LZO;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -10,6 +12,8 @@ namespace GbxMapBrowser
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            Gbx.LZO = new MiniLZO();
+
             if (e.Args.Length == 0)
                 return;
 
