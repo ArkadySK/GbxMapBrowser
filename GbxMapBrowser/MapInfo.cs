@@ -1,5 +1,6 @@
 ﻿using GBX.NET;
 using GBX.NET.Engines.Game;
+using GBX.NET.Engines.MwFoundations;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -30,7 +31,7 @@ namespace GbxMapBrowser
 
         public MapInfo(string fullnamepath, bool basicInfoOnly)
         {
-            Node gbx;
+            CMwNod gbx;
             _shortName = fullnamepath.Split("\\").Last();
             FullPath = fullnamepath;
             FileInfo mapfileInfo = new FileInfo(fullnamepath);
@@ -41,9 +42,9 @@ namespace GbxMapBrowser
             try
             {
                 if (basicInfoOnly)
-                    gbx = GameBox.ParseNodeHeader(fullnamepath);
+                    gbx = Gbx.ParseHeaderNode(fullnamepath);
                 else
-                    gbx = GameBox.ParseNode(fullnamepath);
+                    gbx = Gbx.ParseNode(fullnamepath);
                 IsWorking = true;
             }
             catch (Exception e)
@@ -63,7 +64,7 @@ namespace GbxMapBrowser
 
                 DisplayName = ToReadableText(challenge.MapName);
                 OriginalName = challenge.MapName;
-                Titlepack = challenge.TitleID;
+                Titlepack = challenge.TitleId;
                 if (string.IsNullOrEmpty(OriginalName))
                 {
                     DisplayName = "ERROR - Empty map (" + _shortName + ")";
@@ -76,11 +77,11 @@ namespace GbxMapBrowser
                 else
                     ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
 
-                ObjectiveGold = TimeSpanToString(challenge.TMObjective_GoldTime);
+                ObjectiveGold = TimeSpanToString(challenge.GoldTime);
                 if (basicInfoOnly) return;
-                ObjectiveBronze = TimeSpanToString(challenge.TMObjective_BronzeTime);
-                ObjectiveSilver = TimeSpanToString(challenge.TMObjective_SilverTime);
-                ObjectiveAuthor = TimeSpanToString(challenge.TMObjective_AuthorTime);
+                ObjectiveBronze = TimeSpanToString(challenge.BronzeTime);
+                ObjectiveSilver = TimeSpanToString(challenge.SilverTime);
+                ObjectiveAuthor = TimeSpanToString(challenge.AuthorTime);
 
                 if (!string.IsNullOrEmpty(challenge.Comments))
                     Description = ToReadableText(challenge.Comments);
@@ -95,8 +96,7 @@ namespace GbxMapBrowser
 
                 if (string.IsNullOrEmpty(challenge.ChallengeParameters.MapType))
                 {
-                    if (challenge.Mode.HasValue)
-                        MapType = challenge.Mode.Value.ToString();
+                    MapType = challenge.Mode.ToString();
                 }
                 else
                     MapType = challenge.ChallengeParameters.MapType;
@@ -128,7 +128,7 @@ namespace GbxMapBrowser
                 MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 MapThumbnail.Freeze();
                 Author = ToReadableText(replay.AuthorNickname);
-                Titlepack = replay.TitleID;
+                Titlepack = replay.TitleId;
             }
         }
 
@@ -141,18 +141,18 @@ namespace GbxMapBrowser
 
         public void RenameAndSave(string newName)
         {
-            GameBox gbx;
+            Gbx gbx;
 
             try
             {
-                gbx = GameBox.Parse(FullPath);
+                gbx = Gbx.Parse(FullPath);
             }
             catch (Exception e)
             {
                 throw e;
             }
 
-            if (gbx is GameBox<CGameCtnChallenge> gbxMap)
+            if (gbx is Gbx<CGameCtnChallenge> gbxMap)
             {
                 CGameCtnChallenge challenge = gbxMap.Node;
                 challenge.MapName = newName;
