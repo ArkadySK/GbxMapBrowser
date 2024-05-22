@@ -239,8 +239,14 @@
 		<None Update="Data\MoodIcons\Unknown.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+		<None Update="Data\Titlepacks\TM2Coast.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 		<None Update="Data\Titlepacks\TM2Island.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Data\Titlepacks\TM2Rally.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Data\Titlepacks\TMNextPlatform.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -250,6 +256,9 @@
 		</None>
 		<None Update="Data\Titlepacks\TMOneAlpine.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Data\Titlepacks\TMOneBay.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Data\Titlepacks\TMOneSpeed.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

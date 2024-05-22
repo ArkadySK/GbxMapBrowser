@@ -10,8 +10,11 @@ namespace GbxMapBrowser
         //tuple contains: tp id, tp image
         [
             Tuple.Create("TM2U_Island@adamkooo", "TM2Island"),
+            Tuple.Create("TM2_Coast@tushy444trackmaniagamer", "TM2Coast"),
+            Tuple.Create("TMOneBay@unbitn", "TMOneBay"),
             Tuple.Create("TMOneSpeed@unbitn", "TMOneSpeed"),
             Tuple.Create("TMOneAlpine@unbitn", "TMOneAlpine"),
+            Tuple.Create("TM2Rally@plantathon", "TM2Rally"),
             Tuple.Create("Trackmania", "TMNextStadium"),
             Tuple.Create("TMStadium", "TMNextStadium"),
             Tuple.Create("OrbitalDev", "TMNextStadium"),
