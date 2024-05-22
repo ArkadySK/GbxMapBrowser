@@ -5,7 +5,7 @@ namespace GbxMapBrowser
 {
     public static class EnviManager
     {
-        public static readonly string[] EnviLibrary = ["Alpine", "Bay", "Canyon", "Coast", "Island", "Lagoon", "Rally", "Speed", "Stadium", "Stadium256", "Storm", "Valley"];
+        public static readonly string[] EnviLibrary = ["Alpine", "Bay", "Canyon", "Coast", "Island", "Lagoon", "Rally", "Speed", "Stadium", "Stadium2020", "Stadium256", "Storm", "Valley"];
         public static readonly Tuple<string, string>[] TitlepackLibrary =
         //tuple contains: tp id, tp image
         [
@@ -14,7 +14,8 @@ namespace GbxMapBrowser
             Tuple.Create("TMOneAlpine@unbitn", "TMOneAlpine"),
             Tuple.Create("Trackmania", "TMNextStadium"),
             Tuple.Create("TMStadium", "TMNextStadium"),
-            Tuple.Create("OrbitalDev", "TMNextStadium")
+            Tuple.Create("OrbitalDev", "TMNextStadium"),
+            Tuple.Create("TMNextPlatform@Arkady_TM", "TMNextPlatform")
         ];
 
         /// <summary>
