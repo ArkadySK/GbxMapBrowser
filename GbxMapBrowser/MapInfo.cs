@@ -14,7 +14,6 @@ namespace GbxMapBrowser
 {
     public class MapInfo : FolderAndFileInfo
     {
-        private readonly string _shortName;
         public string Author { get; }
         public string CopperPrice { get; }
         public string MapType { get; }
@@ -27,6 +26,8 @@ namespace GbxMapBrowser
         public string ObjectiveAuthor { get; }
         public ImageSource MapThumbnail { get; }
         public bool IsWorking { get; }
+
+        private readonly string _shortName;
 
         public MapInfo(string fullnamepath, bool basicInfoOnly)
         {
@@ -156,6 +157,23 @@ namespace GbxMapBrowser
             gameGbx.Start();
         }
 
+        internal async Task ExportThumbnailAsync(string filePath)
+        {
+            var dirPath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+
+            var img = MapThumbnail as BitmapImage;
+            PngBitmapEncoder encoder = new();
+            encoder.Frames.Add(BitmapFrame.Create(img));
+
+            using var fileStream = new FileStream(filePath, FileMode.Create);
+            encoder.Save(fileStream);
+            await Task.CompletedTask;
+        }
+
         private async Task OpenMapUnlimiterAsync(GbxGame selGame)
         {
             string exeName = "TmForever.exe";
@@ -179,24 +197,6 @@ namespace GbxMapBrowser
             gameGbxStartInfo.WorkingDirectory = selGame.InstalationFolder; //to avoid exe not found message
             gameGbx.StartInfo = gameGbxStartInfo;
             gameGbx.Start();
-        }
-
-
-        internal async Task ExportThumbnailAsync(string filePath)
-        {
-            var dirPath = Path.GetDirectoryName(filePath);
-            if (!Directory.Exists(dirPath))
-            {
-                Directory.CreateDirectory(dirPath);
-            }
-
-            var img = MapThumbnail as BitmapImage;
-            PngBitmapEncoder encoder = new();
-            encoder.Frames.Add(BitmapFrame.Create(img));
-
-            using var fileStream = new FileStream(filePath, FileMode.Create);
-            encoder.Save(fileStream);
-            await Task.CompletedTask;
         }
     }
 }

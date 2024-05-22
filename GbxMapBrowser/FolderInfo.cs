@@ -22,11 +22,6 @@ namespace GbxMapBrowser
             }
         }
 
-        public override async Task DeleteAsync()
-        {
-            await Task.Run(() => Directory.Delete(FullPath, true));
-        }
-
         public FolderInfo(string fullnamepath)
         {
             DisplayName = fullnamepath.Split('\\').LastOrDefault();
@@ -36,6 +31,11 @@ namespace GbxMapBrowser
             DateModified = directoryInfo.LastWriteTime;
             DateCreated = directoryInfo.CreationTime;
             ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Folder.png");
+        }
+
+        public override async Task DeleteAsync()
+        {
+            await Task.Run(() => Directory.Delete(FullPath, true));
         }
 
         private int GetFilesCount()

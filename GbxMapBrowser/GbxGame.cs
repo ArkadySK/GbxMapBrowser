@@ -15,16 +15,7 @@ namespace GbxMapBrowser
     /// </summary>
     public class GbxGame : INotifyPropertyChanged
     {
-        private string _exeLocation;
-        private bool _isVisibleInGameList;
-
         public event PropertyChangedEventHandler PropertyChanged;
-
-        internal void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public string Name { get; set; }
         public string ExeLocation
         {
@@ -46,10 +37,7 @@ namespace GbxMapBrowser
                 return parentFolder;
             }
         }
-
-        public Sorting.Kind DefaultSortKind = Sorting.Kind.ByNameAscending;
-        private string _mapsFolder;
-
+        public Sorting.Kind DefaultSortKind { get; set; } = Sorting.Kind.ByNameAscending;
         public string TargetExeName { get; internal set; }
         public string MapsFolder
         {
@@ -69,7 +57,6 @@ namespace GbxMapBrowser
                 NotifyPropertyChanged();
             }
         }
-        private BitmapImage _icon;
         public BitmapImage Icon
         {
             get => _icon;
@@ -80,6 +67,11 @@ namespace GbxMapBrowser
             }
         }
         public bool IsVisibleInGameLaunchMenu { get; set; }
+
+        private BitmapImage _icon;
+        private string _mapsFolder;
+        private string _exeLocation;
+        private bool _isVisibleInGameList;
 
         public GbxGame() { }
 
@@ -214,6 +206,11 @@ namespace GbxMapBrowser
         public GbxGame Clone()
         {
             return (GbxGame)MemberwiseClone();
+        }
+
+        internal void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
