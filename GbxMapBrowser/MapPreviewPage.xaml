@@ -52,10 +52,10 @@
                         <Label Content="{Binding SizeString}" Style="{StaticResource DefaultUIStyle}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="File name: " Style="{StaticResource DefaultUIStyle}"/>
-                        <Label Content="{Binding OriginalName}" Style="{StaticResource DefaultUIStyle}">
+                        <Label Content="Full path: " Style="{StaticResource DefaultUIStyle}"/>
+                        <Label Content="{Binding FullPath}" Style="{StaticResource DefaultUIStyle}">
                             <Label.ToolTip>
-                                <ToolTip Content="{Binding OriginalName}"/>
+                                <ToolTip Content="{Binding FullPath}"/>
                             </Label.ToolTip>
                         </Label>
                     </StackPanel>
