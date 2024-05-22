@@ -147,7 +147,7 @@
                 <MenuItem Header="Rename map"/>
                 <Separator/>
                 <MenuItem Header="File properties"/>
-                <MenuItem Header="Map properties (GBX Preview)"/>
+                <!--<MenuItem Header="Map properties (GBX Preview)"/>-->
             </ContextMenu>
 
             <!-- Folder context menu -->

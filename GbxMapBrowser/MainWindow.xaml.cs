@@ -283,15 +283,6 @@ namespace GbxMapBrowser
             mapPreviewFrame.Content = new MapPreviewPage(data);
         }
 
-        private void MapPreview_SetPage(object page)
-        {
-            if (mapPreviewFrame.CanGoBack)
-                mapPreviewFrame.RemoveBackEntry();
-            mapPreviewFrame.Content = null;
-            if (page == null) return;
-            mapPreviewFrame.Content = (GbxInfoPage)page;
-        }
-
         private GbxGame GetSelectedGame()
         {
             var selGame = (GbxGame)openInComboBox.SelectedItem;
