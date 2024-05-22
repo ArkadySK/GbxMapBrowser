@@ -21,21 +21,21 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <StackPanel x:Name="welcomeStackPanel" Visibility="Collapsed" Margin="5" d:Visibility="Visible" Grid.ColumnSpan="2">
+            <StackPanel x:Name="welcomeStackPanel" Visibility="Collapsed" Margin="10" d:Visibility="Visible" Grid.ColumnSpan="2">
                 <TextBlock FontSize="25" FontWeight="Bold" Foreground="{StaticResource MahApps.Brushes.AccentBase}" Text="Welcome!" />
                 <TextBlock FontSize="20" FontWeight="DemiBold" TextWrapping="Wrap" Foreground="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}"
                    Text="Please, set your game preferences before you start to use this program. Configure atleast one game from this list, then you can close this window."/>
 
             </StackPanel>
 
-            <ListView x:Name="listView" Grid.Row="1" Padding="10" ItemsSource="{Binding GbxGames}"  MouseDoubleClick="listView_MouseDoubleClick" SelectedIndex="0" 
+            <ListView x:Name="listView" Grid.Row="1" Padding="5" ItemsSource="{Binding GbxGames}"  MouseDoubleClick="listView_MouseDoubleClick" SelectedIndex="0" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}" KeyDown="listView_KeyDown">
                 <!--GbxGame Item Template-->
                 <ListView.ItemTemplate>
                     <DataTemplate >
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
@@ -57,7 +57,7 @@
                                 <Label Style="{StaticResource DefaultUIStyle}" FontSize="12" FontWeight="Light" Content="{Binding ExeLocation}" 
                                    ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"/>
                             </StackPanel>
-                            <Image Grid.RowSpan="4" Source="{Binding Icon}"/>
+                            <Image Grid.RowSpan="4" Width="100" Margin="10 0" Source="{Binding Icon}"/>
 
                             <!-- Icon buttons-->
                             <Button x:Name="buttonConfigureGame" Grid.Row="3" Grid.Column="2" Content="⛭" Style="{StaticResource AddressButtonStyle}"
@@ -84,9 +84,7 @@
             <!--Add custom game-->
             <Button x:Name="addCustomGameButton" Style="{StaticResource StandardButtonStyle}" Grid.Row="2" Margin="10 0" Click="addCustomGameButton_Click">Add custom game</Button>
 
-            <!--Save all-->
 
-            
             <!--GbxGame Settings Panel-->
             <StackPanel Grid.Column="1" Grid.Row="1" Visibility="Collapsed">
                 <Label Style="{StaticResource DefaultUIStyle}" Margin="5" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Content="{Binding SelectedItem.Name, ElementName=listView, FallbackValue='Choose a game'}"/>
@@ -94,17 +92,7 @@
                 <Button x:Name="ConfigureSelectedGame" Content="Configure game" Style="{StaticResource StandardButtonStyle}" Height="30" Margin="5"/>
             </StackPanel>
         </Grid>
-        
-        <!-- Color settings -->
-        <Grid Grid.Row="1" Margin="10 10 10 60">
-            <!--
-            <Label FontSize="18" Style="{StaticResource DefaultUIStyle}" Content="Color scheme: "/>
-            <Button HorizontalAlignment="Right" Width="40" Height="40">
-                <Rectangle Fill="{StaticResource MahApps.Brushes.Accent}"></Rectangle>
-            </Button>
-            -->
-        </Grid>
-        
+
         <!-- Close button -->
         <Button VerticalAlignment="Bottom" MinHeight="40" Margin="10" Grid.Column="1" Background="{DynamicResource MahApps.Brushes.AccentBase}" Grid.Row="2"
                 Style="{StaticResource StandardButtonStyle}" Click="ButtonSaveAllChanges_Click" Content="Close (changes are being saved automatically)" />

@@ -107,17 +107,16 @@ namespace GbxMapBrowser
         #region Context menu
         private async void MapThumbnailContextMenu_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (!(e.Source is MenuItem)) return;
+            if (e.Source is not MenuItem) return;
             var selMenuItem = (MenuItem)e.Source;
 
             if (Data == null) return;
 
-            var mapInfo = Data[0] as MapInfo;
-            if (mapInfo == null) return;
+            if (Data[0] is not MapInfo mapInfo) return;
 
             string curPath = Environment.CurrentDirectory;
 
-            e.Handled = true; //avoid running this code more than once
+            e.Handled = true; // To avoid running this code more than once
             switch (selMenuItem.Header)
             {
                 case "Open image":
@@ -142,7 +141,6 @@ namespace GbxMapBrowser
             }
         }
         #endregion
-
 
     }
 }

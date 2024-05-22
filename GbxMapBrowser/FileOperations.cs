@@ -9,11 +9,8 @@ namespace GbxMapBrowser
 {
     class FileOperations
     {
-        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-        static extern bool ShellExecuteEx(ref SHELLEXECUTEINFO lpExecInfo);
-
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        public struct SHELLEXECUTEINFO
+        private struct SHELLEXECUTEINFO
         {
             public int cbSize;
             public uint fMask;
@@ -44,7 +41,7 @@ namespace GbxMapBrowser
         public static bool ShowFileProperties(string Filename)
         {
             SHELLEXECUTEINFO info = new SHELLEXECUTEINFO();
-            info.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(info);
+            info.cbSize = Marshal.SizeOf(info);
             info.lpVerb = "properties";
             info.lpFile = Filename;
             info.nShow = SW_SHOW;
@@ -238,5 +235,8 @@ namespace GbxMapBrowser
             catch { }
             return mapPaths;
         }
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        private static extern bool ShellExecuteEx(ref SHELLEXECUTEINFO lpExecInfo);
     }
 }

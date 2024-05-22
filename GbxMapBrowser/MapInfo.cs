@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using TmEssentials;
 
 namespace GbxMapBrowser
 {
@@ -62,7 +61,7 @@ namespace GbxMapBrowser
             {
                 CGameCtnChallenge challenge = gbxMap;
 
-                DisplayName = ToReadableText(challenge.MapName);
+                DisplayName = Utils.ToReadableText(challenge.MapName);
                 OriginalName = challenge.MapName;
                 Titlepack = challenge.TitleId;
                 if (string.IsNullOrEmpty(OriginalName))
@@ -77,20 +76,20 @@ namespace GbxMapBrowser
                 else
                     ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
 
-                ObjectiveGold = TimeSpanToString(challenge.GoldTime);
+                ObjectiveGold = Utils.TimeSpanToString(challenge.GoldTime);
                 if (basicInfoOnly) return;
-                ObjectiveBronze = TimeSpanToString(challenge.BronzeTime);
-                ObjectiveSilver = TimeSpanToString(challenge.SilverTime);
-                ObjectiveAuthor = TimeSpanToString(challenge.AuthorTime);
+                ObjectiveBronze = Utils.TimeSpanToString(challenge.BronzeTime);
+                ObjectiveSilver = Utils.TimeSpanToString(challenge.SilverTime);
+                ObjectiveAuthor = Utils.TimeSpanToString(challenge.AuthorTime);
 
                 if (!string.IsNullOrEmpty(challenge.Comments))
-                    Description = ToReadableText(challenge.Comments);
+                    Description = Utils.ToReadableText(challenge.Comments);
                 MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.ToString());
 
                 if (string.IsNullOrEmpty(challenge.AuthorNickname))
                     Author = challenge.AuthorLogin;
                 else
-                    Author = ToReadableText(challenge.AuthorNickname);
+                    Author = Utils.ToReadableText(challenge.AuthorNickname);
 
                 CopperPrice = challenge.Cost.ToString();
 
@@ -113,7 +112,7 @@ namespace GbxMapBrowser
 
                 Bitmap mapThumbnail = new Bitmap(new StreamReader(thumbnailMemoryStream).BaseStream);
                 mapThumbnail.RotateFlip(RotateFlipType.Rotate180FlipX);
-                MapThumbnail = ConvertToImageSource(mapThumbnail);
+                MapThumbnail = Utils.ConvertToImageSource(mapThumbnail);
                 MapThumbnail.Freeze();
 
             }
@@ -123,34 +122,18 @@ namespace GbxMapBrowser
                 OriginalName = _shortName;
                 ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png");
                 DisplayName = _shortName.Replace(".Replay.Gbx", "", StringComparison.OrdinalIgnoreCase);
-                ObjectiveGold = TimeSpanToString(replay.Time);
+                ObjectiveGold = Utils.TimeSpanToString(replay.Time);
                 if (basicInfoOnly) return;
                 MapThumbnail = new BitmapImage(new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Replay.png"));
                 MapThumbnail.Freeze();
-                Author = ToReadableText(replay.AuthorNickname);
+                Author = Utils.ToReadableText(replay.AuthorNickname);
                 Titlepack = replay.TitleId;
             }
         }
 
-        string TimeSpanToString(TimeSpan? timeSpan)
-        {
-            if (!timeSpan.HasValue) return "-:--.---";
-            TimeSpan time = timeSpan.GetValueOrDefault();
-            return time.ToTmString();
-        }
-
         public void RenameAndSave(string newName)
         {
-            Gbx gbx;
-
-            try
-            {
-                gbx = Gbx.Parse(FullPath);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            Gbx gbx = Gbx.Parse(FullPath);
 
             if (gbx is Gbx<CGameCtnChallenge> gbxMap)
             {
@@ -162,28 +145,6 @@ namespace GbxMapBrowser
                 throw new NotImplementedException("Only Maps could be renamed.");
 
         }
-
-        BitmapImage ConvertToImageSource(Bitmap src)
-        {
-            MemoryStream ms = new MemoryStream();
-            ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            ms.Seek(0, SeekOrigin.Begin);
-            image.StreamSource = ms;
-            image.EndInit();
-            return image;
-        }
-
-        string ToReadableText(string defaultname)
-        {
-            if (defaultname is null)
-                return null;
-            string formattedName = defaultname;
-            formattedName = TmEssentials.TextFormatter.Deformat(formattedName);
-            return formattedName;
-        }
-
 
         public void OpenMap(GbxGame selGame)
         {
@@ -201,7 +162,7 @@ namespace GbxMapBrowser
             gameGbx.Start();
         }
 
-        async Task OpenMapUnlimiter(GbxGame selGame)
+        private async Task OpenMapUnlimiter(GbxGame selGame)
         {
             string exeName = "TmForever.exe";
             bool isRunning = ProcessManager.IsRunning(exeName);

@@ -1,24 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GbxMapBrowser
 {
     public static class EnviManager
     {
-        public static string[] EnviLibrary = new string[] { "Alpine", "Bay", "Canyon", "Coast", "Island", "Lagoon", "Rally", "Speed", "Stadium", "Stadium256", "Storm", "Valley" };
-        public static List<Tuple<string, string>> TitlepackLibrary = new List<Tuple<string, string>> //tuple contains: tp id, tp image
-        {
+        public static readonly string[] EnviLibrary = ["Alpine", "Bay", "Canyon", "Coast", "Island", "Lagoon", "Rally", "Speed", "Stadium", "Stadium256", "Storm", "Valley"];
+        public static readonly Tuple<string, string>[] TitlepackLibrary =
+        //tuple contains: tp id, tp image
+        [
             Tuple.Create("TM2U_Island@adamkooo", "TM2Island"),
             Tuple.Create("TMOneSpeed@unbitn", "TMOneSpeed"),
             Tuple.Create("TMOneAlpine@unbitn", "TMOneAlpine"),
             Tuple.Create("Trackmania", "TMNextStadium"),
             Tuple.Create("TMStadium", "TMNextStadium"),
             Tuple.Create("OrbitalDev", "TMNextStadium")
-        };
+        ];
 
-        //find titlepack first, then environment
-        public static Uri GetEnvironmentImagePath(string envi, string titlepackId)
+        /// <summary>
+        /// Find titlepack first, then environment (as fallback value).
+        /// </summary>
+        /// <param name="environment"></param>
+        /// <param name="titlepackId"></param>
+        /// <returns></returns>
+        public static Uri GetEnvironmentImagePath(string environment, string titlepackId)
         {
             var foundTitlepackTuple = TitlepackLibrary.FirstOrDefault(tp => tp.Item1 == titlepackId);
             if (foundTitlepackTuple != null)
@@ -26,8 +31,8 @@ namespace GbxMapBrowser
                 return new Uri(Environment.CurrentDirectory + "\\Data\\Titlepacks\\" + foundTitlepackTuple.Item2 + ".png");
             }
 
-            if (EnviLibrary.Contains(envi))
-                return new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + envi + ".png");
+            if (EnviLibrary.Contains(environment))
+                return new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + environment + ".png");
             else
                 return new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
 

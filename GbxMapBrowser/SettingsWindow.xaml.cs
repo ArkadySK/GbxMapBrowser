@@ -22,7 +22,6 @@ namespace GbxMapBrowser
             }
             _gbxGameViewModel = gbxGameViewModel;
             DataContext = _gbxGameViewModel;
-            //SettingsManager.LoadAllSettingsFromFile(gbxGameController);
         }
 
         #region SaveAndClose
