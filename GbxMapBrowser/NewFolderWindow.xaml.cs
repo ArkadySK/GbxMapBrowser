@@ -8,7 +8,7 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class NewFolderWindow : Window
     {
-        public string newName { get; set; }
+        public string NewName { get; set; }
         public NewFolderWindow()
         {
             InitializeComponent();
@@ -22,8 +22,8 @@ namespace GbxMapBrowser
                 return;
             }
 
-            newName = nameTextBox.Text;
-            this.Close();
+            NewName = nameTextBox.Text;
+            Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -31,7 +31,7 @@ namespace GbxMapBrowser
             SaveChanges();
         }
 
-        private void nameTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void NameTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {

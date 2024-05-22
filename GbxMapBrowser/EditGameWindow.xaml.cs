@@ -17,7 +17,7 @@ namespace GbxMapBrowser
         {
             InitializeComponent();
             Game = new CustomGbxGame();
-            this.DataContext = Game;
+            DataContext = Game;
             Title = "Add new game...";
             Game.IsVisibleInGameLaunchMenu = true;
             Game.IsVisibleInGameList = true;
@@ -30,8 +30,8 @@ namespace GbxMapBrowser
         internal EditGameWindow(CustomGbxGame game)
         {
             InitializeComponent();
-            this.Game = game;
-            this.DataContext = this.Game;
+            Game = game;
+            DataContext = Game;
             Title = "Edit " + game.Name;
         }
 
@@ -53,8 +53,8 @@ namespace GbxMapBrowser
             if (string.IsNullOrWhiteSpace(Game.ExeLocation))
                 Game.IsVisibleInGameLaunchMenu = false;
 
-            this.DialogResult = true;
-            this.Close();
+            DialogResult = true;
+            Close();
         }
 
         private void changeMapFolder_Click(object sender, RoutedEventArgs e)
@@ -66,7 +66,7 @@ namespace GbxMapBrowser
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Game = null;
-            this.DialogResult = false;
+            DialogResult = false;
             Close();
         }
 

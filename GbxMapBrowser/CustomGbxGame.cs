@@ -37,9 +37,9 @@ namespace GbxMapBrowser
                 path = path.Replace("\\select.this.directory", "");
                 path = path.Replace(".this.directory", "");
                 // If user has changed the filename, create the new directory
-                if (!System.IO.Directory.Exists(path))
+                if (!Directory.Exists(path))
                 {
-                    System.IO.Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(path);
                 }
                 // Our final value is in path
                 MapsFolder = path;

@@ -30,12 +30,12 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="undoButton" Content="&#xE830;" Click="undoButton_Click"/>
-                <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="redoButton" Content="&#xEA47;" Click="redoButton_Click"/>
-                <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="parentFolderButton" Content="&#xE7EB;" Click="parentFolderButton_Click"/>
+                <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="undoButton" Content="&#xE830;" Click="UndoButton_Click"/>
+                <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="redoButton" Content="&#xEA47;" Click="RedoButton_Click"/>
+                <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="parentFolderButton" Content="&#xE7EB;" Click="ParentFolderButton_Click"/>
             </StackPanel>
             <TextBox x:Name="currentFolderTextBox" FontSize="16" BorderThickness="0" Margin="0 0" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="CurrentFolderTextBox_KeyUp"/>
-            <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="refreshMapsButton" Grid.Column="3" HorizontalAlignment="Center" Content="&#xE72C;" Click="refreshMapsButton_Click"/>
+            <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="refreshMapsButton" Grid.Column="3" HorizontalAlignment="Center" Content="&#xE72C;" Click="RefreshMapsButton_Click"/>
             <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="OpenInExplorerButton" Grid.Column="4" HorizontalAlignment="Center" Content="&#xED44;" Click="OpenInExplorerButton_Click"/>
             <Rectangle Fill="{DynamicResource MahApps.Brushes.Badged.Background.Disabled}" Grid.Row="1" Height="1" Grid.ColumnSpan="5"/>
         </Grid>
@@ -50,7 +50,7 @@
                     </Grid.RowDefinitions>
                     <Label x:Name="loadingLabel" Content="Loading..." Panel.ZIndex="10" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" FontStyle="Italic" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" ScrollViewer.CanContentScroll="False" Padding="5"
-                             MouseDoubleClick="mapListBox_MouseDoubleClickAsync" AllowDrop="True" Drop="MapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" 
+                             MouseDoubleClick="MapListBox_MouseDoubleClickAsync" AllowDrop="True" Drop="MapListBox_Drop" SelectionChanged="MapListBox_SelectionChanged" 
                              PreviewMouseLeftButtonDown="MapListBox_PreviewMouseleftButonDown" KeyDown="MapListBox_KeyDown" SelectionMode="Extended" ContextMenuOpening="MapListBox_ContextMenuOpening" PreviewMouseMove="MapListBox_PreviewMouseMove">
                         <ListBox.Resources>
                             <DataTemplate DataType="{x:Type local:FolderInfo}">

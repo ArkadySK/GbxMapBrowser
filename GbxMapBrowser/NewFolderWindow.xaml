@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <StackPanel>
             <Label Padding="0" FontSize="15" Content="Name"/>
-            <TextBox FontSize="15" x:Name="nameTextBox" KeyDown="nameTextBox_KeyDown"/>
+            <TextBox FontSize="15" x:Name="nameTextBox" KeyDown="NameTextBox_KeyDown"/>
         </StackPanel>
         <Button BorderThickness="1" Grid.Row="1" Content="Ok" Height="30" Width="120" Margin="5" FontSize="15" Background="{DynamicResource MahApps.Brushes.AccentBase}" 
                 BorderBrush="{DynamicResource MahApps.Brushes.Button.Flat.Background}" Foreground="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Foreground.MouseOver}" 

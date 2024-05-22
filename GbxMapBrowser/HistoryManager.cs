@@ -6,12 +6,12 @@ namespace GbxMapBrowser
     public static class HistoryManager
     {
         static public event EventHandler UpdateListUI;
-        private static List<string> historyList = new List<string>();
+        private static readonly List<string> historyList = [];
         public static List<string> HistoryListMinimal
         {
             get
             {
-                List<string> list = new List<string>();
+                List<string> list = [];
                 for (int i = 0; i < 5; i++)
                 {
                     if (i < historyList.Count)
@@ -22,7 +22,8 @@ namespace GbxMapBrowser
         }
         public static bool CanUndo { get; private set; } = false;
         public static bool CanRedo { get; private set; } = false;
-        static int CurrentIndex = -1;
+
+        private static int CurrentIndex = -1;
 
         public static void AddToHistory(string path)
         {

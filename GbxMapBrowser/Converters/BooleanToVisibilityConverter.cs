@@ -9,13 +9,7 @@ namespace GbxMapBrowser.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is not bool)
-                return Visibility.Collapsed;
-
-            if ((bool)value == true)
-                return Visibility.Visible;
-            else
-                return Visibility.Collapsed;
+            return value is not bool ? Visibility.Collapsed : (bool)value == true ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

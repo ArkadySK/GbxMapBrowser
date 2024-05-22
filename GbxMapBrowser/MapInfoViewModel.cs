@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
-    class MapInfoViewModel : INotifyPropertyChanged
+    internal class MapInfoViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        void NotifyPropertyChanged([CallerMemberName] string name = "")
+        private void NotifyPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
@@ -41,9 +41,9 @@ namespace GbxMapBrowser
         public Sorting.Kind SortKind { get; set; } = GbxMapBrowser.Sorting.Kind.ByNameAscending;
 
 
-        private List<FolderInfo> folderInfosList = new List<FolderInfo>();
-        private List<MapInfo> mapInfosList = new List<MapInfo>();
-        private List<object> mapList = new List<object>();
+        private readonly List<FolderInfo> folderInfosList = [];
+        private readonly List<MapInfo> mapInfosList = [];
+        private readonly List<object> mapList = [];
 
         public async Task AddFolder(string fullnamepath)
         {
@@ -165,7 +165,7 @@ namespace GbxMapBrowser
 
         public MapInfo[] GetMapsByName(string[] mapNames)
         {
-            List<MapInfo> maps = new List<MapInfo>();
+            List<MapInfo> maps = [];
             foreach (var mi in MapList)
             {
                 if (!(mi is MapInfo)) continue;

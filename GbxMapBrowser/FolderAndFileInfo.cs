@@ -23,8 +23,7 @@ namespace GbxMapBrowser
         {
             get
             {
-                if (DateModified == DateTime.MinValue) return "NO DATE";
-                return DateModified.ToString();
+                return DateModified == DateTime.MinValue ? "NO DATE" : DateModified.ToString();
             }
         }
         public DateTime DateCreated { get; internal set; }
@@ -32,8 +31,7 @@ namespace GbxMapBrowser
         {
             get
             {
-                if (DateModified == DateTime.MinValue) return "NO DATE";
-                return DateCreated.ToString();
+                return DateModified == DateTime.MinValue ? "NO DATE" : DateCreated.ToString();
             }
         }
     }

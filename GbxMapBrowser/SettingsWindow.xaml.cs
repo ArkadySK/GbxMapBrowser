@@ -25,7 +25,7 @@ namespace GbxMapBrowser
         }
 
         #region SaveAndClose
-        bool CanCloseWindow()
+        private bool CanCloseWindow()
         {
             if (Properties.Settings.Default.IsFirstRun)
             {
@@ -40,7 +40,7 @@ namespace GbxMapBrowser
             return false;
         }
 
-        void SaveSettings()
+        private void SaveSettings()
         {
             Properties.Settings.Default.IsFirstRun = true;
             // Check if the locations exist to avoid errors
@@ -85,8 +85,10 @@ namespace GbxMapBrowser
         #region GameProperties
         private void AddGame()
         {
-            var addWindow = new EditGameWindow();
-            addWindow.Owner = this;
+            var addWindow = new EditGameWindow
+            {
+                Owner = this
+            };
             bool? result = addWindow.ShowDialog();
             if (!result.HasValue) return;
             if (result.Value == false) return;
@@ -115,8 +117,10 @@ namespace GbxMapBrowser
             {
                 var customGame = game.Clone() as CustomGbxGame;
 
-                EditGameWindow editGameWindow = new EditGameWindow(customGame);
-                editGameWindow.Owner = this;
+                EditGameWindow editGameWindow = new(customGame)
+                {
+                    Owner = this
+                };
                 bool? result = editGameWindow.ShowDialog();
                 if (!result.HasValue)
                     return;
@@ -126,9 +130,9 @@ namespace GbxMapBrowser
                 int replacementIndex = _gbxGameViewModel.GbxGames.IndexOf(game);
                 _gbxGameViewModel.GbxGames[replacementIndex] = customGame;
             }
-            else if (game is GbxGame)
+            else
             {
-                game.GetInstallationAndMapFolderDialog();
+                game?.GetInstallationAndMapFolderDialog();
             }
         }
 
@@ -142,7 +146,6 @@ namespace GbxMapBrowser
             if (game is CustomGbxGame)
             {
                 _gbxGameViewModel.GbxGames.Remove(game);
-                game = null;
                 return;
             }
             game.ExeLocation = null;
@@ -155,7 +158,7 @@ namespace GbxMapBrowser
         #endregion
 
         #region ButtonEvents
-        private void buttonRemoveGame_Click(object sender, RoutedEventArgs e)
+        private void ButtonRemoveGame_Click(object sender, RoutedEventArgs e)
         {
             Button curButton = (Button)sender;
             Grid parentGrid = (Grid)curButton.Parent;
@@ -170,7 +173,7 @@ namespace GbxMapBrowser
             Close(); //not only close this window, but it will launch the closing event with save method
         }
 
-        private void listView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var selGame = listView.SelectedItem as GbxGame;
 
@@ -180,12 +183,12 @@ namespace GbxMapBrowser
             listView.ItemsSource = _gbxGameViewModel.GbxGames;
         }
 
-        private void addCustomGameButton_Click(object sender, RoutedEventArgs e)
+        private void AddCustomGameButton_Click(object sender, RoutedEventArgs e)
         {
             AddGame();
         }
 
-        private void buttonConfigureGame_Click(object sender, RoutedEventArgs e)
+        private void ButtonConfigureGame_Click(object sender, RoutedEventArgs e)
         {
             Button curButton = (Button)sender;
             Grid parentGrid = (Grid)curButton.Parent;
@@ -201,7 +204,7 @@ namespace GbxMapBrowser
         }
         #endregion
 
-        private void listView_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void ListView_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (listView.SelectedItem is null) return;
 

@@ -12,7 +12,7 @@ namespace GbxMapBrowser
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ObservableCollection<GbxGame> GbxGames { get; private set; } = new ObservableCollection<GbxGame>();
+        public ObservableCollection<GbxGame> GbxGames { get; private set; } = [];
         public GbxGame SelectedGbxGame { get; set; } = new GbxGame();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,10 +35,7 @@ namespace GbxMapBrowser
         }
         public GbxGame FindGameByName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                return null;
-
-            return GbxGames.FirstOrDefault(x => x.Name == name);
+            return string.IsNullOrWhiteSpace(name) ? null : GbxGames.FirstOrDefault(x => x.Name == name);
         }
 
     }

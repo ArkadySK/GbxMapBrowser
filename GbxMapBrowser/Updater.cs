@@ -9,12 +9,12 @@ namespace GbxMapBrowser
 {
     public class Updater
     {
-        private IReleasesClient _releaseClient;
-        private GitHubClient _github;
-        string _repositoryOwner;
-        string _repositoryName;
-        Version _currentVersion;
-        Version _latestVersion;
+        private readonly IReleasesClient _releaseClient;
+        private readonly GitHubClient _github;
+        private readonly string _repositoryOwner;
+        private readonly string _repositoryName;
+        private readonly Version _currentVersion;
+        private Version _latestVersion;
 
         public Updater()
         {
@@ -26,12 +26,12 @@ namespace GbxMapBrowser
             _releaseClient = _github.Repository.Release;
         }
 
-        private Version RemoveV(string version)
+        private static Version RemoveV(string version)
         {
             return new Version(version.Replace("v", ""));
         }
 
-        private Version GetCurrentVersion()
+        private static Version GetCurrentVersion()
         {
             return Assembly.GetExecutingAssembly().GetName().Version;
         }
@@ -43,10 +43,7 @@ namespace GbxMapBrowser
             var allReleases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
             var latestRelease = allReleases.FirstOrDefault(release => !release.Prerelease &&
                                                                     (RemoveV(release.TagName) > _currentVersion));
-            if (latestRelease != null)
-                _latestVersion = RemoveV(latestRelease.TagName);
-            else
-                _latestVersion = _currentVersion;
+            _latestVersion = latestRelease != null ? RemoveV(latestRelease.TagName) : _currentVersion;
             return _latestVersion;
         }
 
@@ -54,7 +51,7 @@ namespace GbxMapBrowser
         {
             Version newVersion = await GetNewVersion();
 
-            return (newVersion == _currentVersion);
+            return newVersion == _currentVersion;
         }
 
         public void DownloadUpdate()

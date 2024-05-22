@@ -13,7 +13,7 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class MapPreviewPage : Page
     {
-        List<FolderAndFileInfo> Data;
+        private List<FolderAndFileInfo> Data;
 
         public MapPreviewPage(List<FolderAndFileInfo> data)
         {
@@ -73,7 +73,7 @@ namespace GbxMapBrowser
             FadeInAnimation();
         }
 
-        void PreviewFolder(FolderInfo folderInfo)
+        private void PreviewFolder(FolderInfo folderInfo)
         {
             HideMapPreviewUI();
             if (folderInfo == null) return;
@@ -86,13 +86,13 @@ namespace GbxMapBrowser
 
         }
 
-        void FadeInAnimation()
+        private void FadeInAnimation()
         {
-            DoubleAnimation animation = new DoubleAnimation(1, TimeSpan.FromSeconds(0.3));
+            DoubleAnimation animation = new(1, TimeSpan.FromSeconds(0.3));
             BeginAnimation(OpacityProperty, animation);
         }
 
-        void HideMapPreviewUI()
+        private void HideMapPreviewUI()
         {
             mapInfoExpander.Visibility = Visibility.Collapsed;
             medalsViewBox.Visibility = Visibility.Collapsed;

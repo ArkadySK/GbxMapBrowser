@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace GbxMapBrowser
 {
-    class FileOperations
+    internal class FileOperations
     {
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         private struct SHELLEXECUTEINFO
@@ -40,7 +40,7 @@ namespace GbxMapBrowser
 
         public static bool ShowFileProperties(string Filename)
         {
-            SHELLEXECUTEINFO info = new SHELLEXECUTEINFO();
+            SHELLEXECUTEINFO info = new();
             info.cbSize = Marshal.SizeOf(info);
             info.lpVerb = "properties";
             info.lpFile = Filename;
@@ -57,8 +57,10 @@ namespace GbxMapBrowser
 
         public static void OpenInExplorer(string folder)
         {
-            Process explorerProcess = new Process();
-            explorerProcess.StartInfo = new ProcessStartInfo("explorer", folder);
+            Process explorerProcess = new()
+            {
+                StartInfo = new ProcessStartInfo("explorer", folder)
+            };
             explorerProcess.Start();
         }
 
@@ -69,20 +71,15 @@ namespace GbxMapBrowser
             {
                 try
                 {
-                    string newName;
-                    if (newfileNames == null)
-                        newName = GetShortNameFromFilePath(path);
-                    else
-                        newName = newfileNames[i];
-
+                    string newName = newfileNames == null ? GetShortNameFromFilePath(path) : newfileNames[i];
                     if (Directory.Exists(path))
                     {
-                        CopyDirectory(path, folderToCopyFiles + "\\" + newName, true);
+                        CopyDirectory(path, folderToCopyFiles + '\\' + newName, true);
                         continue;
                     }
 
-                    FileInfo fileInfo = new FileInfo(path);
-                    fileInfo.CopyTo(folderToCopyFiles + "\\" + newName);
+                    FileInfo fileInfo = new(path);
+                    fileInfo.CopyTo(folderToCopyFiles + '\\' + newName);
 
                 }
                 catch (Exception e)
@@ -94,7 +91,7 @@ namespace GbxMapBrowser
             }
         }
 
-        static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+        private static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
         {
             var dir = new DirectoryInfo(sourceDir);
 
@@ -138,18 +135,18 @@ namespace GbxMapBrowser
             string shortFileName = GetShortNameFromFilePath(oldpath);
             string curFolder = GetFolderFromFilePath(oldpath);
 
-            RenameWindow renameDialog = new RenameWindow(shortFileName, true);
+            RenameWindow renameDialog = new(shortFileName, true);
             var result = renameDialog.ShowDialog();
             if (!result.HasValue)
                 return;
             if (result.Value == false)
                 return;
-            if (string.IsNullOrEmpty(renameDialog.newName))
+            if (string.IsNullOrEmpty(renameDialog.NewName))
                 return;
-            if (renameDialog.newName == oldpath)
+            if (renameDialog.NewName == oldpath)
                 return;
             var mapInfoPaths = new string[] { oldpath };
-            var newMapInfoPaths = new string[] { renameDialog.newName };
+            var newMapInfoPaths = new string[] { renameDialog.NewName };
             try
             {
                 CopyFilesToFolder(mapInfoPaths, curFolder, newMapInfoPaths);
@@ -163,12 +160,12 @@ namespace GbxMapBrowser
             string shortFolderName = GetShortNameFromFilePath(oldpath);
             string curFolder = GetFolderFromFilePath(oldpath);
 
-            RenameWindow renameDialog = new RenameWindow(shortFolderName, false);
+            RenameWindow renameDialog = new(shortFolderName, false);
             renameDialog.ShowDialog();
 
-            if (string.IsNullOrEmpty(renameDialog.newName)) return;
+            if (string.IsNullOrEmpty(renameDialog.NewName)) return;
             var folderInfoPaths = new string[] { oldpath };
-            var newFolderInfoPaths = new string[] { renameDialog.newName };
+            var newFolderInfoPaths = new string[] { renameDialog.NewName };
             try
             {
                 CopyFilesToFolder(folderInfoPaths, curFolder, newFolderInfoPaths);
@@ -179,15 +176,15 @@ namespace GbxMapBrowser
 
         private static string GetShortNameFromFilePath(string path)
         {
-            while (path.EndsWith("\\"))
+            while (path.EndsWith('\\'))
                 path = path.Remove(path.Length - 1);
 
-            return path.Split("\\").ToList().Last();
+            return path.Split('\\').ToList().Last();
         }
 
         public static string GetFolderFromFilePath(string path)
         {
-            while (path.EndsWith("\\"))
+            while (path.EndsWith('\\'))
                 path = path.Remove(path.Length - 1);
 
             var shortFileName = GetShortNameFromFilePath(path);
@@ -199,7 +196,7 @@ namespace GbxMapBrowser
         {
             if (size == 0) return "";
 
-            string[] sizeStrings = { "B", "KB", "MB", "GB", "TB" };
+            string[] sizeStrings = ["B", "KB", "MB", "GB", "TB"];
             int sizeStringsIndex = 0;
             double readableSize = size;
 

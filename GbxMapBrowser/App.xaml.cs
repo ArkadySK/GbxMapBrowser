@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Media;
 
 namespace GbxMapBrowser
 {
@@ -47,12 +48,12 @@ namespace GbxMapBrowser
             }
         }
 
-        private void LaunchMapPreview(List<FolderAndFileInfo> infos)
+        private static void LaunchMapPreview(List<FolderAndFileInfo> infos)
         {
-            Window window = new Window();
+            Window window = new();
             var previewPage = new MapPreviewPage(infos);
             window.SizeToContent = SizeToContent.WidthAndHeight;
-            previewPage.mapImage.Stretch = System.Windows.Media.Stretch.None;
+            previewPage.mapImage.Stretch = Stretch.None;
             window.Content = previewPage;
             window.ShowDialog();
         }

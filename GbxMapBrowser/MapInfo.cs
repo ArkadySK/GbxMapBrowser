@@ -33,17 +33,14 @@ namespace GbxMapBrowser
             CMwNod gbx;
             _shortName = fullnamepath.Split("\\").Last();
             FullPath = fullnamepath;
-            FileInfo mapfileInfo = new FileInfo(fullnamepath);
+            FileInfo mapfileInfo = new(fullnamepath);
             DateModified = mapfileInfo.LastWriteTime;
             DateCreated = mapfileInfo.CreationTime;
             Size = mapfileInfo.Length;
 
             try
             {
-                if (basicInfoOnly)
-                    gbx = Gbx.ParseHeaderNode(fullnamepath);
-                else
-                    gbx = Gbx.ParseNode(fullnamepath);
+                gbx = basicInfoOnly ? Gbx.ParseHeaderNode(fullnamepath) : Gbx.ParseNode(fullnamepath);
                 IsWorking = true;
             }
             catch (Exception e)
@@ -71,10 +68,9 @@ namespace GbxMapBrowser
                     return;
                 }
                 Uri enviImagePath = EnviManager.GetEnvironmentImagePath(challenge.Collection, Titlepack);
-                if (File.Exists(enviImagePath.AbsolutePath))
-                    ImageSmall = enviImagePath;
-                else
-                    ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
+                ImageSmall = File.Exists(enviImagePath.AbsolutePath)
+                    ? enviImagePath
+                    : new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
 
                 ObjectiveGold = Utils.TimeSpanToString(challenge.GoldTime);
                 if (basicInfoOnly) return;
@@ -86,19 +82,13 @@ namespace GbxMapBrowser
                     Description = Utils.ToReadableText(challenge.Comments);
                 MoodIcon = MoodManager.GetMoodImagePath(challenge.Decoration.ToString());
 
-                if (string.IsNullOrEmpty(challenge.AuthorNickname))
-                    Author = challenge.AuthorLogin;
-                else
-                    Author = Utils.ToReadableText(challenge.AuthorNickname);
+                Author = string.IsNullOrEmpty(challenge.AuthorNickname) ? challenge.AuthorLogin : Utils.ToReadableText(challenge.AuthorNickname);
 
                 CopperPrice = challenge.Cost.ToString();
 
-                if (string.IsNullOrEmpty(challenge.ChallengeParameters.MapType))
-                {
-                    MapType = challenge.Mode.ToString();
-                }
-                else
-                    MapType = challenge.ChallengeParameters.MapType;
+                MapType = string.IsNullOrEmpty(challenge.ChallengeParameters.MapType)
+                    ? challenge.Mode.ToString()
+                    : challenge.ChallengeParameters.MapType;
 
                 if (challenge.Thumbnail == null)
                 {
@@ -110,7 +100,7 @@ namespace GbxMapBrowser
 
                 if (thumbnailMemoryStream == null) throw new Exception("buffer is empty");
 
-                Bitmap mapThumbnail = new Bitmap(new StreamReader(thumbnailMemoryStream).BaseStream);
+                Bitmap mapThumbnail = new(new StreamReader(thumbnailMemoryStream).BaseStream);
                 mapThumbnail.RotateFlip(RotateFlipType.Rotate180FlipX);
                 MapThumbnail = Utils.ConvertToImageSource(mapThumbnail);
                 MapThumbnail.Freeze();
@@ -156,9 +146,11 @@ namespace GbxMapBrowser
                 }
 
 
-            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo(selGame.ExeLocation, "/useexedir /singleinst /file=\"" + FullPath + "\"");
-            Process gameGbx = new Process();
-            gameGbx.StartInfo = gameGbxStartInfo;
+            ProcessStartInfo gameGbxStartInfo = new(selGame.ExeLocation, "/useexedir /singleinst /file=\"" + FullPath + "\"");
+            Process gameGbx = new()
+            {
+                StartInfo = gameGbxStartInfo
+            };
             gameGbx.Start();
         }
 
@@ -180,8 +172,8 @@ namespace GbxMapBrowser
             else //show msg about running game
                 Console.WriteLine("An instance of TMUF is running already");
 
-            ProcessStartInfo gameGbxStartInfo = new ProcessStartInfo((selGame.InstalationFolder + "\\" + exeName), "/useexedir /singleinst /file=\"" + FullPath + "\"");
-            Process gameGbx = new Process();
+            ProcessStartInfo gameGbxStartInfo = new(selGame.InstalationFolder + "\\" + exeName, "/useexedir /singleinst /file=\"" + FullPath + "\"");
+            Process gameGbx = new();
             gameGbxStartInfo.WorkingDirectory = selGame.InstalationFolder; //to avoid exe not found message
             gameGbx.StartInfo = gameGbxStartInfo;
             gameGbx.Start();

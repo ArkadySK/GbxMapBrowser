@@ -17,9 +17,9 @@ namespace GbxMapBrowser
             Error = 4
         }
 
-        static string settingsFilePath = Directory.GetCurrentDirectory() + "\\config\\settings.dat";
-        static string customGamesSettingsFilePath = Directory.GetCurrentDirectory() + "\\config\\customgames.dat";
-        static string settingsFolderPath = Directory.GetCurrentDirectory() + "\\config";
+        private static readonly string settingsFilePath = Directory.GetCurrentDirectory() + "\\config\\settings.dat";
+        private static readonly string customGamesSettingsFilePath = Directory.GetCurrentDirectory() + "\\config\\customgames.dat";
+        private static readonly string settingsFolderPath = Directory.GetCurrentDirectory() + "\\config";
         public static string DefaultGameIconPath = Environment.CurrentDirectory + "\\Data\\GameIcons\\Custom.png";
 
 
@@ -73,19 +73,13 @@ namespace GbxMapBrowser
                         if (props.Length >= 3)
                         {
                             string enabledString = props[2];
-                            if (enabledString == "E")
-                                game.IsVisibleInGameLaunchMenu = true;
-                            else
-                                game.IsVisibleInGameLaunchMenu = false;
+                            game.IsVisibleInGameLaunchMenu = enabledString == "E";
                         }
 
                         if (props.Length >= 4)
                         {
                             string visibleString = props[3];
-                            if (visibleString == "V")
-                                game.IsVisibleInGameList = true;
-                            else
-                                game.IsVisibleInGameList = false;
+                            game.IsVisibleInGameList = visibleString == "V";
                         }
 
                         if (props.Length >= 5)
@@ -112,7 +106,7 @@ namespace GbxMapBrowser
             if (!Directory.Exists(settingsFolderPath))
                 Directory.CreateDirectory(settingsFolderPath);
 
-            List<string> settingsText = new List<string>();
+            List<string> settingsText = [];
             foreach (GbxGame game in viewModel.GbxGames)
             {
                 if (game is CustomGbxGame)
@@ -153,35 +147,25 @@ namespace GbxMapBrowser
 
                 try
                 {
-                    var game = new CustomGbxGame();
-                    game.Name = props[0];
-                    game.MapsFolder = props[1];
-                    game.ExeLocation = props[2];
+                    var game = new CustomGbxGame
+                    {
+                        Name = props[0],
+                        MapsFolder = props[1],
+                        ExeLocation = props[2]
+                    };
 
                     string enabledString = props[3];
-                    if (enabledString == "E")
-                        game.IsVisibleInGameLaunchMenu = true;
-                    else
-                        game.IsVisibleInGameLaunchMenu = false;
+                    game.IsVisibleInGameLaunchMenu = enabledString == "E";
 
                     string visibleString = props[4];
-                    if (visibleString == "V")
-                        game.IsVisibleInGameList = true;
-                    else
-                        game.IsVisibleInGameList = false;
+                    game.IsVisibleInGameList = visibleString == "V";
 
                     string unlimiterString = props[5];
-                    if (unlimiterString == "U")
-                        game.IsUnlimiter = true;
-                    else
-                        game.IsUnlimiter = false;
+                    game.IsUnlimiter = unlimiterString == "U";
 
                     controller.GbxGames.Add(game);
                     string iconPath = props[6];
-                    if (File.Exists(iconPath))
-                        game.Icon = new BitmapImage(new Uri(iconPath));
-                    else
-                        game.Icon = new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
+                    game.Icon = File.Exists(iconPath) ? new BitmapImage(new Uri(iconPath)) : new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
 
                     if (props.Length >= 8)
                     {
@@ -206,7 +190,7 @@ namespace GbxMapBrowser
             if (!Directory.Exists(settingsFolderPath))
                 Directory.CreateDirectory(settingsFolderPath);
 
-            List<string> settingsText = new List<string>();
+            List<string> settingsText = [];
             foreach (GbxGame game in controller.GbxGames)
             {
                 if (game is not CustomGbxGame)
@@ -221,8 +205,7 @@ namespace GbxMapBrowser
                 if ((game as CustomGbxGame).IsUnlimiter)
                     unlimiterString = "U";
 
-                if (game.Icon is null)
-                    game.Icon = new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
+                game.Icon ??= new BitmapImage(new Uri(SettingsManager.DefaultGameIconPath));
 
                 settingsText.Add(game.Name + "|" +
                     game.MapsFolder + "|" +

@@ -8,15 +8,13 @@ namespace GbxMapBrowser
     /// </summary>
     public partial class RenameWindow : Window
     {
-        public string newName { get; set; }
-        bool isFile = true;
+        public string NewName { get; set; }
+
+        private readonly bool isFile = true;
 
         public RenameWindow(string oldName, bool IsFile)
         {
-            if (isFile)
-                this.Title = "Rename File";
-            else
-                this.Title = "Rename Map";
+            Title = isFile ? "Rename File" : "Rename Map";
 
             InitializeComponent();
             isFile = IsFile;
@@ -34,15 +32,15 @@ namespace GbxMapBrowser
             string newNametemp = newNameTextBox.Text;
             if (!isFile)
             {
-                newName = newNametemp;
-                this.Close();
+                NewName = newNametemp;
+                Close();
                 return;
             }
 
             if (newNametemp.EndsWith("Map.Gbx") || newNametemp.EndsWith("Replay.Gbx"))
             {
-                newName = newNametemp;
-                this.Close();
+                NewName = newNametemp;
+                Close();
             }
             else
                 MessageBox.Show("Map file must end with '.Map.Gbx'!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -53,7 +51,7 @@ namespace GbxMapBrowser
             SaveChanges();
         }
 
-        private void newNameTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void NewNameTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {

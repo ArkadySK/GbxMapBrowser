@@ -13,9 +13,9 @@ namespace GbxMapBrowser
     {
         public static BitmapImage ConvertToImageSource(Bitmap src)
         {
-            MemoryStream ms = new MemoryStream();
-            ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            BitmapImage image = new BitmapImage();
+            MemoryStream ms = new();
+            src.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            BitmapImage image = new();
             image.BeginInit();
             ms.Seek(0, SeekOrigin.Begin);
             image.StreamSource = ms;
@@ -47,6 +47,25 @@ namespace GbxMapBrowser
             string formattedName = defaultname;
             formattedName = TmEssentials.TextFormatter.Deformat(formattedName);
             return formattedName;
+        }
+
+        /// <summary>
+        /// Shortens string and adds -...
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public static string ShortenString(string text, int size)
+        {
+            if (text.Length <= size)
+            {
+                return text;
+            }
+            else
+            {
+                text = text[..(size - 3)];
+                return text + "...";
+            }
         }
     }
 }

@@ -26,16 +26,11 @@ namespace GbxMapBrowser
         public static Uri GetEnvironmentImagePath(string environment, string titlepackId)
         {
             var foundTitlepackTuple = TitlepackLibrary.FirstOrDefault(tp => tp.Item1 == titlepackId);
-            if (foundTitlepackTuple != null)
-            {
-                return new Uri(Environment.CurrentDirectory + "\\Data\\Titlepacks\\" + foundTitlepackTuple.Item2 + ".png");
-            }
-
-            if (EnviLibrary.Contains(environment))
-                return new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + environment + ".png");
-            else
-                return new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
-
+            return foundTitlepackTuple != null
+                ? new Uri(Environment.CurrentDirectory + "\\Data\\Titlepacks\\" + foundTitlepackTuple.Item2 + ".png")
+                : EnviLibrary.Contains(environment)
+                ? new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\" + environment + ".png")
+                : new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Error.png");
         }
     }
 }

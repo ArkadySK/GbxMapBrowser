@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GbxMapBrowser
 {
-    class FolderInfo : FolderAndFileInfo
+    internal class FolderInfo : FolderAndFileInfo
     {
         public int FilesInsideCount
         {
@@ -27,13 +27,13 @@ namespace GbxMapBrowser
             DisplayName = fullnamepath.Split('\\').LastOrDefault();
             OriginalName = fullnamepath;
             FullPath = fullnamepath;
-            DirectoryInfo directoryInfo = new DirectoryInfo(fullnamepath);
+            DirectoryInfo directoryInfo = new(fullnamepath);
             DateModified = directoryInfo.LastWriteTime;
             DateCreated = directoryInfo.CreationTime;
             ImageSmall = new Uri(Environment.CurrentDirectory + "\\Data\\UIIcons\\Folder.png");
         }
 
-        int GetFilesCount()
+        private int GetFilesCount()
         {
             if (!Directory.Exists(FullPath)) return 0;
             try
@@ -42,7 +42,8 @@ namespace GbxMapBrowser
             }
             catch { return 0; }
         }
-        int GetMapsCount()
+
+        private int GetMapsCount()
         {
             if (!Directory.Exists(FullPath)) return 0;
             try

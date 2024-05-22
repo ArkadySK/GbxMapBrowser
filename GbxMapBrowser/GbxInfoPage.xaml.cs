@@ -39,12 +39,7 @@ namespace GbxMapBrowser
             try
             {
                 gbx = Gbx.ParseNode(_path);
-                if (gbx is CGameCtnChallenge cGameCtnChallenge)
-                    _challenge = cGameCtnChallenge;
-                else
-                {
-                    throw new Exception("Selected file is not challenge / map!");
-                }
+                _challenge = gbx is CGameCtnChallenge cGameCtnChallenge ? cGameCtnChallenge : throw new Exception("Selected file is not challenge / map!");
             }
             catch (Exception ex)
             {
@@ -54,8 +49,11 @@ namespace GbxMapBrowser
             titleLabel.Content = "Loading...";
             await Task.Delay(1000);
 
-            TreeViewItem curTreeViewItem = new TreeViewItem() { Header = "Challenge" };
-            curTreeViewItem.IsExpanded = true;
+            TreeViewItem curTreeViewItem = new()
+            {
+                Header = "Challenge",
+                IsExpanded = true
+            };
             PopulateTreeView(null, curTreeViewItem, _challenge);
             await Task.CompletedTask;
             titleLabel.Content = "GBX Preview:";
@@ -148,7 +146,7 @@ namespace GbxMapBrowser
                         PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = $"{p.Name}: (empty)", Opacity = 0.5 }, null);
                     else
                     {
-                        var shortStringValue = ShortenString(stringValue, 40);
+                        var shortStringValue = Utils.ShortenString(stringValue, 40);
                         PopulateTreeView(curTreeViewItem, new TreeViewItem() { Header = $"{p.Name}: {shortStringValue}", ToolTip = stringValue }, null);
                     }
                 }
@@ -182,19 +180,6 @@ namespace GbxMapBrowser
                     catch { }
 
                 }
-            }
-        }
-
-        string ShortenString(string text, int size)
-        {
-            if (text.Length <= size)
-            {
-                return text;
-            }
-            else
-            {
-                text = text.Substring(0, size - 3);
-                return text + "...";
             }
         }
 

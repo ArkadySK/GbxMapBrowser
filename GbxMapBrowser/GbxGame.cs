@@ -147,16 +147,16 @@ namespace GbxMapBrowser
             }
             if (!Directory.Exists(MapsFolder))
             {
-                if (this.Name == "TM 2020")
+                if (Name == "TM 2020")
                 {
                     MapsFolder = MapsFolder.Replace("\\Maps", "2020\\Maps");
                 }
-                else if (this.Name == "TM Turbo") //it's TMT, search for longest folder and then find maps subfolder
+                else if (Name == "TM Turbo") //it's TMT, search for longest folder and then find maps subfolder
                 {
                     string mainTMTFolder = MapsFolder.Replace("\\Maps", "");
                     if (!Directory.Exists(mainTMTFolder))
                     {
-                        Console.WriteLine(this.Name + ": main folder not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Console.WriteLine(Name + ": main folder not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     var allDirs = Directory.GetDirectories(mainTMTFolder);
@@ -166,20 +166,20 @@ namespace GbxMapBrowser
                     Console.WriteLine(sortDirsByNamelendth.ToArray()[0]);
                     MapsFolder = sortDirsByNamelendth.ToArray()[0] + "\\MapsGhosts";
                 }
-                if (this.Name == "TM Nations Forever" || this.Name == "TM United Forever")
+                if (Name == "TM Nations Forever" || Name == "TM United Forever")
                 {
                     MapsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TMForever\\Tracks\\Challenges";
                 }
 
                 if (!Directory.Exists(MapsFolder))
-                    MessageBox.Show("Error Game: " + this.Name + Environment.NewLine + " Folder '" + MapsFolder + "' not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error Game: " + Name + Environment.NewLine + " Folder '" + MapsFolder + "' not found!", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
 
         public void GetInstallationAndMapFolderDialog()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
+            OpenFileDialog openFileDialog = new()
             {
                 CheckFileExists = true,
                 CheckPathExists = true,
