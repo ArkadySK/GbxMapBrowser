@@ -73,16 +73,18 @@ namespace GbxMapBrowser
                     ? enviImagePath
                     : new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
 
-                ObjectiveAuthor = !string.IsNullOrEmpty(challenge.ObjectiveTextAuthor)
+                bool isRace = challenge.Mode == CGameCtnChallenge.PlayMode.Race || challenge.MapType.EndsWith("Race");
+
+                ObjectiveAuthor = !string.IsNullOrEmpty(challenge.ObjectiveTextAuthor) && !isRace
                     ? challenge.ObjectiveTextAuthor
                     : Utils.TimeSpanToString(challenge.AuthorTime);
-                ObjectiveGold = !string.IsNullOrEmpty(challenge.ObjectiveTextGold) 
+                ObjectiveGold = !string.IsNullOrEmpty(challenge.ObjectiveTextGold) && !isRace
                     ? challenge.ObjectiveTextGold 
                     : Utils.TimeSpanToString(challenge.GoldTime);
-                ObjectiveSilver = !string.IsNullOrEmpty(challenge.ObjectiveTextSilver) 
+                ObjectiveSilver = !string.IsNullOrEmpty(challenge.ObjectiveTextSilver) && !isRace
                     ? challenge.ObjectiveTextSilver 
                     : Utils.TimeSpanToString(challenge.SilverTime);
-                ObjectiveBronze = !string.IsNullOrEmpty(challenge.ObjectiveTextBronze)
+                ObjectiveBronze = !string.IsNullOrEmpty(challenge.ObjectiveTextBronze) && !isRace
                     ? challenge.ObjectiveTextBronze
                     : Utils.TimeSpanToString(challenge.BronzeTime);
                 if (basicInfoOnly) return;
