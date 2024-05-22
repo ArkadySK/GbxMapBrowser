@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GbxMapBrowser"
-        xmlns:System="clr-namespace:System;assembly=System.Runtime" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         mc:Ignorable="d"
         Title="Gbx Map Browser" Height="800" Width="1100" MinHeight="300" MinWidth="600" Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Loaded="Window_LoadedAsync">
     <Grid>

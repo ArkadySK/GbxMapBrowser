@@ -25,8 +25,6 @@ namespace GbxMapBrowser
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
-
         public string Name { get; set; }
         public string ExeLocation
         {
@@ -43,7 +41,7 @@ namespace GbxMapBrowser
             {
                 if (string.IsNullOrWhiteSpace(ExeLocation))
                     return null;
-                var curExeName = @"\" + ExeLocation.Split("\\").Last();
+                var curExeName = @"\" + ExeLocation.Split('\\').Last();
                 string parentFolder = ExeLocation.Replace(curExeName, "");
                 return parentFolder;
             }
@@ -82,8 +80,6 @@ namespace GbxMapBrowser
             }
         }
         public bool IsVisibleInGameLaunchMenu { get; set; }
-
-
 
         public GbxGame() { }
 
@@ -127,7 +123,7 @@ namespace GbxMapBrowser
                     if (line.Contains("UserSubDir")) //it's TMF
                     {
                         string foldername = line.Replace("UserSubDir=", "");
-                        MapsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + foldername + "\\Tracks\\Challenges";
+                        MapsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + '\\' + foldername + "\\Tracks\\Challenges";
                     }
                     else if (line.Contains("UserDir=")) //TMNext or MP
                     {
@@ -137,7 +133,7 @@ namespace GbxMapBrowser
                             foldername = foldername.Replace("{userdocs}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
                             MapsFolder = foldername + "\\Maps";
                         }
-                        else if (foldername.Contains("{")) MessageBox.Show("Unknown mapdata folder");
+                        else if (foldername.Contains('{')) MessageBox.Show("Unknown mapdata folder");
                         else
                         {
                             MapsFolder = foldername + "\\Maps";
@@ -194,8 +190,8 @@ namespace GbxMapBrowser
 
             if (dialogResult.Value)
             {
-                var exeName = openFileDialog.FileName.Split("\\").Last();
-                if (exeName.ToLower() == TargetExeName.ToLower() || TargetExeName == "")
+                var exeName = openFileDialog.FileName.Split('\\').Last();
+                if (exeName.Equals(TargetExeName, StringComparison.CurrentCultureIgnoreCase) || TargetExeName == "")
                 {
                     ExeLocation = openFileDialog.FileName;
                     UpdateMapsFolder();

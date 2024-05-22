@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GbxMapBrowser"
         mc:Ignorable="d"
         d:Background="Black"
         Title="Settings" Height="700" Width="700" Closing="Window_Closing" WindowStartupLocation="CenterOwner">
@@ -25,7 +24,6 @@
                 <TextBlock FontSize="25" FontWeight="Bold" Foreground="{StaticResource MahApps.Brushes.AccentBase}" Text="Welcome!" />
                 <TextBlock FontSize="20" FontWeight="DemiBold" TextWrapping="Wrap" Foreground="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}"
                    Text="Please, set your game preferences before you start to use this program. Configure atleast one game from this list, then you can close this window."/>
-
             </StackPanel>
 
             <ListView x:Name="listView" Grid.Row="1" Padding="5" ItemsSource="{Binding GbxGames}"  MouseDoubleClick="ListView_MouseDoubleClick" SelectedIndex="0" 

@@ -412,12 +412,12 @@ namespace GbxMapBrowser
         #endregion
 
         #region CopyAndPaste
-        private void CopyItemsToMemory(List<FolderAndFileInfo> selectedItems)
+        private void CopySelectedItemsToMemory()
         {
-            if (selectedItems.Count == 0)
+            if (_selectedItems.Count == 0)
                 return;
             var fileDropList = new StringCollection();
-            foreach (var item in selectedItems)
+            foreach (var item in _selectedItems)
                 fileDropList.Add(item.FullPath);
             Clipboard.SetFileDropList(fileDropList);
         }
@@ -544,7 +544,7 @@ namespace GbxMapBrowser
             // Copy
             if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                CopyItemsToMemory(_selectedItems);
+                CopySelectedItemsToMemory();
             }
 
             // Paste
@@ -631,7 +631,7 @@ namespace GbxMapBrowser
                     newFolderWindow.ShowDialog();
 
                     if (string.IsNullOrEmpty(newFolderWindow.NewName)) return;
-                    Directory.CreateDirectory(_curFolder + "\\" + newFolderWindow.NewName);
+                    Directory.CreateDirectory(_curFolder + '\\' + newFolderWindow.NewName);
                     await UpdateMapListAsync(_curFolder);
                     break;
             }
@@ -654,7 +654,7 @@ namespace GbxMapBrowser
                     await LaunchItemsAsync(_selectedItems);
                     break;
                 case "Copy":
-                    CopyItemsToMemory(_selectedItems);
+                    CopySelectedItemsToMemory();
                     break;
                 case "Delete":
                     await DeleteSelectedItemsAsync();

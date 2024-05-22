@@ -32,7 +32,6 @@ namespace GbxMapBrowser
                 HideMapPreviewUI();
                 return;
             }
-
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)

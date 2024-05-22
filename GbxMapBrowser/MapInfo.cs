@@ -31,7 +31,7 @@ namespace GbxMapBrowser
         public MapInfo(string fullnamepath, bool basicInfoOnly)
         {
             CMwNod gbx;
-            _shortName = fullnamepath.Split("\\").Last();
+            _shortName = fullnamepath.Split('\\').Last();
             FullPath = fullnamepath;
             FileInfo mapfileInfo = new(fullnamepath);
             DateModified = mapfileInfo.LastWriteTime;
@@ -165,7 +165,7 @@ namespace GbxMapBrowser
             {
                 //start the unlimiter first
                 await Task.Run(() => selGame.Launch());
-                string unlimiterExeName = selGame.ExeLocation.Replace(selGame.InstalationFolder + "\\", "");
+                string unlimiterExeName = selGame.ExeLocation.Replace(selGame.InstalationFolder + '\\', "");
                 while (ProcessManager.IsRunning(unlimiterExeName) == true)
                 {
                     await Task.Delay(50);
@@ -174,7 +174,7 @@ namespace GbxMapBrowser
             else //show msg about running game
                 Console.WriteLine("An instance of TMUF is running already");
 
-            ProcessStartInfo gameGbxStartInfo = new(selGame.InstalationFolder + "\\" + exeName, "/useexedir /singleinst /file=\"" + FullPath + "\"");
+            ProcessStartInfo gameGbxStartInfo = new(selGame.InstalationFolder + '\\' + exeName, "/useexedir /singleinst /file=\"" + FullPath + "\"");
             Process gameGbx = new();
             gameGbxStartInfo.WorkingDirectory = selGame.InstalationFolder; //to avoid exe not found message
             gameGbx.StartInfo = gameGbxStartInfo;

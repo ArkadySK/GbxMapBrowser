@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GbxMapBrowser
+﻿namespace GbxMapBrowser
 {
     internal class MapOperations
     {
@@ -9,13 +7,8 @@ namespace GbxMapBrowser
         {
             RenameWindow renameWindow = new(mapInfo.OriginalName, false);
             renameWindow.ShowDialog();
-            if (String.IsNullOrEmpty(renameWindow.NewName)) return;
+            if (string.IsNullOrEmpty(renameWindow.NewName)) return;
             mapInfo.RenameAndSave(renameWindow.NewName);
-        }
-
-        public static void ChangeThumbnail(MapInfo mapInfo)
-        {
-            throw new NotImplementedException();
         }
     }
 }

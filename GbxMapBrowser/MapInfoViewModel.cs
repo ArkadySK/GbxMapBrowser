@@ -150,12 +150,9 @@ namespace GbxMapBrowser
                     break;
             }
 
-            if (orderedFolderInfos == null) //fix when null
-            {
-                orderedFolderInfos = await Task.Run(() => from folder in folderInfosList
-                                                          orderby folder.DisplayName ascending
-                                                          select folder);
-            }
+            orderedFolderInfos ??= await Task.Run(() => from folder in folderInfosList
+                                                        orderby folder.DisplayName ascending
+                                                        select folder);
 
             mapList.Clear();
             await Task.Run(() => mapList.AddRange(orderedFolderInfos));
@@ -168,11 +165,11 @@ namespace GbxMapBrowser
             List<MapInfo> maps = [];
             foreach (var mi in MapList)
             {
-                if (!(mi is MapInfo)) continue;
+                if (mi is not MapInfo) continue;
                 var mapName = (mi as MapInfo).DisplayName;
                 if (mapNames.ToList().Contains(mapName)) maps.Add((MapInfo)mi);
             }
-            return maps.ToArray();
+            return [.. maps];
         }
     }
 }

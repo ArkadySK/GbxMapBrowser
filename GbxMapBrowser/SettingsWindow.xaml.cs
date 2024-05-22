@@ -25,7 +25,7 @@ namespace GbxMapBrowser
         }
 
         #region SaveAndClose
-        private bool CanCloseWindow()
+        private static bool CanCloseWindow()
         {
             if (Properties.Settings.Default.IsFirstRun)
             {
