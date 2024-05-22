@@ -127,7 +127,7 @@ namespace GbxMapBrowser
                     }
                     else if (line.Contains("UserDir=")) //TMNext or MP
                     {
-                        string foldername = line.Replace("UserDir=", "");
+                        string foldername = line.Trim().Replace("UserDir=", "");
                         if (foldername.Contains("{userdocs}"))
                         {
                             foldername = foldername.Replace("{userdocs}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
