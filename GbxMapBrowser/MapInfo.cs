@@ -73,11 +73,19 @@ namespace GbxMapBrowser
                     ? enviImagePath
                     : new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
 
-                ObjectiveGold = Utils.TimeSpanToString(challenge.GoldTime);
+                ObjectiveAuthor = !string.IsNullOrEmpty(challenge.ObjectiveTextAuthor)
+                    ? challenge.ObjectiveTextAuthor
+                    : Utils.TimeSpanToString(challenge.AuthorTime);
+                ObjectiveGold = !string.IsNullOrEmpty(challenge.ObjectiveTextGold) 
+                    ? challenge.ObjectiveTextGold 
+                    : Utils.TimeSpanToString(challenge.GoldTime);
+                ObjectiveSilver = !string.IsNullOrEmpty(challenge.ObjectiveTextSilver) 
+                    ? challenge.ObjectiveTextSilver 
+                    : Utils.TimeSpanToString(challenge.SilverTime);
+                ObjectiveBronze = !string.IsNullOrEmpty(challenge.ObjectiveTextBronze)
+                    ? challenge.ObjectiveTextBronze
+                    : Utils.TimeSpanToString(challenge.BronzeTime);
                 if (basicInfoOnly) return;
-                ObjectiveBronze = Utils.TimeSpanToString(challenge.BronzeTime);
-                ObjectiveSilver = Utils.TimeSpanToString(challenge.SilverTime);
-                ObjectiveAuthor = Utils.TimeSpanToString(challenge.AuthorTime);
 
                 if (!string.IsNullOrEmpty(challenge.Comments))
                     Description = Utils.ToReadableText(challenge.Comments);
