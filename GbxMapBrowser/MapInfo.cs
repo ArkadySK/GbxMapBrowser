@@ -96,10 +96,7 @@ namespace GbxMapBrowser
                     MapThumbnail.Freeze();
                     return;
                 }
-                var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail);
-
-                if (thumbnailMemoryStream == null) throw new Exception("buffer is empty");
-
+                var thumbnailMemoryStream = new MemoryStream(challenge.Thumbnail) ?? throw new Exception("buffer is empty");
                 Bitmap mapThumbnail = new(new StreamReader(thumbnailMemoryStream).BaseStream);
                 mapThumbnail.RotateFlip(RotateFlipType.Rotate180FlipX);
                 MapThumbnail = Utils.ConvertToImageSource(mapThumbnail);
@@ -136,12 +133,17 @@ namespace GbxMapBrowser
 
         }
 
+        public override async Task DeleteAsync()
+        {
+            await Task.Run(() => FileOperations.DeleteFile(FullPath));
+        }
+
         public void OpenMap(GbxGame selGame)
         {
             if (selGame is CustomGbxGame cgg)
                 if (cgg.IsUnlimiter)
                 {
-                    Task.Run(() => OpenMapUnlimiter(selGame));
+                    Task.Run(() => OpenMapUnlimiterAsync(selGame));
                     return;
                 }
 
@@ -154,7 +156,7 @@ namespace GbxMapBrowser
             gameGbx.Start();
         }
 
-        private async Task OpenMapUnlimiter(GbxGame selGame)
+        private async Task OpenMapUnlimiterAsync(GbxGame selGame)
         {
             string exeName = "TmForever.exe";
             bool isRunning = ProcessManager.IsRunning(exeName);
@@ -180,7 +182,7 @@ namespace GbxMapBrowser
         }
 
 
-        internal async Task ExportThumbnail(string filePath)
+        internal async Task ExportThumbnailAsync(string filePath)
         {
             var dirPath = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(dirPath))
@@ -189,14 +191,12 @@ namespace GbxMapBrowser
             }
 
             var img = MapThumbnail as BitmapImage;
-            BitmapEncoder encoder = new PngBitmapEncoder();
+            PngBitmapEncoder encoder = new();
             encoder.Frames.Add(BitmapFrame.Create(img));
 
-            using (var fileStream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
-            {
-                encoder.Save(fileStream);
-                await Task.CompletedTask;
-            }
+            using var fileStream = new FileStream(filePath, FileMode.Create);
+            encoder.Save(fileStream);
+            await Task.CompletedTask;
         }
     }
 }

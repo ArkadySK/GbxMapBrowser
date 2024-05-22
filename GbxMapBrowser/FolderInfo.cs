@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
@@ -21,6 +22,10 @@ namespace GbxMapBrowser
             }
         }
 
+        public override async Task DeleteAsync()
+        {
+            await Task.Run(() => Directory.Delete(FullPath, true));
+        }
 
         public FolderInfo(string fullnamepath)
         {

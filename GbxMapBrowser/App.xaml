@@ -146,7 +146,7 @@
                 <MenuItem Header="Rename file"/>
                 <MenuItem Header="Rename map"/>
                 <Separator/>
-                <MenuItem Header="File properties"/>
+                <MenuItem Header="Properties"/>
                 <!--<MenuItem Header="Map properties (GBX Preview)"/>-->
             </ContextMenu>
 
@@ -160,7 +160,7 @@
                 <MenuItem Header="Delete"/>
                 <MenuItem Header="Rename folder"/>
                 <Separator/>
-                <MenuItem Header="Folder properties"/>
+                <MenuItem Header="Properties"/>
             </ContextMenu>
 
             <!-- Multiselection context menu -->

@@ -121,7 +121,7 @@ namespace GbxMapBrowser
             {
                 case "Open image":
                     string path = curPath + "\\Temp\\" + mapInfo.OriginalName + ".png";
-                    var task = mapInfo.ExportThumbnail(path);
+                    var task = mapInfo.ExportThumbnailAsync(path);
                     await task;
                     if (task.IsCompleted)
                         ProcessManager.OpenFile(path);
@@ -130,7 +130,7 @@ namespace GbxMapBrowser
                     break;
                 case "Export as image":
                     string path2 = curPath + "\\Thumbnails\\" + mapInfo.OriginalName + ".png";
-                    var task2 = mapInfo.ExportThumbnail(path2);
+                    var task2 = mapInfo.ExportThumbnailAsync(path2);
                     await task2;
                     if (task2.IsCompleted)
                         MessageBox.Show("Thumbnail exported successfully!\n\nPath: " + path2, "Success", MessageBoxButton.OK, MessageBoxImage.Information);

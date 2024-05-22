@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace GbxMapBrowser
 {
-    public class FolderAndFileInfo
+    public abstract class FolderAndFileInfo
     {
         public string DisplayName { get; internal set; }
         public string OriginalName { get; internal set; }
@@ -13,26 +14,13 @@ namespace GbxMapBrowser
         public double Size { get; internal set; }
         public string SizeString
         {
-            get
-            {
-                return FileOperations.SizeToString(Size);
-            }
+            get => FileOperations.SizeToString(Size);
         }
         public DateTime DateModified { get; internal set; }
-        public string DateModifiedString
-        {
-            get
-            {
-                return DateModified == DateTime.MinValue ? "NO DATE" : DateModified.ToString();
-            }
-        }
+        public string DateModifiedString => DateModified == DateTime.MinValue ? "NO DATE" : DateModified.ToString();
         public DateTime DateCreated { get; internal set; }
-        public string DateCreatedString
-        {
-            get
-            {
-                return DateModified == DateTime.MinValue ? "NO DATE" : DateCreated.ToString();
-            }
-        }
+        public string DateCreatedString => DateModified == DateTime.MinValue ? "NO DATE" : DateCreated.ToString();
+
+        public abstract Task DeleteAsync();
     }
 }

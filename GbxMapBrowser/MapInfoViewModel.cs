@@ -45,14 +45,14 @@ namespace GbxMapBrowser
         private readonly List<MapInfo> mapInfosList = [];
         private readonly List<object> mapList = [];
 
-        public async Task AddFolder(string fullnamepath)
+        public async Task AddFolderAsync(string fullnamepath)
         {
             if (fullnamepath == null) return;
             FolderInfo folderInfo = await Task.Run(() => new FolderInfo(fullnamepath));
             folderInfosList.Add(folderInfo);
         }
 
-        public async Task AddMap(string fullnamepath)
+        public async Task AddMapAsync(string fullnamepath)
         {
             if (fullnamepath.Contains(".Map.Gbx", StringComparison.OrdinalIgnoreCase) || fullnamepath.Contains(".Replay.Gbx", StringComparison.OrdinalIgnoreCase) || fullnamepath.Contains(".Challenge.Gbx", StringComparison.OrdinalIgnoreCase))
             {
@@ -69,7 +69,7 @@ namespace GbxMapBrowser
             GC.Collect();
         }
 
-        public async Task FindMaps(string mapName)
+        public async Task FindMapsAsync(string mapName)
         {
             IOrderedEnumerable<MapInfo> foundMapInfos = null;
             foundMapInfos = from map in mapInfosList
@@ -80,7 +80,7 @@ namespace GbxMapBrowser
             await Task.Run(() => mapList.AddRange(foundMapInfos));
         }
 
-        public async Task SortMapList()
+        public async Task SortMapListAsync()
         {
             IOrderedEnumerable<MapInfo> orderedMapInfos = null;
             IOrderedEnumerable<FolderInfo> orderedFolderInfos = null;
