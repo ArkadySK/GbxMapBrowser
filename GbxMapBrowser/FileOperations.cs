@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace GbxMapBrowser
 {
@@ -53,7 +54,7 @@ namespace GbxMapBrowser
 
         public static bool ShowFilesProperties(string[] Filenames)
         {
-            //TO DO
+            //TODO
             throw new NotImplementedException();
         }
 
@@ -90,7 +91,7 @@ namespace GbxMapBrowser
                 catch (Exception e)
                 {
                     if (e is IOException) { }
-                    else throw e;
+                    else throw;
                 }
                 i++;
             }
@@ -211,6 +212,31 @@ namespace GbxMapBrowser
                 sizeStringsIndex += 1;
             }
             return readableSize.ToString("0.##") + " " + sizeStrings[sizeStringsIndex];
+        }
+
+        public static string[] TryGetFolders(string folder)
+        {
+            string[] folders = [];
+            try
+            {
+                folders = Directory.GetDirectories(folder);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            return folders;
+        }
+
+        public static string[] TryGetMapPaths(string folder, SearchOption _searchOption)
+        {
+            string[] mapPaths = [];
+            try
+            {
+                mapPaths = Directory.GetFiles(folder, "*.gbx", _searchOption);
+            }
+            catch { }
+            return mapPaths;
         }
     }
 }

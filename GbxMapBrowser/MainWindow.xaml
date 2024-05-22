@@ -34,13 +34,13 @@
                 <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="redoButton" Content="&#xEA47;" Click="redoButton_Click"/>
                 <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="parentFolderButton" Content="&#xE7EB;" Click="parentFolderButton_Click"/>
             </StackPanel>
-            <TextBox x:Name="currentFolderTextBox" FontSize="16" BorderThickness="0" Margin="0 0" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="currentFolderTextBox_KeyUp"/>
+            <TextBox x:Name="currentFolderTextBox" FontSize="16" BorderThickness="0" Margin="0 0" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" KeyUp="CurrentFolderTextBox_KeyUp"/>
             <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="refreshMapsButton" Grid.Column="3" HorizontalAlignment="Center" Content="&#xE72C;" Click="refreshMapsButton_Click"/>
             <Button Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource Segoe MDL2 Assets}" x:Name="OpenInExplorerButton" Grid.Column="4" HorizontalAlignment="Center" Content="&#xED44;" Click="OpenInExplorerButton_Click"/>
             <Rectangle Fill="{DynamicResource MahApps.Brushes.Badged.Background.Disabled}" Grid.Row="1" Height="1" Grid.ColumnSpan="5"/>
         </Grid>
-        <Button Grid.Row="1" Panel.ZIndex="10" Width="48" Height="48" Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource SegoeUISymbol}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Click="manageGamesButton_Click" Padding="-5" FontSize="35">⛭</Button>
-        <mah:HamburgerMenu Grid.Row="1" ItemsSource="{Binding GbxGames}" Panel.ZIndex="5" x:Name="gamesListMenu" ItemClick="gamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="48" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
+        <Button Grid.Row="1" Panel.ZIndex="10" Width="48" Height="48" Style="{StaticResource AddressButtonStyle}" FontFamily="{StaticResource SegoeUISymbol}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Click="ManageGamesButton_Click" Padding="-5" FontSize="35">⛭</Button>
+        <mah:HamburgerMenu Grid.Row="1" ItemsSource="{Binding GbxGames}" Panel.ZIndex="5" x:Name="gamesListMenu" ItemClick="GamesListMenu_ItemClick" HamburgerButtonName="Maps" HamburgerWidth="48" HamburgerButtonHelpText="Maps" Foreground="{DynamicResource MahApps.Brushes.Text}">
             <mah:HamburgerMenu.Content>
                 <!--Map list, the right part-->
                 <Grid>
@@ -50,8 +50,8 @@
                     </Grid.RowDefinitions>
                     <Label x:Name="loadingLabel" Content="Loading..." Panel.ZIndex="10" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" FontStyle="Italic" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <ListBox x:Name="mapListBox" HorizontalContentAlignment="Stretch" Grid.Column="1" ScrollViewer.CanContentScroll="False" Padding="5"
-                             MouseDoubleClick="mapListBox_MouseDoubleClickAsync" AllowDrop="True" Drop="mapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" 
-                             PreviewMouseLeftButtonDown="mapListBox_PreviewMouseleftButonDown" KeyDown="mapListBox_KeyDown" SelectionMode="Extended" ContextMenuOpening="mapListBox_ContextMenuOpening" PreviewMouseMove="mapListBox_PreviewMouseMove">
+                             MouseDoubleClick="mapListBox_MouseDoubleClickAsync" AllowDrop="True" Drop="MapListBox_Drop" SelectionChanged="mapListBox_SelectionChanged" 
+                             PreviewMouseLeftButtonDown="MapListBox_PreviewMouseleftButonDown" KeyDown="MapListBox_KeyDown" SelectionMode="Extended" ContextMenuOpening="MapListBox_ContextMenuOpening" PreviewMouseMove="MapListBox_PreviewMouseMove">
                         <ListBox.Resources>
                             <DataTemplate DataType="{x:Type local:FolderInfo}">
                                 <Grid>
@@ -94,8 +94,8 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Fill="{DynamicResource MahApps.Brushes.Badged.Background.Disabled}" Grid.Row="1" Height="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Panel.ZIndex="10"/>
                         <Label Grid.Column="0" Content="🔎" BorderThickness="0" VerticalContentAlignment="Center" FontSize="15"/>
-                        <TextBox x:Name="searchMapsTextBox" Grid.Column="1" Text="search for a map..." Opacity=".5" BorderThickness="0" VerticalContentAlignment="Center" FontSize="15" TextChanged="searchMapsTextBox_TextChanged" GotFocus="searchMapsTextBox_GotFocus" LostFocus="searchMapsTextBox_LostFocus"/>
-                        <ComboBox x:Name="sortMapsComboBox" Grid.Column="2" SelectionChanged="sortMapsComboBox_SelectionChanged" Width="150" BorderBrush="#7FCCCCCC">
+                        <TextBox x:Name="searchMapsTextBox" Grid.Column="1" Text="search for a map..." Opacity=".5" BorderThickness="0" VerticalContentAlignment="Center" FontSize="15" TextChanged="SearchMapsTextBox_TextChanged" GotFocus="SearchMapsTextBox_GotFocus" LostFocus="SearchMapsTextBox_LostFocus"/>
+                        <ComboBox x:Name="sortMapsComboBox" Grid.Column="2" SelectionChanged="SortMapsComboBox_SelectionChanged" Width="150" BorderBrush="#7FCCCCCC">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Style="{StaticResource DefaultUIStyle}"  Content="{Binding .}" />
@@ -110,7 +110,7 @@
             <mah:HamburgerMenu.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Visibility="{Binding IsVisibleInGameList, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="5" 
-                                ContextMenu="{StaticResource GameLibraryContextMenu}" ContextMenuOpening="gameLibraryItem_ContextMenuOpening">
+                                ContextMenu="{StaticResource GameLibraryContextMenu}" ContextMenuOpening="GameLibraryItem_ContextMenuOpening">
                         <Image Width="40" Height="40" Source="{Binding Icon}"></Image>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Label Style="{StaticResource DefaultUIStyle}" Foreground="White" Padding="5 0 0 0" Content="{Binding Name}" FontWeight="DemiBold"/>
