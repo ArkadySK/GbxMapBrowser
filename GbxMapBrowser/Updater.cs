@@ -38,7 +38,7 @@ namespace GbxMapBrowser
 
         private async Task<Version> GetNewVersion()
         {
-            if (String.IsNullOrWhiteSpace(_repositoryName) || String.IsNullOrWhiteSpace(_repositoryOwner)) return null;
+            if (string.IsNullOrWhiteSpace(_repositoryName) || string.IsNullOrWhiteSpace(_repositoryOwner)) return null;
 
             var allReleases = await _releaseClient.GetAll(_repositoryOwner, _repositoryName);
             var latestRelease = allReleases.FirstOrDefault(release => !release.Prerelease &&
@@ -61,7 +61,6 @@ namespace GbxMapBrowser
 
             url = url.Replace("&", "^&");
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
-
         }
     }
 }

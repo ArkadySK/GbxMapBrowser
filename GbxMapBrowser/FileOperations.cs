@@ -49,12 +49,6 @@ namespace GbxMapBrowser
             return ShellExecuteEx(ref info);
         }
 
-        public static bool ShowFilesProperties(string[] Filenames)
-        {
-            //TODO
-            throw new NotImplementedException();
-        }
-
         public static void OpenInExplorer(string folder)
         {
             Process explorerProcess = new()

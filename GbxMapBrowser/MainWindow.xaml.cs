@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -676,10 +675,6 @@ namespace GbxMapBrowser
                     break;
                 case "Properties":
                     FileOperations.ShowFileProperties(path);
-                    break;
-                case "Properties (all items)":
-                    string[] paths = (from item in _selectedItems select item.FullPath).ToArray();
-                    FileOperations.ShowFilesProperties(paths);
                     break;
             }
             await Task.Delay(100);
