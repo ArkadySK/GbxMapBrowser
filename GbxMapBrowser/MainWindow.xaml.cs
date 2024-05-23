@@ -705,7 +705,7 @@ namespace GbxMapBrowser
                 }
                 else
                 {
-                    await Task.Run(() => game.Launch());
+                    await Task.Run(game.Launch);
                 }
                 ((ContextMenu)sender).IsOpen = false;
                 await Task.Delay(100);
