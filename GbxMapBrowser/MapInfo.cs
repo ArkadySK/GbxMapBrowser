@@ -73,7 +73,11 @@ namespace GbxMapBrowser
                     ? enviImagePath
                     : new Uri(Environment.CurrentDirectory + "\\Data\\Environments\\Unknown.png");
 
-                bool isRace = challenge.Mode == CGameCtnChallenge.PlayMode.Race || challenge.MapType.EndsWith("Race");
+                MapType = string.IsNullOrEmpty(challenge.ChallengeParameters?.MapType)
+                    ? challenge.Mode.ToString()
+                    : challenge.ChallengeParameters.MapType;
+
+                bool isRace = challenge.Mode == CGameCtnChallenge.PlayMode.Race || MapType.EndsWith("Race");
 
                 ObjectiveAuthor = !string.IsNullOrEmpty(challenge.ObjectiveTextAuthor) && !isRace
                     ? challenge.ObjectiveTextAuthor
@@ -96,10 +100,6 @@ namespace GbxMapBrowser
                 Author = string.IsNullOrEmpty(challenge.AuthorNickname) ? challenge.AuthorLogin : Utils.ToReadableText(challenge.AuthorNickname);
 
                 CopperPrice = challenge.Cost.ToString();
-
-                MapType = string.IsNullOrEmpty(challenge.ChallengeParameters.MapType)
-                    ? challenge.Mode.ToString()
-                    : challenge.ChallengeParameters.MapType;
 
                 if (challenge.Thumbnail == null)
                 {
