@@ -38,6 +38,6 @@ It uses Octokit: https://github.com/octokit/octokit.net
 
 <h2>Requirements</h2>
 
-**Operating System:** Windows 7 SP1, Windows 8.1, Windows 10 or Windows 11
+**Operating System:** Windows 8.1, Windows 10 or Windows 11
 
 **Have atleast one game installed from this list:** TrackMania United Forever, TrackMania Nations Forever, ManiaPlanet, TrackMania Turbo or TrackMania2020 (TMNext)
