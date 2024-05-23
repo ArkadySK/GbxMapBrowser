@@ -13,7 +13,6 @@ It uses Octokit: https://github.com/octokit/octokit.net
 
 <h2>Features</h2>
 
-- preview a map, see map's information
 - launch a map and select by which game
 - rename a map (inside metadata or file), delete a map
 - search for a map
@@ -31,9 +30,10 @@ It uses Octokit: https://github.com/octokit/octokit.net
 
 <h2>Showcase</h2>
 
-![obrázok](https://user-images.githubusercontent.com/74670743/184122122-627564dd-ee62-4152-85eb-909bd8795a3d.png)
+<img src="https://github.com/ArkadySK/GbxMapBrowser/assets/74670743/25eb08b2-899f-48aa-a226-0358cd1e0f8a" data-canonical-src="https://github.com/ArkadySK/GbxMapBrowser/assets/74670743/25eb08b2-899f-48aa-a226-0358cd1e0f8a" height="600" />
 
-![image](https://user-images.githubusercontent.com/74670743/193781905-579c74fb-d20b-44cf-adde-f04f808fb923.png)
+<img src="https://github.com/ArkadySK/GbxMapBrowser/assets/74670743/5554bd29-384c-4226-b3b8-edac24add8e2" data-canonical-src="https://github.com/ArkadySK/GbxMapBrowser/assets/74670743/5554bd29-384c-4226-b3b8-edac24add8e2" height="600" />
+
 
 
 <h2>Requirements</h2>
